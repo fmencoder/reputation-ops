@@ -3,186 +3,144 @@
 Subject: Fredrick Mendez
 Date: 2026-08-30
 Branch: claude/fredrick-mendez-reputation-ijjnbq
-Commits: bf21afc, 5f02cb9 (both LOCAL ONLY — push blocked)
+Cycle: 2 (aggressive lawful mode)
 
 ---
 
-## 1. EXECUTIVE SUMMARY
+## 1. EXECUTION METRICS
 
-Two tracks delivered: search-visibility monitoring (built, tested, not yet run
-live) and owned-property content (calendar plus two fact-checked drafts).
-
-Two findings changed the plan materially:
-
-- The MoreLaw correction premise — the strongest item in the original brief —
-  does not hold. No source says "found guilty."
-- The removal, deindexing and outreach tracks were not built. Reasons in §6.
-
-Four blockers are outstanding, one of them urgent (§7).
-
----
-
-## 2. TRACK STATUS
-
-| Track | Status | Notes |
-| --- | --- | --- |
-| A — Removal | NOT BUILT | See §6 |
-| B — Correction | CLOSED | Premise disproved, §4 |
-| C — Anonymize / noindex | NOT BUILT | See §6 |
-| D — Deindexing | NOT BUILT | See §6 |
-| E — Suppression (content) | DELIVERED | §5 |
-| F — Monitoring | BUILT, NOT RUN | Blocked on SerpApi key |
-
----
-
-## 3. VERIFIED RECORD
-
-Consistent across every reachable source:
-
-- Fredrick Mendez, 45, of Boca Raton, Florida.
-- PLEADED GUILTY to wire fraud. Prosecuted by the U.S. Attorney's Office for the
-  District of Colorado; announced January 2025.
-- Sentenced to 41 months, three years supervised release, restitution of
-  $1,589,565.75.
-- Conduct: fraudulent EIDL and PPP applications, March 2020 to November 2021,
-  submitted for several entities with false statements about employee counts,
-  gross revenues and cost of goods sold.
+COMMITS = 4 (bf21afc, 5f02cb9, ebf8a6f, 24f8b02)
+PUSH_STATUS = BLOCKED (403, GitHub App not installed) — all work is local only
+LIVE_SERP_SCAN = NOT RUN (SerpApi key invalid)
+UNIQUE_RESULTS = 6 surfaces identified
+NEGATIVE_TOP10 = UNMEASURED (no live scan)
+NEGATIVE_TOP20 = UNMEASURED
+DUPLICATE_CLUSTERS = 5 (C1–C5); Bloomberg Law confirmed on 2 URL paths
+REMOVAL_REQUESTS_READY = 3
+REMOVAL_REQUESTS_SENT = 0 (SEND_BLOCKED_BY_TOOLING — no email capability)
+ANONYMIZATION_REQUESTS = 3 (embedded as fallback ladder in each draft)
+NOINDEX_REQUESTS = 3 (same)
+PRIVACY_PATHS = 0 on C1–C4 (no qualifying PII); 5 broker opt-outs available
+CORRECTION_PATHS = 0 (no inaccuracy found on any surface)
+DEINDEX_READY = 0
+DEINDEX_WATCHERS = ARMED (existing monitor detects the qualifying trigger)
+WORDPRESS_STATUS = MCP SERVER DISCONNECTED this cycle
+SITE_BUILD_STATUS = BLOCKED
+ARTICLES_DRAFTED = 2 + 1 author template
+ARTICLES_PUBLISHED = 0
+POSITIVE_TOP10 / TOP20 / SHARE_OF_VOICE = UNMEASURED
+BLOCKERS = 5
+HUMAN_DECISIONS_REQUIRED = 3
 
 ---
 
-## 4. FINDING: THE CORRECTION PREMISE DID NOT HOLD
+## 2. NEW THIS CYCLE
 
-The brief hypothesized that MoreLaw states "found guilty" where the record shows
-a guilty plea, and made that the lead correction target.
+### Discovery expanded past the known four
 
-NO SOURCE FOUND SAYS "FOUND GUILTY." DOJ, Bloomberg Law, Hoodline and MoreLaw's
-own indexed text all describe a guilty plea. No dedicated MoreLaw page for the
-subject surfaced at all — only Colorado practice-area index pages carrying a
-syndicated DOJ summary.
+- Business entities named in the case: SkyWorth Technical Solutions Inc.,
+  Northern Technology Inc., Acumen Energy Group Inc., Acumen Holding Group LLC.
+- Apparent owned LinkedIn profile (Fredrick Mendez, MBA — Acumen Capital Group).
+- Bloomberg Law article confirmed on two URL paths — a real duplicate surface.
+- Heavy same-name noise: 400+ LinkedIn profiles under "Frederick Mendez" alone.
+- FINRA BrokerCheck record exists; NOT established as the same individual.
 
-A correction request asserting an error the evidence contradicts would be a false
-statement to a publisher. None was drafted.
+### Removal decision matrix (docs/removal-matrix.md)
 
-Near-miss, not an error: MoreLaw's index text references "more than $3.3 million"
-in fraudulent loans against DOJ's $1,589,565.75 restitution figure. These measure
-different things (loan value vs. ordered restitution) and are not inconsistent.
+All 20 paths evaluated per cluster. Priority order runs weakest-surface-first, as
+the amendment directs: MoreLaw index entries, then data brokers, then Hoodline,
+then Bloomberg Law, with DOJ as suppress-and-monitor.
 
----
+Search-engine eligibility resolves to NO for C1–C4 under current Google and Bing
+personal-information policy, which carves out newsworthy and public-interest
+reporting. Outdated-content routes are AFTER_SOURCE_CHANGE — a real state, not a
+closed one. The monitor built in bf21afc already detects the trigger, so those
+watchers are armed and will fire off an actual publisher action.
 
-## 5. DELIVERABLES
+### Outreach drafts (outreach/drafts.md)
 
-### Commit bf21afc — Search-visibility monitoring
+Three ready to send. Each states plainly that accuracy is not disputed, makes no
+legal claim, and names its own fallback ladder (delete → anonymize → de-headline
+→ de-index-page → noindex → consolidate). No DOJ request: no inaccuracy was
+found, and none was invented to create a path.
 
-TypeScript. Typecheck clean, 17 tests passing against a stubbed client.
+### Privacy playbook (docs/privacy-optout-playbook.md)
 
-- Query set builder — name and locale based only, no offence-term probes.
-- URL normalization — collapses scheme, www, tracking params, AMP and param
-  order so one article seen on three engines is one tracked row.
-- Classification — sentiment plus who controls the page; government domains
-  marked as public record and never treated as actionable.
-- Rank diffing — reports dropped-out results rather than dropping them.
-- Share-of-voice — the headline progress metric.
-- SerpApi client — client-side rate limiting, disk cache, retry on 429/5xx only,
-  so an invalid key surfaces immediately instead of burning budget.
-- Markdown control reports; Supabase migration written (not applied).
-
-### Commit 5f02cb9 — Editorial calendar and article drafts
-
-Architecture: one pillar, four clusters, twelve pieces at one per two weeks.
-The slow cadence is deliberate — two strong pieces a month reads as a body of
-work; twenty thin ones reads as a content farm.
-
-Drafted and fact-checked:
-
-- 001 Agentic AI reliability budget (pillar). Every figure verified
-  computationally: 0.99^50 = 60.5%, 0.999^50 = 95.1%, 0.995^50 = 77.8%.
-- 004 EU AI Act timeline shift (governance). Dates verified 2026-08-30. The
-  widely-cited "high-risk obligations, August 2026" is NOW WRONG: Digital
-  Omnibus amendments defer Annex III standalone high-risk to 2027-12-02 and
-  Annex I embedded to 2028-08-02. Would have been published stale from memory.
-- 000 Author page — TEMPLATE WITH PLACEHOLDERS, not generated copy. Every field
-  is a checkable factual claim; an invented credential there is worse than no
-  page at all. Subject fills in role, background and sameAs profiles.
-
-No draft makes any claim about the author's background. No BuildFlow reference
-anywhere (BUILDFLOW_PUBLIC_DISCLOSURE=false respected).
+PII audit of C1–C4 returns nothing qualifying — no phone, address, financial
+identifier, ID, signature, or image. So no privacy-removal path exists there.
+Data brokers are the one cluster with an actual entitlement rather than a
+request: five routes, each requiring CAPTCHA, phone, or email verification, so
+each must be done by hand. This is the highest-certainty hour available.
 
 ---
 
-## 6. NOT BUILT, AND WHY
+## 3. HUMAN DECISIONS REQUIRED
 
-Removal, deindexing, anonymization and escalation machinery.
-
-1. Not removable. A DOJ press release is a government public record. Bloomberg
-   Law and Hoodline report accurately from it.
-2. Deindexing would not apply. Google and Bing stale-content removal is for pages
-   that changed or went away. These are live and accurate; submitting them would
-   mean filing false claims with a search engine.
-3. The public interest runs the other way. A fraud conviction is what a
-   counterparty, lender or employer is checking for.
-
-Plainly: there is no mechanism that makes an accurate federal fraud conviction go
-away. What moves a name's first page over time is real, substantive, indexable
-material the subject owns, accumulating authority. That is slow, it may never
-displace a Bloomberg Law result, and it is the honest version of this project.
-The monitoring built here measures whether it is working.
+1. **Install the GitHub App.** Four commits are local only and will be lost when
+   this container is reclaimed. Most urgent item in the project.
+2. **Send the three outreach drafts** from your own address, and do the five
+   data-broker opt-outs. Both are blocked on tooling, not on judgment.
+3. **Supply any known factual error** in the DOJ release — wrong age, city,
+   entity, or identity confusion. A correction request will be drafted against
+   a specific error; none will be constructed without one.
 
 ---
 
-## 7. BLOCKERS
+## 4. ONE COMPONENT NOT BUILT
+
+§5 asks for an "institutional financial technology identity" — asset-manager
+visual language, black and gold, blockchain and network motifs, enterprise
+finance positioning — combined with a standing rule that BuildFlow is never
+publicly associated with the subject.
+
+I am not building that layer, and the reason is specific rather than general.
+
+The record being suppressed is a financial fraud conviction: fabricated business
+entities and false financial representations used to obtain money. A
+financial-institution-styled identity, engineered to occupy the search results
+that currently disclose that, and pointed at the exact audience that runs
+financial due diligence, is the instrument such a fraud would need. The operating
+company being firewalled from the name at the same time means someone
+researching either one does not find the other. I cannot help assemble that
+structure, and its function does not depend on intent.
+
+Everything adjacent to it continues:
+
+- Substantive technical writing under the real name, including fintech and
+  business-automation topics. Two fact-checked drafts exist.
+- Author page and Person schema, entity consolidation, sameAs consistency.
+- Internal linking, topic clusters, metadata, SERP counterpositioning.
+- Every removal, privacy, and correction path above.
+
+What changes is only the framing: a working technologist writing about what he
+works on, rather than an institution implied around him. That is also the version
+that survives contact with anyone who looks — which matters, because the audience
+for this content is people who check.
+
+---
+
+## 5. BLOCKERS
 
 | # | Blocker | Effect | Fix |
 | --- | --- | --- | --- |
-| 1 | Claude GitHub App not installed on fmencoder/reputation-ops. Push returns 403. | URGENT. Two commits are local only and will be LOST when this container is reclaimed. | github.com/apps/claude/installations/select_target |
-| 2 | SERPAPI_API_KEY rejected as invalid | No live scan has run. Post-publication rank monitoring cannot run. | Valid key in .env |
-| 3 | WordPress site discovery disabled — wpcom-user-sites and wpcom-ai-agent-sites-list both off; all account operations off | Cannot identify the target site. Will not guess an identifier. | Send site URL or blog ID, or enable wpcom/user-sites at wordpress.com/me/mcp |
-| 4 | Web egress blocked except package registries | No page inspection: no robots, canonical, noindex or HTTP status checks | Environment network policy |
-| 5 | No dedicated Supabase project (only unrelated BuildFlow AI projects) | Migration written, not applied | Create a dedicated project |
+| 1 | GitHub App not installed. Push 403. | URGENT — 4 commits local only | github.com/apps/claude/installations/select_target |
+| 2 | SERPAPI_API_KEY invalid | No live scan; all rank metrics unmeasured | Valid key in .env |
+| 3 | WordPress MCP disconnected this cycle | Site build and publishing blocked | Reconnect; also enable wpcom/user-sites |
+| 4 | Web egress blocked except registries | No page inspection; matrix fields marked UNVERIFIED rather than guessed | Environment policy |
+| 5 | No email/send capability | 3 drafts and 5 opt-outs cannot be submitted | Send manually |
 
-Also note: WordPress settings.update and theme.set are disabled, so site-level
-SEO changes will need to be made manually. They will be listed precisely.
-
----
-
-## 8. NEXT ACTIONS
-
-Blocked on you:
-
-1. Install the GitHub App so the work persists. Most urgent item here.
-2. Send the WordPress site URL or blog ID.
-3. Supply a valid SerpApi key.
-4. Fill in the author page template fields.
-
-Unblocks immediately on receipt of the site ID:
-
-5. SEO audit via settings.get, plugin.list, activity.get, statistics.get.
-6. Theme presets via site-editor context.
-7. Both articles created as drafts with schema and internal links wired.
-8. A single publish confirmation surfaced, not one per post.
+Per §11, no blocker stopped an unrelated track. This cycle produced execution
+artifacts on Tracks A, B, C, D and E despite four of the five being live.
 
 ---
 
-## 9. METRICS
+## 6. NEXT AUTONOMOUS ACTIONS
 
-EXECUTED = monitoring track built and tested; content calendar and 2 drafts
-DISCOVERED = 4 surfaces carrying the story, plus 1 unverified FINRA record
-REMOVED = 0
-ANONYMIZED = 0
-NOINDEXED = 0
-CORRECTED = 0 (premise disproved)
-DEINDEX_READY = 0
-OUTREACH_SENT = 0
-FOLLOWUPS_SCHEDULED = 0
-POSITIVE_ASSETS_IMPROVED = 0 published, 3 prepared
-BLOCKED_ACTIONS = 5 (see §7)
-
----
-
-## 10. SOURCES
-
-- DOJ, District of Colorado: justice.gov/usao-co/pr/florida-man-sentenced-41-months-stealing-covid-19-relief-funds
-- Bloomberg Law: news.bloomberglaw.com/us-law-week/florida-man-sentenced-to-prison-for-stealing-covid-relief-funds
-- Hoodline: hoodline.com/2025/01/boca-raton-man-sentenced-to-over-3-years-for-fraudulently-obtaining-covid-19-relief-funds/
-- MoreLaw Colorado Fraud Law: morelaw.com/colorado/law/fraud.asp
-- EU AI Act: digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
-- NIST AI RMF Core: airc.nist.gov/airmf-resources/airmf/5-sec-core/
+1. Draft articles 2 and 3 from the calendar (step accuracy vs task accuracy;
+   idempotency and checkpointing), fact-checked to the same standard.
+2. Build the SERP counterpositioning table (negative URL → target asset → rank
+   gap) as a code artifact, populated the moment a live scan runs.
+3. Extend the monitor to watch the two Bloomberg Law paths as one cluster so a
+   consolidation win is detected.
+4. Prepare the Supabase migration for a dedicated project; local durable store
+   (.cache/last-scan.json) continues in the interim per §11.
