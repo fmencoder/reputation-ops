@@ -1,0 +1,21 @@
+{
+  "name": "reputation-ops",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Search-visibility monitoring for a single named subject.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "scan": "tsx src/cli/scan.ts",
+    "report": "tsx src/cli/report.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
