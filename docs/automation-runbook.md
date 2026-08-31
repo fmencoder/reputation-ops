@@ -45,6 +45,12 @@ in chat, printed, or committed.
 The bootstrap validates the token with a read-only call before showing it, and
 refuses to display it at all if it reaches the wrong site.
 
+**Environment variables are a human action.** The Vercel connection available to
+automation has no environment-variable tool and cannot redeploy a project it
+created — see `oauth-bootstrap/README.md` for the measured limits. Setting the
+four variables and redeploying is one dashboard visit, and the client secret has
+to be typed there anyway.
+
 **Delete the Vercel project once the token is stored.** See
 `oauth-bootstrap/README.md` — including the one exposure this design cannot
 close, which is that Vercel logs the callback request line containing the

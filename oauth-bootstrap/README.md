@@ -50,6 +50,37 @@ and it is a platform behaviour, not something this code can turn off.
 
 It is one more reason to delete the project as soon as the token is stored.
 
+## Hosting-connection limits, measured 2026-08-31
+
+The Vercel MCP connection available to this project is more restricted than it
+looks, and the limits are worth writing down because they are not obvious from
+the tool list and they cost three deployment attempts to establish:
+
+| Capability | Result |
+| --- | --- |
+| Create a project with its first deployment | works |
+| Deploy again to a project it created | **403 forbidden** |
+| Read back any deployment or project it created | **404 not found** |
+| Manage environment variables | **no tool exists** |
+| Fetch a deployed URL to verify it | fails — and the sandbox proxy blocks `*.vercel.app` |
+
+The practical consequence: an agent can put this service on Vercel once, and
+after that every change — environment variables, redeploys, verification — is a
+human action in the dashboard. That is not a workaround to route around; it is
+the shape of the permission boundary.
+
+Two projects exist as a result:
+
+- **`novra-oauth-bootstrap`** — carries the full bootstrap. Created by the first
+  successful deployment.
+- **`novra-wp-oauth`** — carries only `/api/probe`, a permission probe. It has
+  no secrets and no OAuth code. Delete it.
+
+To confirm which project is live, open `/api/wordpress/oauth/start` on it. Before
+environment variables are set it returns **HTTP 500 "Not configured"** listing
+the four missing variables — that page is proof the deployment is healthy, not a
+failure.
+
 ## Removing it
 
 1. Confirm `NOVRA_WP_ACCESS_TOKEN` is stored in the GitHub `production`
