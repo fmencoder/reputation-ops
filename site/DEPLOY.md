@@ -10,29 +10,45 @@ accepts `novraintelligence.com` directly as `wpcom_site` — but **every operati
 is disabled in the account's MCP settings**. `content-authoring` returns an empty
 `operations` array.
 
-Probed 2026-08-31. Exact ability names, all reported as
-*"not enabled in your MCP settings"*:
+**The ability IDs use two different namespaces.** This matters: content
+authoring is namespaced `wpcom-mcp/`, while site, theme and account abilities
+are namespaced `wpcom/`. An earlier revision of this file listed the content
+abilities under `wpcom/`, which is wrong — searching the settings page for
+`wpcom/pages-create` will not find anything.
 
-| Ability | Needed for |
-| --- | --- |
-| `wpcom/user-sites` | Site discovery |
-| `wpcom/site-settings` | Title, tagline, front page, permalinks, visibility |
-| `wpcom/theme-active` | Reading the active theme and its presets |
-| `wpcom/pages-create` | **Creating the six pages — the critical one** |
-| `wpcom/pages-update` `wpcom/pages-get` `wpcom/pages-list` `wpcom/pages-delete` | Page management and QA verification |
-| `wpcom/posts-create` `wpcom/posts-update` `wpcom/posts-get` `wpcom/posts-list` | Publishing the article drafts |
-| `wpcom/media-create` `wpcom/media-list` `wpcom/media-get` | Logo, favicon, Open Graph card |
-| `wpcom/patterns-list` `wpcom/patterns-get` | Pattern reuse |
-| `wpcom/page-sections-*` `wpcom/post-sections-*` | Block-level editing |
-| `wpcom/categories-*` `wpcom/tags-*` | Taxonomy |
-| `wpcom/comments-*` | Comment management |
-| `wpcom/content-search` | Duplicate-content QA |
+Re-probed 2026-08-31 after an enablement attempt. Still rejected; the
+`describe` and `execute` paths return the same rejection as the capability
+listing, so this is not a stale cache.
+
+**Verified by direct probe** (exact strings returned by the connector):
+
+| Ability ID | Needed for | Probe result |
+| --- | --- | --- |
+| `wpcom-mcp/pages-create` | **Creating the six pages — the critical one** | Rejected (describe) |
+| `wpcom-mcp/pages-list` | Duplicate detection, post-create verification | Rejected (execute) |
+| `wpcom/user-sites` | Site discovery | Rejected |
+| `wpcom/theme-active` | Active theme and presets | Rejected |
+| `wpcom/site-settings` | Title, front page, permalinks, visibility | Rejected |
+
+**Reported disabled by the capability listing** (namespace inferred as
+`wpcom-mcp/` by the pattern above, not individually probed):
+
+`pages-get` `pages-update` `pages-delete` · `posts-create` `posts-get`
+`posts-list` `posts-update` `posts-delete` · `media-create` `media-get`
+`media-list` `media-update` `media-delete` · `patterns-list` `patterns-get` ·
+`synced-patterns-list` `synced-patterns-get` · `page-sections-*`
+`post-sections-*` · `categories-*` `tags-*` `comments-*` · `content-search`
 
 Enable at **https://wordpress.com/me/mcp**.
 
-Minimum set to deploy anything: `wpcom/pages-create`, `wpcom/pages-list`,
-`wpcom/media-create`, `wpcom/site-settings`. Add `wpcom/posts-create` for the
-articles.
+Minimum set to deploy anything:
+
+    wpcom-mcp/pages-create     <- without this, nothing can be deployed
+    wpcom-mcp/pages-list       <- required by the duplicate-detection gate
+    wpcom-mcp/media-create     <- logo, favicon, Open Graph card
+    wpcom/site-settings        <- front page, title, visibility
+
+Add `wpcom-mcp/posts-create` for the article drafts.
 
 Nothing was guessed and nothing was written. No site was modified.
 
@@ -73,11 +89,11 @@ Two honest caveats:
 ## Deployment order
 
 1. Site identity, title, canonical URL — needs `wpcom/site-settings`
-2. Logo, favicon, site icon — needs `wpcom/media-create`
+2. Logo, favicon, site icon — needs `wpcom-mcp/media-create`
 3. Additional CSS: `tokens.css` + `components.css`
 4. Pages, in payload order; About first
 5. Home set as static front page
-6. Article drafts — needs `wpcom/posts-create`
+6. Article drafts — needs `wpcom-mcp/posts-create`
 7. Structured data from `structured-data.json`
 8. Open Graph assets
 9. Responsive verification
