@@ -1,18 +1,38 @@
 # NOVRA visual reference
 
-## The image file is NOT in this directory
+## Contents
+
+| File | What it is |
+| --- | --- |
+| `board.html` | **The committed visual benchmark.** Four panels rebuilt in live HTML/CSS from the shipping tokens. Open in a browser. |
+| `asset-specs.md` | Buildable specifications for panels E–J and article heroes |
+| `README.md` | Palette, typography, graphic language, prohibitions |
+| `novra-concept-board.jpg` | **Absent — see below** |
+
+---
+
+## The original image is NOT in this directory
 
 The concept board (panels A/B/C/D) was shown to me in conversation. I can see it,
 but I have no way to write those bytes to disk — the image never existed as a
 file in this environment, and there is no tool here that persists a conversation
 attachment.
 
-**Save it yourself to `docs/visual-reference/novra-concept-board.jpg`.** Once it
-is there it becomes the persistent benchmark for all future work. Until then,
-the written specification below is the benchmark, derived from the board itself.
+Requested three times; verified against the filesystem each time. It has never
+arrived as a file.
 
-I would rather tell you the file is missing than let you believe a reference is
-committed when it is not.
+**Save it yourself to `docs/visual-reference/novra-concept-board.jpg`** and it
+becomes the canonical raster reference. Meanwhile `board.html` serves the same
+function and has one advantage the JPEG does not: it renders from the actual
+shipping tokens, so if the palette drifts, the reference drifts with it and the
+divergence is visible in a diff.
+
+**One deliberate divergence in `board.html`:** the fabricated metrics are not
+reproduced. The original shows 1,248 projects / 87 research papers / 342 systems
+/ 98.7% impact on panel C, and 10+ Years / 50+ Research Papers on panel D. None
+are supportable and all were removed from the live site. A reference that
+contradicts the shipping rules would re-seed them every time someone consulted
+it, so panels C and D show the corrected treatment.
 
 ---
 

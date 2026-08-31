@@ -1,0 +1,259 @@
+<!--
+  NOVRA concept board — reproduction.
+
+  WHY THIS FILE EXISTS
+  The original board is a raster image supplied in conversation. It has been
+  requested three times for docs/visual-reference/novra-concept-board.jpg and it
+  cannot be written from this session: the attachment arrives as visual content,
+  never as a file, and nothing here persists it to disk. Verified against the
+  filesystem each time.
+
+  So this is the benchmark that CAN be committed — the four panels rebuilt in
+  live HTML/CSS from the same tokens the site ships. Open it in a browser beside
+  the original. It is version-controlled, diffable, and it renders rather than
+  merely describing.
+
+  ONE DELIBERATE DIVERGENCE
+  The fabricated metrics are not reproduced. The original shows 1,248 projects,
+  87 research papers, 342 systems, 98.7% impact, 10+ years, 50+ papers. None are
+  supportable and all were removed from the live site. Reproducing them here
+  would re-seed them every time someone consults the reference — a benchmark
+  that contradicts the shipping rules is worse than none. Panels C and D show
+  the corrected treatment.
+
+  Everything else follows the board: composition, hierarchy, palette, the
+  focal-mass discipline, hairline structure, node placement, violet-as-depth.
+-->
+<link rel="stylesheet" href="../../site/tokens.css">
+<style>
+  body { margin: 0; background: #01020a; font-family: var(--font-sans); }
+  .board { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #01020a; }
+  .panel {
+    position: relative; background: var(--c-bg); overflow: hidden;
+    min-height: 520px; padding: 22px 26px 26px;
+  }
+  .panel__tag {
+    position: absolute; left: 0; bottom: 0; z-index: 5;
+    background: var(--c-accent); color: #fff; font-weight: 700;
+    font-size: 13px; padding: 5px 11px;
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+  .mark { display: flex; align-items: center; gap: 9px; }
+  .mark__n {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: var(--grad-brand);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    clip-path: polygon(8% 100%, 8% 0, 30% 0, 74% 62%, 74% 0, 96% 0, 96% 100%, 74% 100%, 30% 38%, 30% 100%);
+  }
+  .mark__t { color: #fff; font-weight: 700; font-size: 17px; letter-spacing: .02em; }
+  .mark__t i {
+    font-style: normal; background: var(--grad-brand);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .nav { display: flex; gap: 17px; }
+  .nav span {
+    font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--c-text-muted); padding-bottom: 3px;
+  }
+  .nav span.on { color: #fff; border-bottom: 2px solid var(--c-accent); }
+
+  .eyeb {
+    font-size: 9.5px; font-weight: 600; letter-spacing: .17em;
+    text-transform: uppercase; color: var(--c-accent-bright); margin: 0 0 13px;
+  }
+  h1.t { color: #fff; font-weight: 800; line-height: 1.06; letter-spacing: -.02em; margin: 0 0 14px; }
+  .grad { background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--c-text-muted); font-size: 11.5px; line-height: 1.62; max-width: 33ch; margin: 0 0 18px; }
+  .btns { display: flex; gap: 10px; }
+  .b1 { background: var(--grad-brand); color: #fff; }
+  .b2 { border: 1px solid var(--c-border-strong); color: #fff; }
+  .b1, .b2 {
+    font-size: 9.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase;
+    padding: 9px 15px; border-radius: 7px;
+  }
+
+  /* Focal-mass rule: one bright region, ~15-20% of canvas, everything else recessive. */
+  .halo { position: absolute; border-radius: 50%; pointer-events: none; }
+  .node { position: absolute; border-radius: 50%; background: #dce6ff; }
+  .grid-sub {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(77,132,255,.07) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(77,132,255,.07) 1px, transparent 1px);
+    background-size: 46px 46px;
+  }
+  .pillars { position: absolute; left: 26px; right: 26px; bottom: 26px; display: flex; gap: 0; }
+  .pillar { flex: 1; padding: 0 13px; border-left: 1px solid var(--c-border); }
+  .pillar:first-child { border-left: 0; padding-left: 0; }
+  .pillar b { display: block; color: #fff; font-size: 10px; letter-spacing: .07em; text-transform: uppercase; line-height: 1.45; }
+  .hex { width: 21px; height: 21px; border: 1.2px solid var(--c-accent-2-soft); margin-bottom: 8px;
+         clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--c-border); border-radius: 10px; }
+  .cards > div { padding: 15px 13px; border-left: 1px solid var(--c-border); }
+  .cards > div:first-child { border-left: 0; }
+  .cards b { display: block; color: #fff; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 7px; line-height: 1.45; }
+  .cards p { color: var(--c-text-muted); font-size: 9.5px; line-height: 1.55; margin: 0 0 9px; }
+  .arw { color: var(--c-accent-2-soft); font-size: 12px; }
+
+  .panels-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+  .mod { border: 1px solid var(--c-border); border-radius: 9px; padding: 11px; background: var(--c-bg-raised); }
+  .mod .k { color: var(--c-text-subtle); font-size: 8.5px; letter-spacing: .07em; text-transform: uppercase; margin: 0 0 6px; }
+  .mod .v { color: #fff; font-size: 12.5px; font-weight: 700; margin: 0; letter-spacing: .04em; }
+
+  .arts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin-top: 13px; }
+  .art { border: 1px solid var(--c-border); border-radius: 9px; overflow: hidden; background: var(--c-bg-raised); }
+  .art .thumb { height: 52px; position: relative; overflow: hidden; }
+  .art .body { padding: 9px 10px 11px; }
+  .art .cat { color: var(--c-accent-bright); font-size: 7.5px; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 5px; }
+  .art h4 { color: #fff; font-size: 10px; line-height: 1.4; margin: 0 0 6px; font-weight: 600; }
+  .art .meta { color: var(--c-text-subtle); font-size: 8px; margin: 0; }
+</style>
+
+<div class="board">
+
+  <!-- ============ A — HOME / GLOBAL INTELLIGENCE ============ -->
+  <section class="panel">
+    <div class="panel__tag">A</div>
+    <div class="grid-sub" style="opacity:.5"></div>
+    <!-- Focal mass: the illuminated limb, upper right. -->
+    <div class="halo" style="right:-16%;top:-14%;width:78%;padding-bottom:78%;background:radial-gradient(closest-side,rgba(47,107,255,.34),rgba(123,77,255,.10) 58%,transparent 78%)"></div>
+    <div style="position:absolute;right:-9%;top:-6%;width:62%;padding-bottom:62%;border-radius:50%;border:1.5px solid rgba(90,150,255,.72);box-shadow:0 0 34px rgba(47,107,255,.5) inset"></div>
+    <div style="position:absolute;right:-4%;top:2%;width:52%;padding-bottom:52%;border-radius:50%;border:1px solid rgba(77,132,255,.28)"></div>
+    <div style="position:absolute;right:2%;top:12%;width:40%;padding-bottom:40%;border-radius:50%;border:1px solid rgba(123,77,255,.20);transform:rotate(34deg)"></div>
+    <div class="node" style="right:26%;top:22%;width:4px;height:4px;box-shadow:0 0 12px rgba(47,107,255,.95)"></div>
+    <div class="node" style="right:14%;top:34%;width:5px;height:5px;box-shadow:0 0 15px rgba(47,107,255,.95)"></div>
+    <div class="node" style="right:32%;top:44%;width:3.5px;height:3.5px;box-shadow:0 0 11px rgba(123,77,255,.95)"></div>
+    <div class="node" style="right:9%;top:52%;width:4px;height:4px;background:#ffb46b;box-shadow:0 0 12px rgba(255,150,60,.85)"></div>
+    <div class="node" style="right:20%;top:60%;width:3px;height:3px;background:#ffb46b;box-shadow:0 0 10px rgba(255,150,60,.8)"></div>
+
+    <div class="bar">
+      <div class="mark"><div class="mark__n"></div><div class="mark__t">NOVRA <i>AI</i></div></div>
+      <div class="nav"><span class="on">Home</span><span>Insights</span><span>Research</span><span>Technology</span><span>About</span><span>Contact</span></div>
+    </div>
+    <p class="eyeb">AI &bull; Blockchain &bull; Financial Technology</p>
+    <h1 class="t" style="font-size:29px;text-transform:uppercase">Intelligent systems.<br>Digital infrastructure.<br><span class="grad">Real impact.</span></h1>
+    <p class="sub">Research and perspectives on artificial intelligence, autonomous systems, blockchain infrastructure, financial technology, and emerging digital systems shaping the future.</p>
+    <div class="btns"><span class="b1">Explore Insights &rarr;</span><span class="b2">View Research</span></div>
+
+    <div class="pillars">
+      <div class="pillar"><div class="hex"></div><b>AI Systems<br>&amp; Agents</b></div>
+      <div class="pillar"><div class="hex"></div><b>Blockchain<br>Infrastructure</b></div>
+      <div class="pillar"><div class="hex"></div><b>Financial<br>Technology</b></div>
+      <div class="pillar"><div class="hex"></div><b>Digital<br>Infrastructure</b></div>
+    </div>
+  </section>
+
+  <!-- ============ B — TECHNOLOGY / DISTRIBUTED ARCHITECTURE ============ -->
+  <section class="panel">
+    <div class="panel__tag">B</div>
+    <div class="grid-sub" style="opacity:.35"></div>
+    <!-- Focal mass: the single large cube, centre-right. Others recede. -->
+    <div class="halo" style="right:16%;top:14%;width:44%;padding-bottom:44%;background:radial-gradient(closest-side,rgba(47,107,255,.40),rgba(123,77,255,.10) 60%,transparent 80%)"></div>
+    <div style="position:absolute;right:24%;top:20%;width:118px;height:118px;border:1.4px solid rgba(120,175,255,.85);transform:rotate(45deg) skewY(-12deg);box-shadow:0 0 30px rgba(47,107,255,.45)"></div>
+    <div style="position:absolute;right:6%;top:12%;width:66px;height:66px;border:1px solid rgba(77,132,255,.44);transform:rotate(45deg) skewY(-12deg)"></div>
+    <div style="position:absolute;right:44%;top:9%;width:54px;height:54px;border:1px solid rgba(123,77,255,.36);transform:rotate(45deg) skewY(-12deg)"></div>
+    <div style="position:absolute;right:12%;top:46%;width:72px;height:72px;border:1px solid rgba(77,132,255,.34);transform:rotate(45deg) skewY(-12deg)"></div>
+    <div style="position:absolute;right:48%;top:44%;width:44px;height:44px;border:1px solid rgba(123,77,255,.26);transform:rotate(45deg) skewY(-12deg)"></div>
+    <div class="node" style="right:35%;top:31%;width:5px;height:5px;box-shadow:0 0 18px rgba(120,175,255,1)"></div>
+    <div class="node" style="right:10%;top:20%;width:3px;height:3px;box-shadow:0 0 10px rgba(47,107,255,.9)"></div>
+    <div class="node" style="right:52%;top:16%;width:3px;height:3px;box-shadow:0 0 10px rgba(123,77,255,.9)"></div>
+
+    <div class="bar">
+      <div class="mark"><div class="mark__n"></div><div class="mark__t">NOVRA <i>AI</i></div></div>
+      <div class="nav"><span class="on">Home</span><span>Insights</span><span>Research</span><span>Technology</span><span>About</span><span>Contact</span></div>
+    </div>
+    <p class="eyeb">Research. Analyze. Build.</p>
+    <h1 class="t" style="font-size:27px">Technology That<br>Builds the Future.</h1>
+    <p class="sub">Exploring the intersection of AI, blockchain, and financial technology to solve complex problems and create real-world impact.</p>
+    <div class="btns" style="margin-bottom:26px"><span class="b1">Explore Insights &rarr;</span><span class="b2">View Research</span></div>
+
+    <div class="cards" style="position:absolute;left:26px;right:26px;bottom:26px">
+      <div><b>AI Systems<br>&amp; Agents</b><p>Designing autonomous intelligent systems that learn, reason, and adapt.</p><span class="arw">&rarr;</span></div>
+      <div><b>Blockchain<br>Infrastructure</b><p>Building secure, scalable, and decentralized infrastructure.</p><span class="arw">&rarr;</span></div>
+      <div><b>Financial<br>Technology</b><p>Engineering technology that drives efficiency in modern finance.</p><span class="arw">&rarr;</span></div>
+      <div><b>Digital<br>Infrastructure</b><p>Researching the systems and networks powering our digital world.</p><span class="arw">&rarr;</span></div>
+    </div>
+  </section>
+
+  <!-- ============ C — INSIGHTS (metrics corrected) ============ -->
+  <section class="panel">
+    <div class="panel__tag">C</div>
+    <div class="bar">
+      <div class="mark"><div class="mark__n"></div><div class="mark__t">NOVRA <i>AI</i></div></div>
+      <div class="nav"><span>Home</span><span class="on">Insights</span><span>Research</span><span>Technology</span><span>About</span><span>Contact</span></div>
+    </div>
+    <p class="eyeb">Insights That Matter</p>
+    <h1 class="t" style="font-size:25px">Research.<br>Insights.<br><span class="grad">Real Impact.</span></h1>
+    <p class="sub" style="margin-bottom:14px">In-depth analysis and original research on the technologies and systems that are transforming our world.</p>
+    <div class="btns" style="margin-bottom:20px"><span class="b1">Browse Insights &rarr;</span><span class="b2">Explore Research</span></div>
+
+    <!--
+      CORRECTED. The original renders four counters (1,248 / 87 / 342 / 98.7%).
+      None are supportable, so they are replaced with topic navigation, which is
+      what the modules become on the live site.
+    -->
+    <div class="panels-row">
+      <div class="mod"><p class="k">Section</p><p class="v">AI Systems</p></div>
+      <div class="mod"><p class="k">Section</p><p class="v">Blockchain</p></div>
+      <div class="mod"><p class="k">Section</p><p class="v">FinTech</p></div>
+      <div class="mod"><p class="k">Section</p><p class="v">Infrastructure</p></div>
+    </div>
+
+    <div class="arts">
+      <div class="art">
+        <div class="thumb" style="background:radial-gradient(closest-side at 40% 50%,rgba(47,107,255,.55),transparent 72%),#070b18"><div class="node" style="left:38%;top:42%;width:5px;height:5px;box-shadow:0 0 16px rgba(47,107,255,1)"></div></div>
+        <div class="body"><p class="cat">AI Systems</p><h4>The Reliability Challenge in Agentic Systems</h4><p class="meta">8 min read</p></div>
+      </div>
+      <div class="art">
+        <div class="thumb" style="background:radial-gradient(closest-side at 55% 45%,rgba(77,132,255,.5),transparent 70%),#070b18"><div class="node" style="left:52%;top:38%;width:4px;height:4px;box-shadow:0 0 14px rgba(77,132,255,1)"></div></div>
+        <div class="body"><p class="cat">Blockchain</p><h4>Beyond Speculation: The Infrastructure Thesis</h4><p class="meta">7 min read</p></div>
+      </div>
+      <div class="art">
+        <div class="thumb" style="background:linear-gradient(180deg,transparent 40%,rgba(47,107,255,.32) 100%),#070b18"></div>
+        <div class="body"><p class="cat">FinTech</p><h4>The Next Wave of Financial Infrastructure</h4><p class="meta">6 min read</p></div>
+      </div>
+      <div class="art">
+        <div class="thumb" style="background:radial-gradient(closest-side at 60% 55%,rgba(123,77,255,.5),transparent 72%),#070b18"><div class="node" style="left:58%;top:50%;width:4px;height:4px;background:#a07cff;box-shadow:0 0 14px rgba(123,77,255,1)"></div></div>
+        <div class="body"><p class="cat">AI Governance</p><h4>Building Trust in Autonomous Systems</h4><p class="meta">9 min read</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ D — ABOUT (metric tiles corrected) ============ -->
+  <section class="panel">
+    <div class="panel__tag">D</div>
+    <div class="grid-sub" style="opacity:.45"></div>
+    <!-- Focal mass: the wave crest. Violet marks the far side — depth, not decoration. -->
+    <div class="halo" style="right:6%;top:26%;width:66%;padding-bottom:40%;border-radius:50%;background:radial-gradient(closest-side,rgba(47,107,255,.32),rgba(123,77,255,.12) 58%,transparent 80%)"></div>
+    <div style="position:absolute;right:2%;top:36%;width:80%;height:22%;border-top:1.6px solid rgba(150,190,255,.85);border-radius:50%;box-shadow:0 0 26px rgba(47,107,255,.4)"></div>
+    <div style="position:absolute;right:4%;top:44%;width:76%;height:20%;border-top:1px solid rgba(123,77,255,.5);border-radius:50%"></div>
+    <div style="position:absolute;right:8%;top:52%;width:70%;height:17%;border-top:1px solid rgba(77,132,255,.28);border-radius:50%"></div>
+    <div class="node" style="right:44%;top:41%;width:5px;height:5px;box-shadow:0 0 18px rgba(150,190,255,1)"></div>
+    <div class="node" style="right:20%;top:47%;width:3.5px;height:3.5px;background:#a07cff;box-shadow:0 0 13px rgba(123,77,255,1)"></div>
+
+    <div class="bar">
+      <div class="mark"><div class="mark__n"></div><div class="mark__t">NOVRA <i>AI</i></div></div>
+      <div class="nav"><span>Home</span><span>Insights</span><span>Research</span><span>Technology</span><span class="on">About</span><span>Contact</span></div>
+    </div>
+    <p class="eyeb">About</p>
+    <h1 class="t" style="font-size:25px">Building the Future<br>Through Research<br>and Technology.</h1>
+    <p class="sub">I explore the intersection of artificial intelligence, blockchain, financial technology, and digital infrastructure to build systems that create measurable impact and lasting value.</p>
+    <p style="color:#fff;font-size:12px;font-weight:600;margin:16px 0 0">Fredrick Mendez</p>
+    <p style="color:var(--c-text-muted);font-size:9.5px;margin:3px 0 0;letter-spacing:.04em">Technology Executive &bull; AI Strategy &bull; Autonomous Systems</p>
+
+    <!--
+      CORRECTED. The original renders 10+ Years of Experience, 50+ Research
+      Papers, Global Perspective, Impact Focused. All four are removed: the
+      numeric two are unsupported, and the qualitative two read as metrics purely
+      by sitting in a counter frame. Replaced with focus areas, which state
+      subject matter rather than attainment.
+    -->
+    <div class="panels-row" style="position:absolute;left:26px;right:26px;bottom:26px">
+      <div class="mod"><p class="k">01</p><p class="v" style="font-size:10.5px">AI &amp; Autonomous Systems</p></div>
+      <div class="mod"><p class="k">02</p><p class="v" style="font-size:10.5px">Blockchain &amp; Smart Contracts</p></div>
+      <div class="mod"><p class="k">03</p><p class="v" style="font-size:10.5px">Digital Infrastructure</p></div>
+      <div class="mod"><p class="k">04</p><p class="v" style="font-size:10.5px">Technology Innovation</p></div>
+    </div>
+  </section>
+
+</div>
