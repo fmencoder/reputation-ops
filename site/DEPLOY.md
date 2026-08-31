@@ -143,9 +143,18 @@ been verified against this install. Diff the echoed content after `pages.create`
 
 - **Survived** → nothing to do; mobile viewports get the portrait composition.
 - **Stripped** → the inner `<img>` still renders everywhere, so the page is not
-  broken, only desktop-only on mobile. Swap to the two-`<img>` fallback:
-  duplicate the `<img>`, class them `figure__desktop` and `figure__mobile`, and
-  the rules already in `novra.css` will do the switching.
+  broken, only desktop-only on mobile. Switch strategies with one command:
+
+      node site/wp-export.mjs --picture-fallback
+
+  That rewrites the `<picture>` block into two `<img>` elements classed
+  `figure__desktop` and `figure__mobile`, derived from the same source markup so
+  the two forms cannot drift. Redeploy `03-technology.json` and read back again.
+
+  Do not enable it speculatively. `<picture>` lets the browser skip the request
+  it does not need by contract; the fallback pair relies on the hidden image not
+  being fetched, which held in Chromium under `loading="lazy"` but is not
+  guaranteed everywhere.
 
 Checking `_content_warnings` is not sufficient here. It reports stripped
 *elements* inconsistently and stripped *CSS properties* not at all — which is how

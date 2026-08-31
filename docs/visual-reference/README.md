@@ -231,6 +231,34 @@ reference line was strengthened from 0.22/1.2 to 0.45/1.9 during this pass: at
 340px the original was effectively invisible, which erased the comparison the
 figure exists to make.
 
+### Fallback strategy QA — 2026-08-31
+
+The dual-`<img>` fallback was rendered and measured rather than assumed ready,
+which found a defect that would have shipped silently.
+
+`.figure__mobile { display: none }` has specificity 0,1,0. `.figure__frame img
+{ display: block }` has 0,1,1 and wins. Both images therefore rendered at every
+width and the breakpoint switch did nothing at all — with no error, no warning,
+and a page that looks plausible until you notice it is twice as tall.
+
+Fixed by qualifying the toggles as `.figure__frame img.figure__mobile` /
+`.figure__frame img.figure__desktop` (0,2,1).
+
+Verified after the fix, in Chromium against the generated fallback payload:
+
+| Viewport | Visible | In a11y tree | Hidden image fetched |
+| ---: | --- | --- | --- |
+| 1600 | desktop | desktop only | no |
+| 860 | desktop | desktop only | no |
+| 620 | mobile | mobile only | no |
+| 390 | mobile | mobile only | no |
+
+Exactly one image is displayed and exactly one is exposed to assistive
+technology at every width, which is why both carry the same `alt` rather than
+one being nulled. The hidden image was not fetched under `loading="lazy"`, but
+that is a Chromium observation, not a guarantee — `<picture>` remains the
+primary strategy because it makes the same promise by contract.
+
 ### Accessibility
 
 - Both figures carry substantive `alt`; neither is `aria-hidden`.

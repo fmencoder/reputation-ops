@@ -37,6 +37,9 @@ const MEDIA_MAP = join(ROOT, "wp-media.json");
 const domainArg = process.argv.indexOf("--domain");
 const DOMAIN = domainArg > -1 ? process.argv[domainArg + 1] : "novraintelligence.com";
 
+/** Set only after a read-back proves WordPress stripped <picture>/<source>. */
+const PICTURE_FALLBACK = process.argv.includes("--picture-fallback");
+
 /** Deployment order matters: About first, because it holds the Person node. */
 const PAGES = [
   { file: "about.html", slug: "about", title: "About", order: 1,
@@ -101,6 +104,48 @@ function rewriteAssets(markup, media, unmapped) {
   );
 }
 
+/**
+ * Rewrite <picture> into the dual-<img> fallback.
+ *
+ * KSES support for <picture>/<source> is WordPress-version-dependent. If the
+ * deployed install strips them, the inner <img> still renders — the page is not
+ * broken, just desktop-only on phones — and this transform restores the mobile
+ * composition using the .figure__desktop / .figure__mobile rules already in
+ * novra.css.
+ *
+ * It is derived from the <picture> markup rather than maintained as a second
+ * copy in the page source, so the two can never drift. Exactly one <img> is
+ * displayed at any viewport, so exactly one is in the accessibility tree, which
+ * is why both carry the same alt text rather than one being nulled.
+ *
+ * Enable with --picture-fallback. Do NOT enable it speculatively: <picture>
+ * lets the browser skip the request it does not need, and the fallback pair
+ * gives up that guarantee.
+ */
+function applyPictureFallback(markup) {
+  return markup.replace(
+    /<picture>\s*<source\b([^>]*)>\s*(<img\b[^>]*>)\s*<\/picture>/g,
+    (whole, sourceAttrs, img) => {
+      const attr = (name, text) => text.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1];
+      const mobileSrc = attr("srcset", sourceAttrs);
+      const mobileW = attr("width", sourceAttrs);
+      const mobileH = attr("height", sourceAttrs);
+      const alt = attr("alt", img);
+      if (!mobileSrc || !mobileW || !mobileH || alt === undefined) {
+        throw new Error(
+          "picture-fallback: <source> needs srcset/width/height and <img> needs alt. " +
+          "Refusing to emit a half-built fallback.",
+        );
+      }
+      const desktop = img.replace("<img ", '<img class="figure__desktop" ');
+      const mobile =
+        `<img class="figure__mobile" src="${mobileSrc}" width="${mobileW}" ` +
+        `height="${mobileH}" loading="lazy" decoding="async" alt="${alt}">`;
+      return `${desktop}\n        ${mobile}`;
+    },
+  );
+}
+
 async function main() {
   await mkdir(OUT, { recursive: true });
 
@@ -111,11 +156,12 @@ async function main() {
 
   for (const page of PAGES) {
     const body = await readFile(join(ROOT, "pages", page.file), "utf8");
-    const markup = rewriteAssets(
+    let markup = rewriteAssets(
       body.replaceAll("{{DOMAIN}}", DOMAIN),
       media,
       unmapped,
     );
+    if (PICTURE_FALLBACK) markup = applyPictureFallback(markup);
     const placeholders = findPlaceholders(markup);
     if (placeholders.length) allPlaceholders.set(page.slug, placeholders);
 
@@ -173,6 +219,9 @@ async function main() {
   await writeFile(join(OUT, "manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
 
   console.log(`\n${PAGES.length} payloads written to wp-payload/ (domain: ${DOMAIN})`);
+  console.log(
+    `picture strategy: ${PICTURE_FALLBACK ? "FALLBACK (dual <img>)" : "PRIMARY (<picture>)"}`,
+  );
   if (allPlaceholders.size) {
     console.log("\nBLOCKED — unresolved placeholders:");
     for (const [slug, keys] of allPlaceholders) console.log(`  ${slug}: ${keys.join(", ")}`);

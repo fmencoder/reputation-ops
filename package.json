@@ -16,7 +16,8 @@
     "site:build": "node site/build.mjs",
     "site:export": "node site/wp-export.mjs",
     "site:assets": "node site/render-assets.mjs",
-    "site:assets:check": "node site/render-assets.mjs --check"
+    "site:assets:check": "node site/render-assets.mjs --check",
+    "site:export:fallback": "node site/wp-export.mjs --picture-fallback"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

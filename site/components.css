@@ -220,8 +220,13 @@ img { max-width: 100%; height: auto; }
 /*
  * Fallback pair. Used only if <picture>/<source> does not survive KSES on the
  * deployed WordPress version; with <picture> intact these classes are unused.
+ *
+ * Qualified with .figure__frame img on purpose. The unqualified `.figure__mobile`
+ * loses to `.figure__frame img { display: block }` on specificity — 0,1,0 against
+ * 0,1,1 — so both images render at every width and the switch silently does
+ * nothing. Caught by rendering the fallback and counting visible images.
  */
-.figure__mobile { display: none; }
+.figure__frame img.figure__mobile { display: none; }
 
 @media (max-width: 1024px) {
   .grid--4 { grid-template-columns: repeat(2, 1fr); }
@@ -251,6 +256,6 @@ img { max-width: 100%; height: auto; }
   .byline { flex-wrap: wrap; }
 
   .figure { margin: var(--s-8) 0; }
-  .figure__desktop { display: none; }
-  .figure__mobile { display: block; }
+  .figure__frame img.figure__desktop { display: none; }
+  .figure__frame img.figure__mobile { display: block; }
 }
