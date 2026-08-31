@@ -1,0 +1,52 @@
+{
+  "siteVisibility": "COMING_SOON",
+  "gates": {
+    "CONTACT_EMAIL_CONFIRMED": {
+      "value": false,
+      "setBy": "human",
+      "updatedAt": "2026-08-31T00:00:00.000Z",
+      "evidence": "no address supplied; PLACEHOLDER_CONTACT_EMAIL is still on the Contact page"
+    },
+    "HUMAN_LAUNCH_APPROVAL": {
+      "value": false,
+      "setBy": "human",
+      "updatedAt": "2026-08-31T00:00:00.000Z",
+      "evidence": "not requested and not granted. Automation is refused this field in code, not by convention."
+    },
+    "CSS_INSTALLED": {
+      "value": false,
+      "setBy": "automation",
+      "updatedAt": "2026-08-31T00:00:00.000Z",
+      "evidence": "never assumed. Closes only when a hash read back from the site matches site/novra.css."
+    },
+    "T0_CAPTURED": {
+      "value": false,
+      "setBy": "automation",
+      "updatedAt": "2026-08-31T00:00:00.000Z",
+      "evidence": "SerpApi rejected the configured key on 2026-08-31; no baseline exists."
+    },
+    "MEDIA_SYNC_COMPLETE": {
+      "value": false,
+      "setBy": "automation",
+      "updatedAt": "2026-08-31T00:00:00.000Z",
+      "evidence": "site/wp-media.json holds 0 of 5 referenced assets."
+    },
+    "CORE_PAGES_DEPLOYED": {
+      "value": false,
+      "setBy": "automation",
+      "updatedAt": "2026-08-31T00:00:00.000Z",
+      "evidence": "no deployment has run against a live site."
+    },
+    "FINAL_QA_PASS": {
+      "value": false,
+      "setBy": "automation",
+      "updatedAt": "2026-08-31T00:00:00.000Z",
+      "evidence": "local responsive and accessibility QA passes; live read-back QA has never run."
+    }
+  },
+  "notes": [
+    "Machine gates are written by automation from evidence it verified in the same run.",
+    "Human gates are written by a person. applyAutomationUpdates() drops any attempt by automation to raise one.",
+    "T0 is the only gate that cannot be recovered if it is missed: it is defined as the state before intervention."
+  ]
+}

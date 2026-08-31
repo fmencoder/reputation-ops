@@ -1,9 +1,13 @@
-node_modules/
-dist/
+*.log
+.cache/
 .env
 .env.local
-.cache/
-*.log
+artifacts/
 coverage/
+data/search/snapshots/
+dist/
+node_modules/
+site/deploy-report.json
 site/dist/
+site/wp-payload-fallback/
 site/wp-payload/

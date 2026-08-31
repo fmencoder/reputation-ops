@@ -1,0 +1,98 @@
+# Production deployment.
+#
+# Runs only from the repository's own branches, never from a pull request, and
+# never automatically on a fork's code. Secrets live in the `production`
+# environment so they can carry required reviewers and branch restrictions
+# independently of this file.
+#
+# Deployment does not change site visibility. That is novra-launch.yml.
+name: novra-deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Plan only — no writes to WordPress"
+        type: boolean
+        default: true
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "content/**"
+      - "src/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: novra-deploy
+  cancel-in-progress: false
+
+jobs:
+  # Validation runs first, as a separate job with no access to the production
+  # environment. A failing gate cannot be skipped on the way to a deployment.
+  validate:
+    uses: ./.github/workflows/novra-ci.yml
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    # The manifest is committed after a successful media sync, so the next run
+    # knows what already exists and uploads nothing.
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run site:assets
+      - run: npm run site:build
+
+      - name: Deploy
+        env:
+          NOVRA_WP_SITE: ${{ secrets.NOVRA_WP_SITE }}
+          NOVRA_WP_ACCESS_TOKEN: ${{ secrets.NOVRA_WP_ACCESS_TOKEN }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            npm run site:deploy:dry-run
+          else
+            npm run site:deploy
+          fi
+
+      - name: Upload deployment report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-report
+          path: site/deploy-report.json
+          if-no-files-found: ignore
+          retention-days: 90
+
+      # Only the manifest is committed. The report is an artifact, not a commit:
+      # it is per-run evidence, not repository state.
+      #
+      # `HEAD:main` is required, not cosmetic: on a push event the checkout is
+      # detached at the pushed SHA, so a bare `git push` has no upstream.
+      #
+      # This commit uses GITHUB_TOKEN, and pushes made with it do not trigger
+      # further workflow runs — which is what stops this workflow from
+      # retriggering itself on the file it just wrote.
+      - name: Commit the media manifest if the sync changed it
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          if git diff --quiet -- site/wp-media.json; then
+            echo "media manifest unchanged"
+            exit 0
+          fi
+          git config user.name "novra-deploy"
+          git config user.email "noreply@users.noreply.github.com"
+          git add site/wp-media.json
+          git commit -m "Record Media Library URLs returned by WordPress"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -1,0 +1,79 @@
+# Search observation.
+#
+# Observes and records. It does not act on what it finds: no page is generated
+# in response to a ranking, nothing is submitted to a search engine, and no
+# removal request is filed. A measurement that changes its own subject is not a
+# measurement.
+#
+# Daily is enough. SerpApi bills per search and five queries across two engines
+# is ten searches a run; a tighter cadence buys noise, not signal.
+name: novra-search-monitor
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      capture_t0:
+        description: "Capture the immutable pre-launch baseline (only possible once, ever)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: novra-search-monitor
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: search
+    permissions:
+      # Snapshots are append-only history. They are committed so a ranking
+      # cannot be quietly revised later to make a trend look better.
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+
+      - name: Capture
+        env:
+          SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+        run: |
+          if [ "${{ inputs.capture_t0 }}" = "true" ]; then
+            npm run search:t0
+          else
+            npm run search:monitor
+          fi
+
+      # HEAD:main because a scheduled checkout is detached at the default
+      # branch SHA and a bare push has no upstream.
+      - name: Commit the snapshot
+        if: always()
+        run: |
+          if git diff --quiet -- data/; then
+            echo "nothing captured"
+            exit 0
+          fi
+          git config user.name "novra-search-monitor"
+          git config user.email "noreply@users.noreply.github.com"
+          git add data/
+          git commit -m "Search snapshot $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Upload the scoreboard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: search-scoreboard
+          path: data/search/
+          if-no-files-found: ignore
+          retention-days: 90

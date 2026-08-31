@@ -14,7 +14,9 @@
  *
  * Usage: node site/render-assets.mjs [--check]
  *   --check re-renders to memory and compares byte length against the committed
- *   file, so a drifted asset fails instead of being silently stale.
+ *   file, so a drifted asset fails instead of being silently stale. It also
+ *   compares against site/asset-budget.json, so a size regression is noticed
+ *   rather than discovered later in a page-weight report.
  */
 
 import { readFile, writeFile, stat } from "node:fs/promises";
@@ -55,6 +57,8 @@ async function render(target) {
 const check = process.argv.includes("--check");
 let failed = false;
 
+const budget = JSON.parse(await readFile(join(ASSETS, "..", "asset-budget.json"), "utf8"));
+
 for (const target of TARGETS) {
   const buffer = await render(target);
   const path = join(ASSETS, target.webp);
@@ -64,6 +68,21 @@ for (const target of TARGETS) {
     const ok = current?.size === buffer.length;
     if (!ok) failed = true;
     console.log(`${ok ? "ok  " : "DRIFT"} ${target.webp} — committed ${current?.size ?? "missing"}B, rendered ${buffer.length}B`);
+
+    const allowed = budget.assets[target.webp];
+    if (typeof allowed === "number") {
+      const ceiling = Math.round(allowed * (1 + budget.tolerance));
+      if (buffer.length > ceiling) {
+        failed = true;
+        console.log(
+          `      SIZE REGRESSION: ${buffer.length}B exceeds the ${ceiling}B ceiling ` +
+          `(${allowed}B budget +${Math.round(budget.tolerance * 100)}%). ` +
+          "Raise the budget deliberately if the extra bytes buy legibility.",
+        );
+      }
+    } else {
+      console.log(`      no budget recorded for ${target.webp} — add one to site/asset-budget.json`);
+    }
     continue;
   }
 

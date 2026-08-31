@@ -27,11 +27,13 @@
  */
 
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { dirname, isAbsolute, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const OUT = join(ROOT, "wp-payload");
+const outArg = process.argv.indexOf("--out");
+const outValue = outArg > -1 ? process.argv[outArg + 1] : "wp-payload";
+const OUT = isAbsolute(outValue) ? outValue : join(ROOT, outValue);
 const MEDIA_MAP = join(ROOT, "wp-media.json");
 
 const domainArg = process.argv.indexOf("--domain");
@@ -53,7 +55,7 @@ const PAGES = [
   { file: "research.html", slug: "research", title: "Research", order: 5,
     description: "Longer-form investigation into agentic system reliability, evaluation methodology, and AI governance." },
   { file: "contact.html", slug: "contact", title: "Contact", order: 6,
-    description: "Get in touch." },
+    description: "How to reach Fredrick Mendez about anything published on NOVRA Intelligence, including corrections to work published here." },
 ];
 
 /** Wrap raw markup in a core/html block. */
@@ -169,7 +171,7 @@ async function main() {
       _tool: "wpcom-mcp-content-authoring",
       _operation: "pages.create",
       _order: page.order,
-      _requires_ability: "wpcom/pages-create",
+      _requires_ability: "wpcom-mcp/pages-create",
       _placeholders: placeholders,
       _notes: [
         "status is draft; site stays in Coming Soon until every gate passes.",

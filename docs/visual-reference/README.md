@@ -147,6 +147,11 @@ the raster clears every constraint at once.
 
 Panel E and the reliability hero were produced exactly this way.
 
+The pipeline is enforced in CI: `npm run site:assets:check` fails on a raster
+that no longer matches its SVG source or that exceeds its recorded size budget
+in `site/asset-budget.json`, and `npm run site:visual-qa` renders every page at
+every validated width. See `docs/automation-runbook.md`.
+
 **Pipeline** (canonical — `node site/render-assets.mjs`):
 
 1. Author the diagram as `site/assets/<name>.svg`. DejaVu Sans is installed and

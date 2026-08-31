@@ -147,6 +147,26 @@ Grep PLACEHOLDER across site/ before any publish. Non-empty means not ready.
 
 ---
 
+## 8b. PRODUCTION AUTOMATION
+
+Routine deployment no longer depends on an MCP connector being enabled in a
+particular chat. The runbook is `docs/automation-runbook.md`; five GitHub
+workflows cover validation, deployment, launch, search monitoring and the
+publisher source watch.
+
+| Capability | State |
+| --- | --- |
+| CI validation (placeholders, policy, schema, links, a11y, visual QA) | Implemented, fails closed |
+| WordPress REST deployer with media sync and read-back | Implemented, untested against a live site |
+| `<picture>` -> dual-image self-healing, one attempt | Implemented and unit-tested |
+| Launch gates with an uncounterfeitable human approval | Implemented |
+| T0 / search observation model with identity resolution | Implemented; blocked on a valid SerpApi key |
+| Publisher source watch | Implemented; flags only, never submits or sends |
+
+Three secrets, by name only: `NOVRA_WP_SITE`, `NOVRA_WP_ACCESS_TOKEN`,
+`SERPAPI_API_KEY`. None is committed. `AUTH_SETUP_REQUIRED=YES` — minting the
+WordPress token needs a person signed in to the account.
+
 ## 9. NEXT AUTONOMOUS ACTIONS
 
 1. SERP counterpositioning table as a code artifact, populated on first scan.

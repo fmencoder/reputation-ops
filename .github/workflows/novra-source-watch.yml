@@ -1,0 +1,59 @@
+# Publisher source watch.
+#
+# Checks whether the three watched pages have actually changed. Only the live
+# page counts: an acknowledgement, a ticket number or a "we're reviewing it" is
+# not a source change, and recording one as such is how a project convinces
+# itself of progress it has not made.
+#
+# It flags. It never sends. A search-engine refresh request asserts that a live
+# page no longer matches its index, and a follow-up email is contact with a
+# publisher — both are representations a person makes and is accountable for.
+name: novra-source-watch
+
+on:
+  schedule:
+    - cron: "41 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: novra-source-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      # The check ledger is committed so a change has a dated record rather than
+      # living in one workflow run's log.
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+
+      # No secrets. These are public pages fetched with an honest user agent.
+      - name: Check watched sources
+        run: npm run source:watch
+
+      # HEAD:main because a scheduled checkout is detached at the default
+      # branch SHA and a bare push has no upstream.
+      - name: Commit the ledger
+        if: always()
+        run: |
+          if git diff --quiet -- data/source-watch/; then
+            echo "no change"
+            exit 0
+          fi
+          git config user.name "novra-source-watch"
+          git config user.email "noreply@users.noreply.github.com"
+          git add data/source-watch/
+          git commit -m "Source watch $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin HEAD:main

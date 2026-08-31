@@ -1,9 +1,26 @@
-# WordPress deployment
+# NOVRA WordPress deployment
+
+> **Routine deployment is automated.** See **`docs/automation-runbook.md`** for
+> the token setup, the GitHub secret names, the dry run, the deploy, the launch
+> gates, rollback, and the search and source-watch schedules.
+>
+> This file keeps the WordPress-specific detail that the runbook points at:
+> what gets stripped, what the payloads contain, and the manual MCP path that
+> remains available as an interactive administrative alternative.
 
 Target: `novraintelligence.com` — WordPress.com Personal, Coming Soon, DNS
 verified via Cloudflare.
 
-## Status: blocked on MCP abilities, not on the site ID
+## Status: MCP is no longer the deployment dependency
+
+The connector is authenticated at the account level (`installState=connected`)
+and was still unavailable in three consecutive sessions because it is toggled
+off per-chat (`enabledInChat=false`). That is why routine deployment now runs
+through the WordPress.com REST API from CI with a bearer token, and why the MCP
+notes below are retained as an interactive administrative path rather than as
+the deployment procedure.
+
+## Historical: blocked on MCP abilities, not on the site ID
 
 The site ID was never the real blocker. With the domain supplied, the connector
 accepts `novraintelligence.com` directly as `wpcom_site` — but **every operation

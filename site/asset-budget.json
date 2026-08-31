@@ -1,0 +1,14 @@
+{
+  "_comment": [
+    "Regression context, not a hard cap. Quality comes first: if a diagram needs",
+    "more bytes to be legible, raise the number here deliberately and say why in",
+    "the commit. The point is that a size change is noticed, not that it is banned.",
+    "tolerance is the fraction a file may grow before the check fails."
+  ],
+  "tolerance": 0.25,
+  "assets": {
+    "novra-convergence-architecture.webp": 18252,
+    "novra-convergence-architecture-mobile.webp": 23670,
+    "reliability-budget-agentic-ai.webp": 7762
+  }
+}

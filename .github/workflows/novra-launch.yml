@@ -1,0 +1,80 @@
+# Public launch.
+#
+# Separate from deployment on purpose. Launch is the one irreversible action in
+# this project: a page, once indexed, cannot be un-indexed on demand, and the
+# entire premise is that what gets indexed is accurate.
+#
+# Three independent things must line up before this can do anything:
+#   1. Every gate in site/launch-state.json is closed.
+#   2. HUMAN_LAUNCH_APPROVAL was recorded by a human — automation is refused
+#      that field in code, not by convention (see applyAutomationUpdates).
+#   3. The `launch` GitHub environment approves the run.
+#
+# No push, schedule, or other workflow can reach it.
+name: novra-launch
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type LAUNCH to confirm you intend to make the site public'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: novra-launch
+  cancel-in-progress: false
+
+jobs:
+  check-gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+
+      - name: Typed confirmation
+        run: |
+          if [ "${{ inputs.confirm }}" != "LAUNCH" ]; then
+            echo "Confirmation string did not match. Nothing was done."
+            exit 1
+          fi
+
+      - name: Full validation must pass on the exact commit being launched
+        run: |
+          npm test
+          npm run typecheck
+          npm run site:assets:check
+          npm run site:build
+          npm run site:validate
+
+      - name: Every launch gate must be closed
+        run: npm run site:launch
+
+  launch:
+    needs: check-gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Configure this environment with required reviewers. That is the human
+    # approval step this workflow cannot fake for itself.
+    environment: launch
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+
+      - name: Execute launch
+        env:
+          NOVRA_WP_SITE: ${{ secrets.NOVRA_WP_SITE }}
+          NOVRA_WP_ACCESS_TOKEN: ${{ secrets.NOVRA_WP_ACCESS_TOKEN }}
+        run: npm run site:launch -- --execute

@@ -38,7 +38,7 @@ const PAGES = [
     description: "Fredrick Mendez is a technology executive and strategist focused on artificial intelligence, autonomous systems, blockchain technology, smart contracts, software architecture, and next-generation digital infrastructure." },
   { file: "contact.html", path: "/contact/", nav: "CONTACT",
     title: "Contact — NOVRA Intelligence",
-    description: "Get in touch." },
+    description: "How to reach Fredrick Mendez about anything published on NOVRA Intelligence, including corrections to work published here." },
 ];
 
 const NAV_KEYS = ["HOME", "INSIGHTS", "RESEARCH", "TECHNOLOGY", "ABOUT", "CONTACT"];

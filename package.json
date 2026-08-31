@@ -17,10 +17,19 @@
     "site:export": "node site/wp-export.mjs",
     "site:assets": "node site/render-assets.mjs",
     "site:assets:check": "node site/render-assets.mjs --check",
-    "site:export:fallback": "node site/wp-export.mjs --picture-fallback"
+    "site:export:fallback": "node site/wp-export.mjs --picture-fallback",
+    "site:validate": "tsx src/cli/validate.ts",
+    "site:deploy": "tsx src/cli/deploy.ts",
+    "site:deploy:dry-run": "tsx src/cli/deploy.ts --dry-run",
+    "site:launch": "tsx src/cli/launch.ts",
+    "site:visual-qa": "node site/visual-qa.mjs",
+    "search:monitor": "tsx src/cli/search-monitor.ts",
+    "search:t0": "tsx src/cli/search-monitor.ts --capture-t0",
+    "source:watch": "tsx src/cli/source-watch.ts"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "playwright-core": "^1.62.1",
     "sharp": "^0.35.4",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",

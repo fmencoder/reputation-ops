@@ -1,0 +1,91 @@
+# Validation only. Never touches WordPress, never sees a production secret.
+#
+# This workflow runs on pull requests, including from forks, so it is
+# deliberately kept free of any credential: `pull_request` (not
+# `pull_request_target`) means a fork's code cannot reach repository secrets,
+# and adding one here would hand arbitrary PR code a production token.
+#
+# Fails closed. A check that cannot run is a failure, not a pass.
+name: novra-ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_call:
+
+# Read-only. This job produces artifacts and a verdict, nothing else.
+permissions:
+  contents: read
+
+concurrency:
+  group: novra-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Actions from the `actions/` org are used at their major tag rather than
+      # pinned to a SHA. Pinning is stricter and worth doing — replace each tag
+      # with the commit SHA you have verified yourself rather than one written
+      # here from memory, which would be a pin to an unverified value.
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Rasterise diagram assets from their SVG sources
+        run: npm run site:assets
+
+      - name: Assets match their sources and fit the size budget
+        run: npm run site:assets:check
+
+      - name: Build the static site
+        run: npm run site:build
+
+      # Placeholders, project policy, schema, links, alt text, heading order,
+      # canonical URLs, front matter, missing assets, accidental SVG references.
+      - name: Content and policy validation
+        run: npm run site:validate
+
+      - name: Install Chromium for visual QA
+        run: npx playwright-core install --with-deps chromium
+
+      # Renders at the validated content widths and asserts what pixel
+      # arithmetic cannot: the image loaded, the figure has a real box, exactly
+      # one responsive source wins, nothing scrolls sideways.
+      # --require-browser turns a missing browser into a failure. Without it a
+      # broken install would show as a green skip, which is the failure mode
+      # this whole workflow exists to prevent.
+      - name: Visual QA
+        run: npm run site:visual-qa -- --require-browser
+
+      - name: Upload screenshots for human review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-qa-screenshots
+          path: artifacts/visual-qa/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      # A deployment plan needs no credentials and is worth seeing on every run:
+      # it says exactly which assets would upload and which gates are open.
+      - name: Deployment dry run (no credentials, no external writes)
+        run: npm run site:deploy:dry-run
+        continue-on-error: true
+
+      - name: Launch gate state
+        run: npm run site:launch
