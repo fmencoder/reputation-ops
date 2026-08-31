@@ -15,10 +15,10 @@ built for an audience that checks.
 | Field | Value |
 | --- | --- |
 | `DISPLAY_NAME` | Fredrick Mendez |
-| `PROFESSIONAL_HEADLINE` | `[UNVERIFIED]` — see note below |
-| `SHORT_BIO` (≤160 chars) | `[UNVERIFIED]` |
-| `LONG_BIO` (~250 words) | `[UNVERIFIED]` |
-| `AUTHOR_DESCRIPTION` (1 sentence, Person.description) | `[UNVERIFIED]` |
+| `PROFESSIONAL_HEADLINE` | Technology Executive \| AI Strategy \| Autonomous Systems \| Blockchain & Digital Infrastructure |
+| `SHORT_BIO` | **RESOLVED** — see Approved copy below |
+| `LONG_BIO` | **RESOLVED** — see Approved copy below |
+| `AUTHOR_DESCRIPTION` | Technology executive and strategist focused on artificial intelligence, autonomous systems, blockchain technology, smart contracts, software architecture, and next-generation digital infrastructure. |
 | `PROFILE_PHOTO_REFERENCE` | `[UNVERIFIED]` |
 
 ## Owned properties
@@ -44,18 +44,29 @@ same-name profiles under `sameAs`.
 
 ---
 
-## Headline guidance
+## Approved copy — 2026-08-31
 
-The headline is the highest-leverage unverified field: it appears in search
-snippets, LinkedIn previews and schema.
+**SHORT_BIO**
 
-It must be a factual description of current work. Not aspirational, not a
-positioning statement. Two tests before using one:
+> Fredrick Mendez is a technology executive and strategist focused on artificial
+> intelligence, autonomous systems, blockchain technology, smart contracts,
+> software architecture, and next-generation digital infrastructure. His work
+> centers on designing scalable intelligent platforms, decentralized systems, and
+> automation architectures that translate emerging technologies into measurable
+> business and operational value.
 
-1. If a stranger asked "is that true?", could you show them something?
-2. Does it describe what you do, or what you would like to be seen as?
+**LONG_BIO** — four paragraphs, deployed on the About page under the headings
+Executive Focus / Technology Leadership / AI, Blockchain & Smart Contracts /
+Research & Innovation. Full text lives in `site/pages/about.html`; that file is
+the deployed source, so edit it there rather than maintaining a second copy here.
 
-The second test disqualifies most headlines people write.
+**One standing caution.** "Technology executive" is a self-conferred role
+description, not a verified title, and the bio carries no employer, no dates and
+no credential to anchor it. That is internally consistent — nothing is
+fabricated, because nothing specific is claimed. But it is the sentence a
+sceptical reader will test first, and it is the one place on the site where
+substance has to come from the published work rather than the copy. The articles
+are what make it true.
 
 ---
 
@@ -108,11 +119,27 @@ in the privacy-reduction track (`outreach/broker-worklist.md`), not here.
 
 ---
 
-## Blocking status
+## Blocking status — 2026-08-31
 
-Five identity fields are unverified. Until `AUTHOR_DESCRIPTION` and at least one
-`sameAs` URL are filled, the Person schema cannot ship complete — and the Person
-schema is the single asset the whole entity architecture rests on.
+**Resolved:** `PROFESSIONAL_HEADLINE`, `SHORT_BIO`, `LONG_BIO`,
+`AUTHOR_DESCRIPTION`. The Person schema now ships with a real description and an
+eleven-entry `knowsAbout`.
 
-This is the same blocker as the site's `PLACEHOLDER_ONE_SENTENCE_VERIFIED` and
-`PLACEHOLDER_VERIFIED_PROFILE_URL`. One answer clears both.
+**Still blank, deliberately:**
+
+| Field | Why it stays blank |
+| --- | --- |
+| `PROFILE_PHOTO_REFERENCE` | No verified photograph supplied |
+| `SAMEAS` | **Key removed from the schema entirely**, not left as a placeholder |
+| `GITHUB_URL` | Handle inferred from repo ownership; unconfirmed as a public profile |
+| `LINKEDIN_URL` | Surfaced in discovery; not confirmed as current or intended |
+| `LABLAB_URL` | Reported to exist; exact URL never supplied |
+| `CONTACT_EMAIL` | Last remaining site placeholder — blocks launch |
+
+On `sameAs`: shipping it with a placeholder string would be worse than omitting
+it. `sameAs` instructs search engines to treat profiles as the same entity, so a
+wrong entry actively merges the subject with someone else — the precise failure
+this project exists to avoid, given 400+ same-name profiles. The key is gone
+from the schema and returns only when a specific URL is confirmed.
+
+**One value now blocks public launch: `CONTACT_EMAIL`.**

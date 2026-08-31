@@ -4,7 +4,7 @@
     "",
     "NO Organization node is emitted, and none may be added until a legal entity",
     "exists and its exact registered name is supplied. NOVRA Intelligence is currently a",
-    "masthead — a publication name — not a company. Emitting Organization schema",
+    "masthead \u2014 a publication name \u2014 not a company. Emitting Organization schema",
     "would assert to search engines that a legal organization exists, which would",
     "be a false machine-readable claim and is explicitly out of scope.",
     "",
@@ -15,7 +15,6 @@
     "Every PLACEHOLDER is unverified and must be filled from fact or deleted.",
     "A deleted field costs nothing. A false one is the whole liability."
   ],
-
   "website": {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -24,46 +23,45 @@
     "url": "https://novraintelligence.com/",
     "description": "Research and perspectives on artificial intelligence, autonomous systems, blockchain infrastructure, financial technology, and emerging digital systems.",
     "inLanguage": "en-US",
-    "publisher": { "@id": "https://novraintelligence.com/about/#person" }
+    "publisher": {
+      "@id": "https://novraintelligence.com/about/#person"
+    }
   },
-
   "_publisher_note": [
     "publisher points at the Person, not an Organization. This is accurate: the",
     "publication is currently published by an individual. schema.org permits a",
     "Person as publisher and it is the honest mapping of the real arrangement."
   ],
-
   "person": {
     "@context": "https://schema.org",
     "@type": "Person",
     "@id": "https://novraintelligence.com/about/#person",
     "name": "Fredrick Mendez",
     "url": "https://novraintelligence.com/about/",
-    "description": "PLACEHOLDER_ONE_SENTENCE_VERIFIED",
+    "description": "Technology executive and strategist focused on artificial intelligence, autonomous systems, blockchain technology, smart contracts, software architecture, and next-generation digital infrastructure.",
     "knowsAbout": [
-      "Artificial intelligence",
-      "Agentic and autonomous systems",
-      "AI reliability",
-      "AI governance",
-      "Blockchain infrastructure",
-      "Financial technology",
-      "Digital infrastructure",
-      "Business automation"
-    ],
-    "sameAs": [
-      "PLACEHOLDER_VERIFIED_PROFILE_URL"
+      "Artificial Intelligence",
+      "Autonomous Systems",
+      "AI Agents",
+      "Blockchain Technology",
+      "Smart Contracts",
+      "Software Architecture",
+      "Digital Infrastructure",
+      "Intelligent Automation",
+      "Financial Technology",
+      "Decentralized Finance",
+      "Digital Transformation"
     ]
   },
-
   "_person_notes": [
-    "jobTitle omitted deliberately — not verified. Add only if true and current.",
-    "worksFor omitted deliberately. It would require an Organization node, and",
-    "BUILDFLOW_PUBLIC_DISCLOSURE=false rules out the one that exists.",
+    "jobTitle omitted - the headline is a self-description, not a verified title.",
+    "worksFor omitted. Would require an Organization node, and BUILDFLOW_PUBLIC_DISCLOSURE=false.",
     "alumniOf, award, hasCredential all omitted: nothing verified.",
-    "sameAs must list only profiles that resolve and that the subject controls.",
-    "A dead or unowned sameAs weakens entity association rather than helping it."
+    "sameAs REMOVED entirely rather than shipped with a placeholder. A sameAs array",
+    "containing a guess is worse than no sameAs at all - it tells search engines to",
+    "consolidate an entity with a profile that may belong to someone else. Re-add only",
+    "after a specific URL is confirmed to resolve publicly and be controlled by the subject."
   ],
-
   "article_template": {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -71,22 +69,40 @@
     "description": "PLACEHOLDER_META_DESCRIPTION",
     "datePublished": "PLACEHOLDER_ISO_DATE",
     "dateModified": "PLACEHOLDER_ISO_DATE",
-    "author": { "@id": "https://novraintelligence.com/about/#person" },
-    "publisher": { "@id": "https://novraintelligence.com/about/#person" },
-    "isPartOf": { "@id": "https://novraintelligence.com/#website" },
+    "author": {
+      "@id": "https://novraintelligence.com/about/#person"
+    },
+    "publisher": {
+      "@id": "https://novraintelligence.com/about/#person"
+    },
+    "isPartOf": {
+      "@id": "https://novraintelligence.com/#website"
+    },
     "mainEntityOfPage": "https://novraintelligence.com/insights/PLACEHOLDER_SLUG/"
   },
-
   "breadcrumb_template": {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://novraintelligence.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Insights", "item": "https://novraintelligence.com/insights/" },
-      { "@type": "ListItem", "position": 3, "name": "PLACEHOLDER_TITLE" }
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://novraintelligence.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Insights",
+        "item": "https://novraintelligence.com/insights/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "PLACEHOLDER_TITLE"
+      }
     ]
   },
-
   "_forbidden_until_entity_exists": [
     "Organization",
     "Corporation",
@@ -98,7 +114,6 @@
     "numberOfEmployees",
     "foundingDate"
   ],
-
   "_copy_rules": [
     "First person singular throughout. No 'we', 'our team', 'our research'.",
     "Those imply staff who do not exist, which is the same false claim as",
