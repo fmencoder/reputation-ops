@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse">
+      <path d="M52 0H0V52" fill="none" stroke="#4d84ff" stroke-opacity="0.055" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="focal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.34"/>
+      <stop offset="55%" stop-color="#7b4dff" stop-opacity="0.11"/>
+      <stop offset="100%" stop-color="#05070f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ambient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#05070f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7fb0ff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#4d84ff" stop-opacity="0.5"/>
+    </linearGradient>
+    <filter id="soft" x="-140%" y="-140%" width="380%" height="380%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="tight" x="-160%" y="-160%" width="420%" height="420%">
+      <feGaussianBlur stdDeviation="3.2"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="#05070f"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <ellipse cx="800" cy="450" rx="760" ry="470" fill="url(#ambient)"/>
+  <!-- Focal mass: the authorization gate. ~17% of canvas carries real luminance. -->
+  <ellipse cx="800" cy="405" rx="430" ry="220" fill="url(#focal)"/>
+
+  <!-- Containment: security / governance / observability / human oversight enclose execution -->
+  <rect x="392" y="172" width="816" height="558" rx="16" fill="none" stroke="#7b4dff" stroke-opacity="0.30" stroke-width="1"/>
+  <rect x="406" y="186" width="788" height="530" rx="13" fill="none" stroke="#7b4dff" stroke-opacity="0.14" stroke-width="1"/>
+  <g font-family="DejaVu Sans, sans-serif" font-size="12.5" fill="#a07cff" fill-opacity="0.62" letter-spacing="3.4">
+    <text transform="translate(372,392) rotate(-90)">SECURITY</text>
+    <text transform="translate(372,650) rotate(-90)">GOVERNANCE</text>
+    <text transform="translate(1228,318) rotate(90)">OBSERVABILITY</text>
+    <text transform="translate(1228,540) rotate(90)">HUMAN OVERSIGHT</text>
+  </g>
+
+  <!-- Flow spine -->
+  <g stroke="url(#flow)" stroke-width="2.1" stroke-linecap="round">
+    <line x1="800" y1="162" x2="800" y2="198"/>
+    <line x1="800" y1="252" x2="800" y2="288"/>
+    <line x1="800" y1="342" x2="800" y2="378"/>
+    <line x1="800" y1="432" x2="800" y2="468"/>
+    <line x1="800" y1="522" x2="800" y2="558"/>
+    <line x1="800" y1="612" x2="800" y2="648"/>
+    <line x1="800" y1="702" x2="800" y2="738"/>
+  </g>
+
+  <!-- Stage plates -->
+  <g font-family="DejaVu Sans, sans-serif">
+    <!-- 0 DATA + EVENTS -->
+    <rect x="480" y="108" width="640" height="54" rx="12" fill="#0a0e1c" stroke="#1b2340" stroke-width="1"/>
+    <text x="800" y="141" font-size="16.5" fill="#ffffff" letter-spacing="2.6" text-anchor="middle">DATA + EVENTS</text>
+    <circle cx="480" cy="135" r="3.4" fill="#dce6ff" filter="url(#tight)"/><circle cx="480" cy="135" r="3.4" fill="#dce6ff"/>
+
+    <!-- 1 AI / INTELLIGENCE -->
+    <rect x="480" y="198" width="640" height="54" rx="12" fill="#0a0e1c" stroke="#1b2340" stroke-width="1"/>
+    <text x="800" y="231" font-size="16.5" fill="#ffffff" letter-spacing="2.6" text-anchor="middle">AI / INTELLIGENCE</text>
+    <circle cx="480" cy="225" r="3.6" fill="#dce6ff" filter="url(#tight)"/><circle cx="480" cy="225" r="3.6" fill="#dce6ff"/>
+
+    <!-- 2 AUTONOMOUS AGENTS -->
+    <rect x="480" y="288" width="640" height="54" rx="12" fill="#0a0e1c" stroke="#1b2340" stroke-width="1"/>
+    <text x="800" y="321" font-size="16.5" fill="#ffffff" letter-spacing="2.6" text-anchor="middle">AUTONOMOUS AGENTS</text>
+    <circle cx="480" cy="315" r="3.6" fill="#dce6ff" filter="url(#tight)"/><circle cx="480" cy="315" r="3.6" fill="#dce6ff"/>
+
+    <!-- 3 POLICY + AUTHORIZATION — FOCAL -->
+    <rect x="466" y="374" width="668" height="62" rx="13" fill="#0d1226" stroke="#4d84ff" stroke-opacity="0.85" stroke-width="1.6" filter="url(#soft)"/>
+    <rect x="466" y="374" width="668" height="62" rx="13" fill="#0d1226" stroke="#4d84ff" stroke-opacity="0.9" stroke-width="1.6"/>
+    <text x="800" y="411" font-size="19" fill="#ffffff" letter-spacing="3.2" text-anchor="middle">POLICY + AUTHORIZATION</text>
+    <circle cx="466" cy="405" r="5.6" fill="#ffffff" filter="url(#soft)"/><circle cx="466" cy="405" r="4.6" fill="#ffffff"/>
+    <circle cx="1134" cy="405" r="5.6" fill="#a07cff" filter="url(#soft)"/><circle cx="1134" cy="405" r="4.2" fill="#a07cff"/>
+
+    <!-- 4 SMART CONTRACTS -->
+    <rect x="480" y="468" width="640" height="54" rx="12" fill="#0a0e1c" stroke="#1b2340" stroke-width="1"/>
+    <text x="800" y="501" font-size="16.5" fill="#ffffff" letter-spacing="2.6" text-anchor="middle">SMART CONTRACTS</text>
+    <circle cx="480" cy="495" r="3.6" fill="#dce6ff" filter="url(#tight)"/><circle cx="480" cy="495" r="3.6" fill="#dce6ff"/>
+
+    <!-- 5 BLOCKCHAIN / DISTRIBUTED STATE -->
+    <rect x="480" y="558" width="640" height="54" rx="12" fill="#0a0e1c" stroke="#1b2340" stroke-width="1"/>
+    <text x="800" y="591" font-size="16.5" fill="#ffffff" letter-spacing="2.6" text-anchor="middle">BLOCKCHAIN / DISTRIBUTED STATE</text>
+    <circle cx="480" cy="585" r="3.4" fill="#a07cff" filter="url(#tight)"/><circle cx="480" cy="585" r="3.4" fill="#a07cff"/>
+
+    <!-- 6 DIGITAL + FINANCIAL INFRASTRUCTURE -->
+    <rect x="480" y="648" width="640" height="54" rx="12" fill="#0a0e1c" stroke="#1b2340" stroke-width="1"/>
+    <text x="800" y="681" font-size="16.5" fill="#ffffff" letter-spacing="2.6" text-anchor="middle">DIGITAL + FINANCIAL INFRASTRUCTURE</text>
+    <circle cx="480" cy="675" r="3.4" fill="#dce6ff" filter="url(#tight)"/><circle cx="480" cy="675" r="3.4" fill="#dce6ff"/>
+
+    <!-- 7 VERIFIED OUTCOMES -->
+    <rect x="480" y="738" width="640" height="54" rx="12" fill="#0a0e1c" stroke="#2a3560" stroke-width="1"/>
+    <text x="800" y="771" font-size="16.5" fill="#ffffff" letter-spacing="2.6" text-anchor="middle">VERIFIED OUTCOMES</text>
+    <circle cx="480" cy="765" r="4.2" fill="#dce6ff" filter="url(#soft)"/><circle cx="480" cy="765" r="3.8" fill="#dce6ff"/>
+  </g>
+
+  <!-- Recessive lateral structure: distributed substrate, well below the focal mass -->
+  <g stroke="#4d84ff" stroke-opacity="0.16" stroke-width="1" fill="none">
+    <path d="M392 300 L250 300 L250 600 L392 600"/>
+    <path d="M1208 360 L1350 360 L1350 620 L1208 620"/>
+  </g>
+  <g fill="#4d84ff" fill-opacity="0.5">
+    <circle cx="250" cy="300" r="2.4"/><circle cx="250" cy="600" r="2.4"/>
+    <circle cx="1350" cy="360" r="2.4"/><circle cx="1350" cy="620" r="2.4"/>
+  </g>
+</svg>

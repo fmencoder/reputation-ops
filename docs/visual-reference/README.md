@@ -127,28 +127,35 @@ media upload.
 | B | Technology band | **Implemented** — CSS gradient field with nodes, deployed |
 | C | Insights | **Partial** — layout deployed; metric tiles deliberately absent |
 | D | About | **Implemented** — CSS wave/grid field, deployed |
-| E | Convergence architecture | Not built — see below |
+| E | Convergence architecture | **BUILT** — `site/assets/novra-convergence-architecture.webp`, 1600×900, 21 KB |
 | F | Blockchain / smart contracts | Not built |
 | G | AI & autonomous agents | Not built |
 | H | Financial technology | Not built |
 | I | Digital infrastructure | Not built |
 | J | Research modules | Not built |
-| K | Article experience | Template exists; hero graphics not built |
+| K | Article experience | Template exists; **reliability-budget hero BUILT** (1600×900, 8.6 KB), 4 heroes outstanding |
 | L | Contact | **Implemented** — intentionally minimal |
 
-### On E through J
+### These are buildable here — earlier assessment corrected
 
-These are multi-node architecture diagrams with labelled layers — genuinely the
-strongest visual idea in the brief, and the one CSS reproduces worst. Layered
-gradients handle atmosphere well; they do not handle labelled topology with
-connecting edges.
+An earlier revision marked E–J `MANUAL_ASSET_REQUIRED` on the grounds that CSS
+cannot render labelled topology with connecting edges. That reasoning was sound
+about CSS and wrong about the pipeline: **SVG renders it precisely, and `sharp`
+rasterises SVG to WebP locally.** WordPress rejects SVG upload and strips inline
+SVG, but it accepts WebP without complaint — so authoring in SVG and shipping
+the raster clears every constraint at once.
 
-`GRAPHIC_STATUS = MANUAL_ASSET_REQUIRED` for all six. Producing them as
-half-quality CSS approximations would undercut the design system rather than
-extend it, which the brief explicitly rules out.
+Panel E and the reliability hero were produced exactly this way.
 
-Asset specification for each: 1600×900 minimum, WebP at quality 80 with PNG
-fallback, transparent or `#05070f` ground, palette strictly as above, thin
-strokes (1–1.5px at 1× scale), labels in white at ≥14px effective size, node
-glow via soft shadow only. Deliver to `site/assets/` and they can be uploaded
-and referenced as `<img>` — that path is proven to work.
+**Pipeline** (reproducible, no external tooling):
+
+1. Author the diagram as SVG. DejaVu Sans is installed and rasterises correctly.
+2. `sharp(svg, {density: 144}).resize(1600, 900).webp({quality: 80, effort: 6})`
+3. Render a PNG alongside and **look at it** before committing. Both assets here
+   went through a review pass that changed them — E's flow spine was invisible
+   at first, and the hero's composition left the lower half dead.
+4. Keep the `.svg` source in `site/assets/` next to the `.webp`. It is the
+   editable original; regenerating from it is one command.
+
+F, G, H, I and J remain unbuilt but are no longer blocked — the specifications in
+`asset-specs.md` are directly buildable through this pipeline.
