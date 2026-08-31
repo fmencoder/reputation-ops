@@ -1,0 +1,7 @@
+{
+  "name": "novra-oauth-bootstrap",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Temporary server-side WordPress.com OAuth bootstrap. Delete after the access token is stored.",
+  "engines": { "node": ">=20" }
+}

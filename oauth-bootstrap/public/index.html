@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<title>NOVRA OAuth bootstrap</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin:0; background:#05070f; color:#9aa6c8;
+         font:15px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:40rem; margin:0 auto; padding:3rem 1.5rem; }
+  h1 { color:#fff; font-size:1.5rem; margin:0 0 1rem; letter-spacing:-0.01em; }
+  a { color:#4d84ff; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+</style></head>
+<body><main>
+<h1>NOVRA OAuth bootstrap</h1>
+<p>A single-purpose, temporary service. It mints a WordPress.com access token
+for the NOVRA deployment pipeline and shows it once.</p>
+<p>Begin at <code>/api/wordpress/oauth/start</code>.</p>
+<p>This service is meant to be deleted once the token is stored. It holds no
+database and no session state, so there is nothing to migrate when it goes.</p>
+</main></body></html>

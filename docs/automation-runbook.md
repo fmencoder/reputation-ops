@@ -24,31 +24,36 @@ interactive administrative path; it is no longer the only path.
 
 ### 1. WordPress access token
 
-**AUTH_SETUP_REQUIRED=YES.** This cannot be automated: it needs a person signed
-in to the WordPress.com account.
+**AUTH_SETUP_REQUIRED=YES**, but the manual parts are now automated. The
+`oauth-bootstrap/` service performs the authorization-code exchange server-side,
+so nobody copies a code, pastes a client secret into a browser tool, or POSTs to
+the token endpoint by hand.
 
-1. Create an application at <https://developer.wordpress.com/apps/>. The
-   redirect URL can be any URL you control; it is not used at runtime.
-2. Exchange credentials for a token:
+The existing WordPress.com application is `NOVRA Deployment Automation`,
+client ID `147112`. Its client secret is human-held and must never be requested
+in chat, printed, or committed.
 
-       curl -X POST https://public-api.wordpress.com/oauth2/token \
-         -d client_id=YOUR_CLIENT_ID \
-         -d client_secret=YOUR_CLIENT_SECRET \
-         -d grant_type=password \
-         -d username=YOUR_WPCOM_LOGIN \
-         -d password=YOUR_WPCOM_PASSWORD
+1. In the Vercel project for `oauth-bootstrap`, set the four environment
+   variables from `oauth-bootstrap/README.md`. The client secret goes in
+   through Vercel's encrypted environment store.
+2. Add the deployed callback URL as an **additional** Redirect URL on the
+   WordPress application at <https://developer.wordpress.com/apps/>. Keep the
+   existing one; WordPress supports several.
+3. Open `/api/wordpress/oauth/start` in a browser and approve.
+4. Copy the token from the one-time panel.
 
-   **If two-factor authentication is on, this grant fails** — that is expected,
-   not a misconfiguration. Use the authorization-code flow instead: open
-   `https://public-api.wordpress.com/oauth2/authorize?client_id=…&redirect_uri=…&response_type=code`,
-   approve, and exchange the returned `code` at the same token endpoint with
-   `grant_type=authorization_code`.
-3. WordPress.com access tokens do not expire on a fixed schedule, so this is a
-   one-time step until the token is revoked.
+The bootstrap validates the token with a read-only call before showing it, and
+refuses to display it at all if it reaches the wrong site.
 
-The client ID and secret are **not** stored as repository secrets. They are
-needed only to mint the token, and storing them would widen the blast radius of
-a leak for no operational benefit.
+**Delete the Vercel project once the token is stored.** See
+`oauth-bootstrap/README.md` — including the one exposure this design cannot
+close, which is that Vercel logs the callback request line containing the
+single-use authorization code.
+
+If the bootstrap is unavailable, the manual fallback still works: exchange at
+`https://public-api.wordpress.com/oauth2/token` with
+`grant_type=authorization_code`. The password grant fails when two-factor
+authentication is on, which is expected rather than a misconfiguration.
 
 ### 2. GitHub secrets — names only
 
