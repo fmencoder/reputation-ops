@@ -25,7 +25,8 @@
     "site:visual-qa": "node site/visual-qa.mjs",
     "search:monitor": "tsx src/cli/search-monitor.ts",
     "search:t0": "tsx src/cli/search-monitor.ts --capture-t0",
-    "source:watch": "tsx src/cli/source-watch.ts"
+    "source:watch": "tsx src/cli/source-watch.ts",
+    "site:deploy:auth-check": "tsx src/cli/deploy.ts --auth-check"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

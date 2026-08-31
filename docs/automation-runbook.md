@@ -87,12 +87,67 @@ hash comparison.
 
 ---
 
+## Canonical production ref
+
+    CANONICAL_PRODUCTION_REF = claude/fredrick-mendez-reputation-ijjnbq
+
+This is the repository's default branch and it carries the entire automation
+layer. Every workflow trigger, and every commit an automated job makes, targets
+`github.ref_name` — the ref the run checked out — never a hardcoded branch.
+
+**`main` is not the production ref and must not be used as one right now.** It
+sits at `8e60fd3`, four commits behind, and contains none of this: no workflows,
+no `src/novra/`, no deployer, no launch state. Committing `site/wp-media.json`
+to `main` would put deployment state on a branch that has none of the code that
+produced it — a manifest with no exporter to read it, and an exporter on another
+branch with no manifest.
+
+That was the state of `novra-deploy.yml` before this correction: it triggered on
+`push: branches: [main]` (where the workflow file does not exist, so it could
+never fire) and pushed the manifest with `git push origin HEAD:main`. Fixed.
+
+### Promoting `main` to canonical, when that is wanted
+
+Not done here — it is a repository-topology decision, and this phase has an
+un-launched site and an unresolved contact address. When you want it:
+
+1. Confirm `main` has no commits the working branch lacks:
+
+       git fetch origin
+       git rev-list --left-right --count origin/main...origin/claude/fredrick-mendez-reputation-ijjnbq
+
+   The current answer is `0  4` — `main` is strictly behind, so this is a
+   fast-forward with nothing to lose.
+
+2. Fast-forward `main`:
+
+       git push origin origin/claude/fredrick-mendez-reputation-ijjnbq:main
+
+   No force, no rebase, no history rewrite. If it is ever rejected as
+   non-fast-forward, stop: something landed on `main` independently and needs
+   looking at rather than forcing.
+
+3. Change the default branch in GitHub Settings, then update the one trigger
+   that names a branch:
+
+       .github/workflows/novra-deploy.yml -> on.push.branches
+
+   Everything else already follows `github.ref_name` and needs no edit.
+
+4. Re-point the `production` and `launch` environments' branch restrictions at
+   `main`.
+
+Until all four are done, the working branch stays canonical.
+
+---
+
 ## Daily commands
 
 | Command | What it does | Writes to WordPress |
 | --- | --- | --- |
 | `npm run site:validate` | placeholders, policy, schema, links, alt text, headings, canonicals, front matter | no |
 | `npm run site:visual-qa` | renders at every validated width and checks what pixel maths cannot | no |
+| `npm run site:deploy:auth-check` | authenticate, probe capabilities, compute the plan — read-only client | no |
 | `npm run site:deploy:dry-run` | full plan: assets to upload, pages to update, gates still open | no |
 | `npm run site:deploy` | the real thing | yes |
 | `npm run site:launch` | reports gate state | no |
@@ -104,8 +159,38 @@ hash comparison.
 
 ## Deploying
 
-    npm run site:deploy:dry-run     # always first
+Three modes, gated differently:
+
+| Mode | Content gate | Writes | Answers |
+| --- | --- | --- | --- |
+| `auth_check` | **skipped** | none, enforced | do the credentials work, and what would happen |
+| `dry_run` | full | none | the same plan through the ordinary deploy path |
+| `deploy` | full, fail-closed | yes | the real thing |
+
+    npm run site:deploy:auth-check  # first, once, to prove the token
+    npm run site:deploy:dry-run
     npm run site:deploy
+
+### Why `auth_check` skips the content gate
+
+`site:validate` fails while `PLACEHOLDER_CONTACT_EMAIL` remains, and that is
+correct — the site is not fit to publish. But "is the site fit to publish" and
+"does the token authenticate" are different questions. Gating the second on the
+first means the first live deployment attempt is also the first time anyone
+finds out the token is wrong, which is the worst possible moment to discover it.
+
+`auth_check` answers only the second question. It still runs the tests and the
+typecheck, because a probe run from broken code is worth refusing. It still
+prints the content blocker. It just does not treat a publishing blocker as a
+reason to be unable to test a credential.
+
+Its "no writes" claim is not a promise about what the code happens to call: the
+client is wrapped by `readOnly()`, which replaces every write method with a
+throw. A connectivity check that *can* write is a deployment with no gates in
+front of it, so the capability is removed rather than left unused.
+
+Nothing about the write path changed. `deploy` remains fail-closed behind full
+validation and will refuse while any public-content placeholder remains.
 
 What a real run does, in order:
 
@@ -230,13 +315,16 @@ What it will never do:
 | File | Trigger | Secrets | Writes |
 | --- | --- | --- | --- |
 | `novra-ci.yml` | push, PR | **none** | nothing |
-| `novra-deploy.yml` | dispatch, push to main | `production` | WordPress + the manifest |
+| `novra-deploy.yml` | dispatch (3 modes), push to the canonical ref | `production` | WordPress + the manifest, on `github.ref_name` |
 | `novra-launch.yml` | dispatch only, typed confirmation | `launch` | visibility, gated |
 | `novra-search-monitor.yml` | daily 06:17 UTC | `search` | snapshots |
 | `novra-source-watch.yml` | daily 07:41 UTC | **none** | the check ledger |
 
 CI runs on `pull_request`, not `pull_request_target`, so a fork's code never sees
 a secret. Deployment never runs from a pull request at all.
+
+No workflow targets a hardcoded branch for a write. Every automated commit goes
+to `github.ref_name`, so state lands on the ref it came from.
 
 Actions from the `actions/` org are referenced at their major tag. Pinning each
 to a verified commit SHA is stricter and worth doing — verify the SHAs yourself

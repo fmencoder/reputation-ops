@@ -2,8 +2,18 @@
  * Production deployment CLI.
  *
  * Usage:
+ *   npm run site:deploy:auth-check  authenticate, probe, plan. Read-only client.
  *   npm run site:deploy:dry-run     no external writes; prints what would change
  *   npm run site:deploy             performs the deployment
+ *
+ * The three modes answer different questions and are gated differently.
+ * `auth-check` answers "do the credentials work and what would happen" and runs
+ * without the content-validation gate, because a public-content placeholder is
+ * a publishing blocker rather than a reason to be unable to test a token. It
+ * uses a readOnly() client, so its "no writes" claim is enforced by the type of
+ * client it holds rather than by what its code happens to call.
+ *
+ * `deploy` stays fail-closed behind full validation. Nothing here weakens that.
  *
  * Authentication comes from the environment. Nothing is read from a file in the
  * repository, nothing is echoed, and the token never reaches the report.
@@ -22,15 +32,16 @@ import { mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
-import { WpClient } from "../novra/wp-client.js";
-import { parseManifest, serializeManifest, type MediaManifest } from "../novra/media-manifest.js";
+import { readOnly, WpClient } from "../novra/wp-client.js";
+import { parseManifest, serializeManifest, sha256, type MediaManifest } from "../novra/media-manifest.js";
 import {
-  syncAssets, deployPage, cssStrategy,
-  type AssetSpec, type DeployReport, type PageResult, type PageSpec,
+  syncAssets, deployPage, cssStrategy, runAuthCheck,
+  type AssetSpec, type AuthCheckReport, type DeployReport, type PageResult, type PageSpec,
 } from "../novra/deploy.js";
 
 const ROOT = process.cwd();
-const DRY_RUN = process.argv.includes("--dry-run");
+const AUTH_CHECK = process.argv.includes("--auth-check");
+const DRY_RUN = process.argv.includes("--dry-run") || AUTH_CHECK;
 const AUTHOR_HREF = "/about/#fredrick-mendez";
 
 /** Assets the deployed site references. SVG sources are never included. */
@@ -145,11 +156,15 @@ async function main(): Promise<void> {
   }
 
   if (!site || !token) {
-    if (!DRY_RUN) {
+    if (!DRY_RUN || AUTH_CHECK) {
+      // An auth check without credentials has nothing to check. Reporting a
+      // clean plan here would be answering a different question than the one
+      // asked, which is the failure this mode exists to avoid.
       console.error(
-        "NOVRA_WP_SITE and NOVRA_WP_ACCESS_TOKEN are required for a real deployment.\n" +
-        "See the runbook in site/DEPLOY.md for the one-time token setup.\n" +
-        "AUTH_SETUP_REQUIRED=YES",
+        "NOVRA_WP_SITE and NOVRA_WP_ACCESS_TOKEN are required" +
+        (AUTH_CHECK ? " for an auth check." : " for a real deployment.") +
+        "\nSee the runbook in docs/automation-runbook.md for the one-time token setup." +
+        "\nAUTH_SETUP_REQUIRED=YES",
       );
       process.exit(2);
     }
@@ -158,6 +173,25 @@ async function main(): Promise<void> {
     console.log("DRY RUN (no credentials present — no site was contacted)\n");
     printPlan(specs, blocked, loaded);
     process.exit(blocked.length > 0 ? 1 : 0);
+  }
+
+  if (AUTH_CHECK) {
+    // readOnly() removes the write methods entirely. Nothing below this line
+    // can upload, update or create even if it tried.
+    const probeClient = readOnly(new WpClient({ site, token }));
+    const assets = await loadAssets();
+    const report = await runAuthCheck(
+      probeClient,
+      loaded,
+      assets.map((asset) => ({ path: asset.path, sha256: sha256(asset.bytes) })),
+      specs,
+      blocked,
+    );
+    printAuthCheck(report);
+    // Exit 0 when authentication succeeded. The content blocker is reported,
+    // not converted into an auth failure — conflating them is what made this
+    // question unanswerable in the first place.
+    process.exit(0);
   }
 
   const client = new WpClient({ site, token });
@@ -212,6 +246,31 @@ function printPlan(specs: readonly PageSpec[], blocked: readonly string[], manif
     for (const line of blocked) console.log(`  ${line}`);
   }
   console.log(`\nDEPLOY_READY=${blocked.length === 0 ? "YES" : "NO"}`);
+}
+
+function printAuthCheck(report: AuthCheckReport): void {
+  console.log("--- AUTH CHECK (read-only, zero external writes) ---");
+  console.log(`AUTHENTICATED=${report.authenticated}`);
+  console.log(`SITE=${report.siteName} <${report.siteUrl}> id=${report.siteId}`);
+
+  console.log("\nCAPABILITIES");
+  for (const capability of report.capabilities) {
+    console.log(`  ${capability.ok ? "ok  " : "FAIL"} ${capability.name.padEnd(16)} ${capability.detail}`);
+  }
+
+  console.log("\nPLAN");
+  for (const line of report.plannedUploads) console.log(`  media  ${line}`);
+  for (const path of report.plannedReuse) console.log(`  media  ${path} (reuse — already mapped)`);
+  for (const line of report.plannedPages) console.log(`  page   ${line}`);
+
+  if (report.blockers.length > 0) {
+    console.log("\nDEPLOYMENT BLOCKERS (this check does not clear them)");
+    for (const blocker of report.blockers) console.log(`  ${blocker}`);
+  }
+
+  console.log(`\nEXTERNAL_WRITES=${report.externalWrites}`);
+  console.log(`DEPLOY_BLOCKED=${report.blockers.length > 0 ? "YES" : "NO"}`);
+  console.log("SITE_VISIBILITY=UNCHANGED");
 }
 
 function printReport(report: DeployReport & { css: { strategy: string; installed: boolean; detail: string } }): void {

@@ -235,3 +235,41 @@ export class WpClient {
     });
   }
 }
+
+/** Every method on WpClient that mutates the site. */
+export const WRITE_METHODS = [
+  "uploadMedia", "updatePage", "updatePost", "createPage", "createPost", "setCustomCss",
+] as const;
+
+export class ReadOnlyViolationError extends Error {
+  constructor(readonly method: string) {
+    super(
+      `${method} was called on a read-only client. The auth check authenticates, ` +
+      "probes and plans; it does not write. This is enforced here rather than " +
+      "promised in a comment, because a connectivity check that can write is a " +
+      "deployment with no gates in front of it.",
+    );
+    this.name = "ReadOnlyViolationError";
+  }
+}
+
+/**
+ * Wrap a client so every write throws.
+ *
+ * The auth-check path runs without the full content-validation gate — that is
+ * the whole point of it — so "it performs no writes" cannot rest on the code
+ * happening not to call one. The capability is removed, not merely unused.
+ */
+export function readOnly(client: WpClient): WpClient {
+  return new Proxy(client, {
+    get(target, property, receiver) {
+      if (typeof property === "string" && (WRITE_METHODS as readonly string[]).includes(property)) {
+        return () => {
+          throw new ReadOnlyViolationError(property);
+        };
+      }
+      const value = Reflect.get(target, property, receiver) as unknown;
+      return typeof value === "function" ? value.bind(target) : value;
+    },
+  });
+}

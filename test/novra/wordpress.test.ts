@@ -8,13 +8,15 @@
 
 import { describe, expect, it } from "vitest";
 
-import { WpClient, redact, WpError } from "../../src/novra/wp-client.js";
+import {
+  readOnly, redact, ReadOnlyViolationError, WpClient, WpError, WRITE_METHODS,
+} from "../../src/novra/wp-client.js";
 import {
   parseManifest, planSync, rewriteAssetUrls, serializeManifest, sha256,
   type MediaManifest,
 } from "../../src/novra/media-manifest.js";
 import { compareReadback, detectPictureStrategy } from "../../src/novra/readback.js";
-import { cssStrategy, deployPage, syncAssets, type PageSpec } from "../../src/novra/deploy.js";
+import { cssStrategy, deployPage, runAuthCheck, syncAssets, type PageSpec } from "../../src/novra/deploy.js";
 
 const TOKEN = "wpcom-secret-token-value";
 
@@ -341,5 +343,90 @@ describe("custom CSS", () => {
     expect(status.installed).toBe(false);
     expect(status.installedSha256).toBeNull();
     expect(status.detail).toMatch(/Additional CSS/);
+  });
+});
+
+describe("read-only client", () => {
+  it("throws on every write method rather than relying on nobody calling one", () => {
+    const wp = new FakeWp();
+    const guarded = readOnly(wp.asClient());
+    for (const method of WRITE_METHODS) {
+      expect(() => (guarded as unknown as Record<string, () => unknown>)[method]?.())
+        .toThrow(ReadOnlyViolationError);
+    }
+    expect(wp.writes).toHaveLength(0);
+    expect(wp.media).toHaveLength(0);
+  });
+
+  it("passes reads through unchanged", async () => {
+    const wp = new FakeWp();
+    wp.seedPage("technology", "<p>x</p>");
+    const guarded = readOnly(wp.asClient());
+    expect(await guarded.listPages()).toHaveLength(1);
+  });
+});
+
+describe("auth check", () => {
+  /**
+   * A FakeWp plus the one client it will be probed through. asClient() builds a
+   * fresh object each call, so the patched client is returned alongside the
+   * recorder rather than rebuilt per assertion.
+   */
+  function probeWp(): { wp: FakeWp; client: WpClient } {
+    const wp = new FakeWp();
+    wp.seedPage("technology", "<p>existing</p>");
+    const client = wp.asClient() as unknown as Record<string, unknown>;
+    client["getSite"] = async () => ({ ID: 246, name: "NOVRA Intelligence", URL: "https://novraintelligence.com" });
+    return { wp, client: client as unknown as WpClient };
+  }
+
+  const assets = [
+    { path: "/assets/e.webp", sha256: "a".repeat(64) },
+    { path: "/assets/e-mobile.webp", sha256: "b".repeat(64) },
+  ];
+
+  it("authenticates, probes and plans without a single write", async () => {
+    const { wp, client } = probeWp();
+    const report = await runAuthCheck(readOnly(client), { assets: {} }, assets, [SPEC], []);
+
+    expect(report.authenticated).toBe(true);
+    expect(report.siteId).toBe(246);
+    expect(report.externalWrites).toBe(0);
+    expect(report.plannedUploads).toHaveLength(2);
+    expect(report.plannedPages[0]).toContain("update existing");
+    expect(wp.writes).toHaveLength(0);
+    expect(wp.media).toHaveLength(0);
+  });
+
+  it("records a failed capability probe instead of aborting the check", async () => {
+    const { client } = probeWp();
+    // getCustomCss throws on the fake, standing in for a site where the API is
+    // unavailable. That is a finding, not a crash.
+    const report = await runAuthCheck(readOnly(client), { assets: {} }, assets, [SPEC], []);
+    const css = report.capabilities.find((c) => c.name === "customcss.get");
+    expect(css?.ok).toBe(false);
+    expect(report.authenticated).toBe(true);
+  });
+
+  it("still reports a content blocker while confirming the credentials work", async () => {
+    const { client } = probeWp();
+    const report = await runAuthCheck(
+      readOnly(client), { assets: {} }, assets, [SPEC],
+      ["contact: unresolved PLACEHOLDER_CONTACT_EMAIL"],
+    );
+    expect(report.authenticated).toBe(true);
+    expect(report.blockers).toHaveLength(1);
+    expect(report.blockers[0]).toContain("PLACEHOLDER_CONTACT_EMAIL");
+  });
+
+  it("marks an already-mapped asset for reuse rather than upload", async () => {
+    const { client } = probeWp();
+    const manifest = manifestWith({ "/assets/e.webp": "https://cdn.example/e.webp" });
+    const report = await runAuthCheck(
+      readOnly(client), manifest,
+      [{ path: "/assets/e.webp", sha256: "a".repeat(64) }], [SPEC], [],
+    );
+    expect(report.plannedReuse).toEqual(["/assets/e.webp"]);
+    expect(report.plannedUploads).toHaveLength(0);
   });
 });

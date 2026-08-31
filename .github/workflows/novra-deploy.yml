@@ -1,22 +1,41 @@
 # Production deployment.
 #
-# Runs only from the repository's own branches, never from a pull request, and
-# never automatically on a fork's code. Secrets live in the `production`
-# environment so they can carry required reviewers and branch restrictions
-# independently of this file.
+# Three modes, gated differently on purpose:
 #
-# Deployment does not change site visibility. That is novra-launch.yml.
+#   auth_check  authenticate, probe capabilities, compute the plan. Uses a
+#               readOnly() client, so it cannot write even if the code tried.
+#               Runs WITHOUT the content-validation gate — deliberately.
+#   dry_run     the same plan, through the ordinary deploy path, no writes.
+#   deploy      the real thing. Fail-closed behind full validation.
+#
+# WHY auth_check SKIPS CONTENT VALIDATION
+# `site:validate` fails while PLACEHOLDER_CONTACT_EMAIL remains, which is
+# correct: the site is not fit to publish. But "is the site fit to publish" and
+# "does the token authenticate" are different questions, and gating the second
+# on the first means the first live deployment attempt is also the first time
+# anyone discovers the token is wrong. auth_check answers the second question
+# only, performs zero writes, and still reports the content blocker.
+#
+# Code integrity is NOT skipped: auth_check runs the tests and the typecheck.
+# What it skips is the content gate, which cannot affect a read-only run.
+#
+# Never changes site visibility. That is novra-launch.yml.
 name: novra-deploy
 
 on:
   workflow_dispatch:
     inputs:
-      dry_run:
-        description: "Plan only — no writes to WordPress"
-        type: boolean
-        default: true
+      mode:
+        description: "auth_check (read-only) · dry_run (plan only) · deploy (writes)"
+        type: choice
+        options: [auth_check, dry_run, deploy]
+        default: auth_check
   push:
-    branches: [main]
+    # The canonical production ref. `main` is NOT used: it sits at 8e60fd3 and
+    # contains none of this automation, so committing deployment state there
+    # would split it from the source that produced it. See
+    # docs/automation-runbook.md for the promotion path if that changes.
+    branches: [claude/fredrick-mendez-reputation-ijjnbq]
     paths:
       - "site/**"
       - "content/**"
@@ -30,18 +49,44 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Validation runs first, as a separate job with no access to the production
-  # environment. A failing gate cannot be skipped on the way to a deployment.
+  # Read-only. No content gate in front of it, because it cannot write.
+  auth-check:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'auth_check' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+
+      # Code integrity only. A read-only probe run from broken code is still
+      # worth refusing; a read-only probe run from a site with an unresolved
+      # contact address is not.
+      - run: npm test
+      - run: npm run typecheck
+
+      - name: Authenticate, probe and plan
+        env:
+          NOVRA_WP_SITE: ${{ secrets.NOVRA_WP_SITE }}
+          NOVRA_WP_ACCESS_TOKEN: ${{ secrets.NOVRA_WP_ACCESS_TOKEN }}
+        run: npm run site:deploy:auth-check
+
+  # Full validation. Separate job, no access to the production environment, so a
+  # failing gate cannot be skipped on the way to a write.
   validate:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.mode != 'auth_check' }}
     uses: ./.github/workflows/novra-ci.yml
 
   deploy:
     needs: validate
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.mode != 'auth_check' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: production
-    # The manifest is committed after a successful media sync, so the next run
-    # knows what already exists and uploads nothing.
     permissions:
       contents: write
     steps:
@@ -59,10 +104,10 @@ jobs:
           NOVRA_WP_SITE: ${{ secrets.NOVRA_WP_SITE }}
           NOVRA_WP_ACCESS_TOKEN: ${{ secrets.NOVRA_WP_ACCESS_TOKEN }}
         run: |
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
-            npm run site:deploy:dry-run
-          else
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.mode }}" = "deploy" ]; then
             npm run site:deploy
+          else
+            npm run site:deploy:dry-run
           fi
 
       - name: Upload deployment report
@@ -74,17 +119,15 @@ jobs:
           if-no-files-found: ignore
           retention-days: 90
 
-      # Only the manifest is committed. The report is an artifact, not a commit:
-      # it is per-run evidence, not repository state.
+      # Only the manifest is committed, and only back to the ref this run
+      # deployed from. `github.ref_name` rather than a hardcoded branch: the
+      # deployment state belongs on the same commit history as the source that
+      # produced it, and a hardcoded target is how those two drift apart.
       #
-      # `HEAD:main` is required, not cosmetic: on a push event the checkout is
-      # detached at the pushed SHA, so a bare `git push` has no upstream.
-      #
-      # This commit uses GITHUB_TOKEN, and pushes made with it do not trigger
-      # further workflow runs — which is what stops this workflow from
-      # retriggering itself on the file it just wrote.
+      # Pushes made with GITHUB_TOKEN do not trigger further workflow runs,
+      # which is what stops this from retriggering itself on the file it wrote.
       - name: Commit the media manifest if the sync changed it
-        if: ${{ inputs.dry_run != true }}
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'deploy' }}
         run: |
           if git diff --quiet -- site/wp-media.json; then
             echo "media manifest unchanged"
@@ -94,5 +137,5 @@ jobs:
           git config user.email "noreply@users.noreply.github.com"
           git add site/wp-media.json
           git commit -m "Record Media Library URLs returned by WordPress"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push origin "HEAD:${{ github.ref_name }}"

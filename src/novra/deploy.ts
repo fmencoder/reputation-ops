@@ -374,3 +374,90 @@ export async function cssStrategy(
     };
   }
 }
+
+export interface CapabilityProbe {
+  readonly name: string;
+  readonly ok: boolean;
+  readonly detail: string;
+}
+
+export interface AuthCheckReport {
+  readonly authenticated: boolean;
+  readonly siteId: number | null;
+  readonly siteName: string;
+  readonly siteUrl: string;
+  readonly capabilities: readonly CapabilityProbe[];
+  readonly plannedUploads: readonly string[];
+  readonly plannedReuse: readonly string[];
+  readonly plannedPages: readonly string[];
+  readonly blockers: readonly string[];
+  readonly externalWrites: 0;
+}
+
+/**
+ * Authenticate, probe and plan. Never write.
+ *
+ * This exists because the full validation gate legitimately fails while a
+ * public-content placeholder remains, and that must not also make it impossible
+ * to find out whether the credentials work. Those are different questions: one
+ * is "is the site fit to publish", the other is "does the token authenticate".
+ * Blocking the second on the first means the first live deployment attempt is
+ * also the first time anyone finds out the token is wrong.
+ *
+ * The client passed in must be a readOnly() wrapper. Blockers are reported, not
+ * suppressed — the check answers the connectivity question and still says, in
+ * the same breath, that the site is not deployable.
+ */
+export async function runAuthCheck(
+  client: WpClient,
+  manifest: MediaManifest,
+  assets: readonly { path: string; sha256: string }[],
+  pages: readonly PageSpec[],
+  blockers: readonly string[],
+): Promise<AuthCheckReport> {
+  const capabilities: CapabilityProbe[] = [];
+
+  const site = await client.getSite();
+
+  const probe = async (name: string, run: () => Promise<string>): Promise<void> => {
+    try {
+      capabilities.push({ name, ok: true, detail: await run() });
+    } catch (error) {
+      // A failed probe is information, not a crash. "Custom CSS is unavailable"
+      // is exactly what this check exists to discover.
+      capabilities.push({ name, ok: false, detail: (error as Error).message.slice(0, 160) });
+    }
+  };
+
+  // Fetched once and reused for the page plan below — a probe that costs two
+  // round trips to answer one question is a probe nobody leaves enabled.
+  let existingPages: readonly WpPage[] = [];
+  await probe("pages.list", async () => {
+    existingPages = await client.listPages();
+    return `${existingPages.length} pages readable`;
+  });
+  await probe("posts.list", async () => `${(await client.listPosts()).length} posts readable`);
+  await probe("media.list", async () => `${(await client.listMedia()).length} media items readable`);
+  await probe("customcss.get", async () => {
+    const css = await client.getCustomCss();
+    return `Custom CSS API reachable (${(css?.css ?? "").length} characters installed)`;
+  });
+
+  const plan = planSync(manifest, assets);
+  const existingSlugs = new Set(existingPages.map((page) => page.slug));
+
+  return {
+    authenticated: true,
+    siteId: site.ID ?? null,
+    siteName: site.name ?? "",
+    siteUrl: site.URL ?? "",
+    capabilities,
+    plannedUploads: plan.filter((d) => d.action !== "reuse").map((d) => `${d.path} (${d.action})`),
+    plannedReuse: plan.filter((d) => d.action === "reuse").map((d) => d.path),
+    plannedPages: pages.map(
+      (page) => `${page.slug} -> ${existingSlugs.has(page.slug) ? "update existing" : "create draft"}`,
+    ),
+    blockers,
+    externalWrites: 0,
+  };
+}
