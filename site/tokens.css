@@ -1,0 +1,118 @@
+/*
+ * Design tokens — approved NOVRA visual direction.
+ *
+ * Palette, type scale and spacing derived from the approved four-page
+ * reference. These map onto WordPress theme.json preset slugs so the same
+ * values drive both the static templates here and the block editor.
+ *
+ * Dark-first by design: the approved direction is a near-black environment.
+ * A light variant is defined so the site is not unreadable for anyone forcing
+ * a light preference, but dark is the canonical presentation.
+ */
+
+:root {
+  /* Environment */
+  --c-bg:            #05070f;  /* near-black, deep navy cast */
+  --c-bg-raised:     #0a0e1c;  /* cards, panels */
+  --c-bg-inset:      #0d1226;  /* nested surfaces */
+  --c-border:        #1b2340;
+  --c-border-strong: #2a3560;
+
+  /* Text — high contrast is a named requirement of the approved direction */
+  --c-text:          #ffffff;
+  --c-text-muted:    #9aa6c8;
+  --c-text-subtle:   #6b779c;
+
+  /* Accents. Blue leads; violet supports and never dominates. */
+  --c-accent:        #2f6bff;  /* electric blue — primary */
+  --c-accent-bright: #4d84ff;
+  --c-accent-2:      #7b4dff;  /* violet — secondary */
+  --c-accent-2-soft: #a07cff;
+
+  /* Selective gradient: electric blue -> royal -> violet */
+  --grad-brand: linear-gradient(100deg, #2f6bff 0%, #4058e8 48%, #7b4dff 100%);
+  --grad-rule:  linear-gradient(90deg, #2f6bff 0%, #7b4dff 100%);
+
+  /* Restrained glow. The direction warns against excessive neon. */
+  --glow-accent: 0 0 24px rgba(47, 107, 255, 0.28);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset,
+                 0 12px 32px rgba(0, 0, 0, 0.5);
+
+  /* Type */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+  --fs-eyebrow: 0.75rem;
+  --fs-body:    1rem;
+  --fs-lead:    1.125rem;
+  --fs-h3:      1.375rem;
+  --fs-h2:      2rem;
+  --fs-h1:      clamp(2.25rem, 5.5vw, 4rem);
+
+  --lh-tight: 1.08;
+  --lh-snug:  1.3;
+  --lh-body:  1.65;
+
+  --tracking-eyebrow: 0.18em;
+  --tracking-hero:   -0.02em;
+
+  /* Space — 4px base */
+  --s-1: 0.25rem;  --s-2: 0.5rem;   --s-3: 0.75rem;  --s-4: 1rem;
+  --s-6: 1.5rem;   --s-8: 2rem;     --s-12: 3rem;    --s-16: 4rem;
+  --s-24: 6rem;    --s-32: 8rem;
+
+  --radius:    10px;
+  --radius-lg: 14px;
+  --measure:   68ch;
+  --container: 1200px;
+}
+
+/*
+ * Respect a forced light preference rather than shipping white-on-white.
+ * The canonical presentation stays dark; this is a legibility floor.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --c-bg:            #ffffff;
+    --c-bg-raised:     #f6f8fc;
+    --c-bg-inset:      #eef2f9;
+    --c-border:        #dbe2ef;
+    --c-border-strong: #b9c4da;
+    --c-text:          #0a0e1c;
+    --c-text-muted:    #46527a;
+    --c-text-subtle:   #6b779c;
+    --shadow-card: 0 1px 2px rgba(16, 24, 48, 0.06),
+                   0 8px 24px rgba(16, 24, 48, 0.08);
+    --glow-accent: none;
+  }
+}
+
+:root[data-theme="light"] {
+  --c-bg:            #ffffff;
+  --c-bg-raised:     #f6f8fc;
+  --c-bg-inset:      #eef2f9;
+  --c-border:        #dbe2ef;
+  --c-border-strong: #b9c4da;
+  --c-text:          #0a0e1c;
+  --c-text-muted:    #46527a;
+  --c-text-subtle:   #6b779c;
+  --shadow-card: 0 1px 2px rgba(16, 24, 48, 0.06),
+                 0 8px 24px rgba(16, 24, 48, 0.08);
+  --glow-accent: none;
+}
+
+/*
+ * Core Web Vitals: the approved direction calls for depth and luminosity, both
+ * of which are cheap as CSS gradients and expensive as animation. Motion is
+ * limited to opacity/transform on interaction, and disabled outright for anyone
+ * who has asked for reduced motion.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
