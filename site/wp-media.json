@@ -1,0 +1,10 @@
+{
+  "_comment": [
+    "Maps local /assets/ paths to WordPress Media Library URLs.",
+    "Populated ONLY from the URL returned by a real media.create response.",
+    "Never hand-write an entry: a guessed CDN URL renders as a broken image on a",
+    "live page, and wp-export.mjs cannot tell a guess from a real one.",
+    "Any /assets/ path referenced by a page and missing here fails the export."
+  ],
+  "assets": {}
+}

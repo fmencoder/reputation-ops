@@ -33,7 +33,7 @@
 
   <!-- Flat reference: reliability if steps did not compound. Deliberately dim and inert. -->
   <line x1="150" y1="280" x2="1448" y2="280"
-        stroke="#9aa6c8" stroke-opacity="0.22" stroke-width="1.2" stroke-dasharray="9 9"/>
+        stroke="#9aa6c8" stroke-opacity="0.45" stroke-width="1.9" stroke-dasharray="11 8"/>
 
   <!-- Actual: compounding decay. -->
   <polyline points="150,280.0 268,360.5 386,420.9 504,466.2 622,500.1 740,525.6 858,544.7 976,559.0 1094,569.8 1212,577.8 1330,583.9 1448,588.4" fill="none" stroke="url(#envg)" stroke-width="2.1" stroke-linejoin="round"/>

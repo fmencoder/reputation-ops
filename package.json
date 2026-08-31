@@ -12,7 +12,11 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "scan": "tsx src/cli/scan.ts",
-    "report": "tsx src/cli/report.ts"
+    "report": "tsx src/cli/report.ts",
+    "site:build": "node site/build.mjs",
+    "site:export": "node site/wp-export.mjs",
+    "site:assets": "node site/render-assets.mjs",
+    "site:assets:check": "node site/render-assets.mjs --check"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

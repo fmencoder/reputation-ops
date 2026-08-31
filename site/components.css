@@ -193,6 +193,36 @@ img { max-width: 100%; height: auto; }
  * breaks, not at device names.
  */
 
+/* --- Figure: rasterised diagram assets ---------------------------------- */
+/*
+ * The diagram rasters are dark-ground artwork. The frame is pinned to the
+ * environment colour in BOTH themes deliberately: under a forced light
+ * preference, a near-black image inside a light card reads as a rendering
+ * fault, whereas the same image inside an intentional dark plate reads as a
+ * figure. This is the one place the light variant does not follow the tokens.
+ */
+.figure { margin: var(--s-12) 0; }
+.figure__frame {
+  background: #05070f;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  line-height: 0;
+}
+.figure__frame img { display: block; width: 100%; height: auto; }
+.figure figcaption {
+  color: var(--c-text-subtle);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  margin: var(--s-3) 0 0;
+  max-width: var(--measure);
+}
+/*
+ * Fallback pair. Used only if <picture>/<source> does not survive KSES on the
+ * deployed WordPress version; with <picture> intact these classes are unused.
+ */
+.figure__mobile { display: none; }
+
 @media (max-width: 1024px) {
   .grid--4 { grid-template-columns: repeat(2, 1fr); }
   .footer__grid { grid-template-columns: 1fr 1fr; }
@@ -219,4 +249,8 @@ img { max-width: 100%; height: auto; }
   .display { font-size: clamp(1.875rem, 8vw, 2.5rem); }
   .btn { width: 100%; justify-content: center; }
   .byline { flex-wrap: wrap; }
+
+  .figure { margin: var(--s-8) 0; }
+  .figure__desktop { display: none; }
+  .figure__mobile { display: block; }
 }

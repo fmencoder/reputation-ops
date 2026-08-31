@@ -5,6 +5,11 @@ meta_description: "A 99%-reliable step sounds excellent until you chain fifty of
 primary_keyword: agentic ai reliability
 cluster: pillar
 schema: Article
+hero: /assets/reliability-budget-agentic-ai.webp
+hero_width: 1600
+hero_height: 900
+hero_alt: "Twelve nodes in a chain, each dimmer than the last. A dashed line across the top marks the success rate a single step suggests; a curve falling away beneath it marks the rate the whole chain actually achieves, and the widening gap between them is shaded."
+hero_caption: "Per-step reliability read as if it were end-to-end reliability. The shaded wedge is the error in that reading, and it widens with every step."
 status: draft
 internal_links:
   - { to: "step-accuracy-vs-task-accuracy", anchor: "the gap between step accuracy and task accuracy" }

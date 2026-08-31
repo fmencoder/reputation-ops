@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" font-family="DejaVu Sans, sans-serif">
+  <defs>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#4d84ff" stroke-opacity="0.055" stroke-width="1"/></pattern>
+    <radialGradient id="focal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.34"/>
+      <stop offset="55%" stop-color="#7b4dff" stop-opacity="0.11"/>
+      <stop offset="100%" stop-color="#05070f" stop-opacity="0"/></radialGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7fb0ff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#4d84ff" stop-opacity="0.5"/></linearGradient>
+    <filter id="soft" x="-140%" y="-140%" width="380%" height="380%"><feGaussianBlur stdDeviation="9"/></filter>
+  </defs>
+  <rect width="900" height="1200" fill="#05070f"/>
+  <rect width="900" height="1200" fill="url(#grid)"/>
+  <ellipse cx="450.0" cy="535.0" rx="470" ry="260" fill="url(#focal)"/>
+
+  <rect x="52" y="201" width="796" height="798" rx="20" fill="none" stroke="#7b4dff" stroke-opacity="0.30" stroke-width="1.4"/>
+  <text x="450.0" y="223" font-size="17" fill="#a07cff" fill-opacity="0.72" letter-spacing="4" text-anchor="middle">SECURITY &#183; GOVERNANCE</text>
+  <text x="450.0" y="992" font-size="17" fill="#a07cff" fill-opacity="0.72" letter-spacing="4" text-anchor="middle">OBSERVABILITY &#183; HUMAN OVERSIGHT</text>
+
+  <g stroke="url(#flow)" stroke-width="2.8" stroke-linecap="round"><line x1="450.0" y1="189" x2="450.0" y2="231"/><line x1="450.0" y1="319" x2="450.0" y2="361"/><line x1="450.0" y1="449" x2="450.0" y2="485"/><line x1="450.0" y1="585" x2="450.0" y2="621"/><line x1="450.0" y1="709" x2="450.0" y2="751"/><line x1="450.0" y1="839" x2="450.0" y2="881"/><line x1="450.0" y1="969" x2="450.0" y2="1011"/></g>
+  <rect x="96" y="101" width="708" height="88" rx="14" fill="#0a0e1c" stroke="#1b2340" stroke-width="1.4"/><text x="450.0" y="154.0" font-size="26" fill="#ffffff" letter-spacing="2.2" text-anchor="middle">DATA + EVENTS</text><circle cx="96" cy="145.0" r="5.5" fill="#dce6ff"/><rect x="96" y="231" width="708" height="88" rx="14" fill="#0a0e1c" stroke="#1b2340" stroke-width="1.4"/><text x="450.0" y="284.0" font-size="26" fill="#ffffff" letter-spacing="2.2" text-anchor="middle">AI / INTELLIGENCE</text><circle cx="96" cy="275.0" r="5.5" fill="#dce6ff"/><rect x="96" y="361" width="708" height="88" rx="14" fill="#0a0e1c" stroke="#1b2340" stroke-width="1.4"/><text x="450.0" y="414.0" font-size="26" fill="#ffffff" letter-spacing="2.2" text-anchor="middle">AUTONOMOUS AGENTS</text><circle cx="96" cy="405.0" r="5.5" fill="#dce6ff"/><rect x="82" y="485" width="736" height="100" rx="16" fill="#0d1226" stroke="#4d84ff" stroke-opacity="0.85" stroke-width="2.4" filter="url(#soft)"/><rect x="82" y="485" width="736" height="100" rx="16" fill="#0d1226" stroke="#4d84ff" stroke-opacity="0.92" stroke-width="2.4"/><text x="450.0" y="545.0" font-size="30" fill="#ffffff" letter-spacing="2.4" text-anchor="middle">POLICY + AUTHORIZATION</text><circle cx="82" cy="535.0" r="9" fill="#ffffff" filter="url(#soft)"/><circle cx="82" cy="535.0" r="7.5" fill="#ffffff"/><rect x="96" y="621" width="708" height="88" rx="14" fill="#0a0e1c" stroke="#1b2340" stroke-width="1.4"/><text x="450.0" y="674.0" font-size="26" fill="#ffffff" letter-spacing="2.2" text-anchor="middle">SMART CONTRACTS</text><circle cx="96" cy="665.0" r="5.5" fill="#dce6ff"/><rect x="96" y="751" width="708" height="88" rx="14" fill="#0a0e1c" stroke="#1b2340" stroke-width="1.4"/><text x="450.0" y="791.0" font-size="25" fill="#ffffff" letter-spacing="2.2" text-anchor="middle">BLOCKCHAIN /</text><text x="450.0" y="821.0" font-size="25" fill="#ffffff" letter-spacing="2.2" text-anchor="middle">DISTRIBUTED STATE</text><circle cx="96" cy="795.0" r="5.5" fill="#a07cff"/><rect x="96" y="881" width="708" height="88" rx="14" fill="#0a0e1c" stroke="#1b2340" stroke-width="1.4"/><text x="450.0" y="921.0" font-size="25" fill="#ffffff" letter-spacing="2.2" text-anchor="middle">DIGITAL + FINANCIAL</text><text x="450.0" y="951.0" font-size="25" fill="#ffffff" letter-spacing="2.2" text-anchor="middle">INFRASTRUCTURE</text><circle cx="96" cy="925.0" r="5.5" fill="#a07cff"/><rect x="96" y="1011" width="708" height="88" rx="14" fill="#0a0e1c" stroke="#1b2340" stroke-width="1.4"/><text x="450.0" y="1064.0" font-size="26" fill="#ffffff" letter-spacing="2.2" text-anchor="middle">VERIFIED OUTCOMES</text><circle cx="96" cy="1055.0" r="5.5" fill="#dce6ff"/>
+</svg>

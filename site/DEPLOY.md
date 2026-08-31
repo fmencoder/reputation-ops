@@ -71,8 +71,12 @@ files. Nothing about what gets published is decided at deploy time.
 
 No theme upload, no file access, no GitHub deployment. The approved design is a
 custom system rather than a theme, so the markup travels inside `core/html`
-blocks and the two stylesheets go into **Appearance → Customize → Additional
-CSS** (concatenate `tokens.css` then `components.css`).
+blocks and the stylesheet goes into **Appearance → Customize → Additional CSS**.
+
+**Paste `site/novra.css` — the whole file, nothing else.** It is the merged,
+deployment-ready build of `tokens.css` + `components.css`, already hardened for
+the two sanitisation traps below. Pasting the two source files separately is
+wrong: `novra.css` carries fixes that are not in them.
 
 Rebuilding the layout from core blocks would mean re-deriving the design through
 whatever the active theme imposes — the stock-theme outcome the brief rules out.
@@ -90,17 +94,62 @@ Two honest caveats:
 
 1. Site identity, title, canonical URL — needs `wpcom/site-settings`
 2. Logo, favicon, site icon — needs `wpcom-mcp/media-create`
-3. Additional CSS: `tokens.css` + `components.css`
-4. Pages, in payload order; About first
-5. Home set as static front page
-6. Article drafts — needs `wpcom-mcp/posts-create`
-7. Structured data from `structured-data.json`
-8. Open Graph assets
-9. Responsive verification
-10. Publication gates, then visibility change
+3. **Diagram assets** — upload the three `.webp` files below, record the returned
+   URLs in `site/wp-media.json`, re-run `node site/wp-export.mjs`
+4. Additional CSS: paste `site/novra.css` (see below)
+5. Pages, in payload order; About first
+6. Home set as static front page
+7. Article drafts — needs `wpcom-mcp/posts-create`
+8. Structured data from `structured-data.json`
+9. Open Graph assets
+10. Responsive verification
+11. Publication gates, then visibility change
 
 Site stays **Coming Soon** throughout. Visibility is the last step and is not
 automated.
+
+## Diagram assets
+
+Three rasters must exist in the Media Library before the Technology page or the
+reliability article can be published. They are generated from committed SVG
+sources by `node site/render-assets.mjs`, and `--check` verifies the committed
+`.webp` still matches its source.
+
+| File | Size | Used by |
+| --- | --- | --- |
+| `site/assets/novra-convergence-architecture.webp` | 1600×900, 17.8 KB | Technology — default source |
+| `site/assets/novra-convergence-architecture-mobile.webp` | 900×1200, 23.1 KB | Technology — `<source media="(max-width: 620px)">` |
+| `site/assets/reliability-budget-agentic-ai.webp` | 1600×900, 7.6 KB | Reliability-budget article hero |
+
+**Do not upload the `.svg` sources.** WordPress rejects `image/svg+xml`, and they
+are the editable originals, not deliverables. `wp-export.mjs` throws if an `.svg`
+is ever referenced as an image source.
+
+After each upload, record the URL returned by `media.create` in
+`site/wp-media.json`:
+
+    { "assets": { "/assets/novra-convergence-architecture.webp": "https://…" } }
+
+Never hand-write one of these URLs. `wp-export.mjs` rewrites every `src`/`srcset`
+through this map and **fails the export** on any unmapped asset — a page carrying
+an unrewritten `/assets/` path renders a broken image, because WordPress.com on
+the Personal plan has no file access and that path 404s.
+
+### One thing to verify on the Technology page
+
+The Technology payload contains the only `<picture>` element on the site. KSES
+support for `<picture>` and `<source>` is WordPress-version-dependent and has not
+been verified against this install. Diff the echoed content after `pages.create`:
+
+- **Survived** → nothing to do; mobile viewports get the portrait composition.
+- **Stripped** → the inner `<img>` still renders everywhere, so the page is not
+  broken, only desktop-only on mobile. Swap to the two-`<img>` fallback:
+  duplicate the `<img>`, class them `figure__desktop` and `figure__mobile`, and
+  the rules already in `novra.css` will do the switching.
+
+Checking `_content_warnings` is not sufficient here. It reports stripped
+*elements* inconsistently and stripped *CSS properties* not at all — which is how
+`inset` was silently removed. Diff the echo.
 
 ## Placeholder gate
 
@@ -109,10 +158,16 @@ per page. Current state:
 
 | Page | Placeholder | Needs |
 | --- | --- | --- |
-| `about` | `PLACEHOLDER_BIO_PARAGRAPH_1` / `_2` | Two short paragraphs, written from fact |
-| `contact` | `PLACEHOLDER_CONTACT_EMAIL` | A working address |
-| `structured-data.json` | `PLACEHOLDER_ONE_SENTENCE_VERIFIED` | Person description |
-| `structured-data.json` | `PLACEHOLDER_VERIFIED_PROFILE_URL` | `sameAs` — only profiles that resolve and are controlled |
+| `contact` | `PLACEHOLDER_CONTACT_EMAIL` | A working address. **The only one blocking launch.** |
+| `structured-data.json` | `PLACEHOLDER_TITLE` / `_META_DESCRIPTION` / `_ISO_DATE` / `_SLUG` | Per-article, filled from each post's front matter at publish. Not launch blockers. |
+
+Resolved since the last pass: the About bio paragraphs and the Person
+description are written; `sameAs` was removed from the schema outright rather
+than left as a placeholder, because a wrong entry merges the subject with one of
+400+ same-name people.
+
+`wp-export.mjs` now also fails on any `/assets/` path with no Media Library URL
+in `site/wp-media.json`. Both gates must be clear before a visibility change.
 
 Pages may be created as drafts with placeholders present. None may be published
 with them. Run `grep -R "PLACEHOLDER" site/ --exclude-dir=dist --exclude-dir=wp-payload`
@@ -199,13 +254,16 @@ the resulting URLs.
 
 ## Still outstanding
 
-- Additional CSS not yet installed. `tokens.css` + `components.css` must be
-  pasted into Appearance → Customize → Additional CSS (tokens first). **Until
-  that happens the pages will render unstyled** — every class is defined there.
+- Additional CSS not yet installed. Paste `site/novra.css` into Appearance →
+  Customize → Additional CSS. **Until that happens the pages render unstyled** —
+  every class is defined there, including the new `.figure` rules the Technology
+  diagram depends on.
+- Three diagram `.webp` files not uploaded; `site/wp-media.json` is empty, so
+  `wp-export.mjs` currently blocks the Technology payload.
 - Site title, front page, and permalinks need `wpcom/site-settings`.
 - Structured data not yet injected.
 - Articles not published, per instruction.
-- 5 placeholders unresolved.
+- `PLACEHOLDER_CONTACT_EMAIL` unresolved — the one launch blocker.
 
 ## Plan note
 

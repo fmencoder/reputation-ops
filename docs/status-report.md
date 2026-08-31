@@ -139,7 +139,8 @@ Grep PLACEHOLDER across site/ before any publish. Non-empty means not ready.
 
 1. WordPress site URL or blog ID. (P0)
 2. Valid SerpApi key. (P0)
-3. Fill the 5 content placeholders. (P1)
+3. Fill `PLACEHOLDER_CONTACT_EMAIL` — the last launch blocker. The other four
+   are resolved. (P1)
 4. Send the 3 outreach drafts; do the 5 data-broker opt-outs by hand — each
    needs CAPTCHA, phone, or email verification. (P1)
 5. Switch the default branch to main in GitHub Settings. (P2)

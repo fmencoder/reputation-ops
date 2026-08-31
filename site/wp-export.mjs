@@ -32,6 +32,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = join(ROOT, "wp-payload");
+const MEDIA_MAP = join(ROOT, "wp-media.json");
 
 const domainArg = process.argv.indexOf("--domain");
 const DOMAIN = domainArg > -1 ? process.argv[domainArg + 1] : "novraintelligence.com";
@@ -65,14 +66,56 @@ function findPlaceholders(text) {
   return [...new Set(text.match(/PLACEHOLDER[A-Z_]*/g) ?? [])];
 }
 
+/**
+ * Rewrite local /assets/ references to WordPress Media Library URLs.
+ *
+ * The static build serves images from its own /assets/ directory. WordPress.com
+ * on the Personal plan has no file access, so that path 404s once deployed —
+ * every referenced asset has to resolve to a Media Library URL instead.
+ *
+ * Only src and srcset attributes are rewritten. Scanning raw text would also
+ * match the .svg source paths named in the authoring comments, which are
+ * deliberately never uploaded.
+ *
+ * Unmapped assets are collected, not silently passed through. A page that ships
+ * with an unrewritten /assets/ path renders a broken image, which is worse than
+ * a failed export.
+ */
+function rewriteAssets(markup, media, unmapped) {
+  return markup.replace(
+    /(\s(?:src|srcset)=")(\/assets\/[A-Za-z0-9._-]+)(")/g,
+    (whole, before, path, after) => {
+      if (path.endsWith(".svg")) {
+        throw new Error(
+          `${path} is referenced as an image source, but WordPress rejects ` +
+          `image/svg+xml uploads. Reference the rasterised .webp instead.`,
+        );
+      }
+      const url = media[path];
+      if (!url) {
+        unmapped.add(path);
+        return whole;
+      }
+      return before + url + after;
+    },
+  );
+}
+
 async function main() {
   await mkdir(OUT, { recursive: true });
 
+  const media = JSON.parse(await readFile(MEDIA_MAP, "utf8")).assets ?? {};
+
   const allPlaceholders = new Map();
+  const unmapped = new Set();
 
   for (const page of PAGES) {
     const body = await readFile(join(ROOT, "pages", page.file), "utf8");
-    const markup = body.replaceAll("{{DOMAIN}}", DOMAIN);
+    const markup = rewriteAssets(
+      body.replaceAll("{{DOMAIN}}", DOMAIN),
+      media,
+      unmapped,
+    );
     const placeholders = findPlaceholders(markup);
     if (placeholders.length) allPlaceholders.set(page.slug, placeholders);
 
@@ -124,6 +167,7 @@ async function main() {
     },
     structuredData: "site/structured-data.json — WebSite + Person + Article. No Organization node.",
     blockedPlaceholders: Object.fromEntries(allPlaceholders),
+    unmappedAssets: [...unmapped],
   };
 
   await writeFile(join(OUT, "manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
@@ -133,6 +177,16 @@ async function main() {
     console.log("\nBLOCKED — unresolved placeholders:");
     for (const [slug, keys] of allPlaceholders) console.log(`  ${slug}: ${keys.join(", ")}`);
     console.log("\nThese pages may be created as drafts but must not be published.");
+  }
+  if (unmapped.size) {
+    console.log("\nBLOCKED — assets with no Media Library URL:");
+    for (const path of unmapped) console.log(`  ${path}`);
+    console.log(
+      "\nUpload each to the Media Library, then record the returned URL in\n" +
+      "site/wp-media.json. Do not publish a page carrying an unmapped path:\n" +
+      "/assets/ does not resolve on WordPress.com and renders as a broken image.",
+    );
+    process.exitCode = 1;
   }
 }
 

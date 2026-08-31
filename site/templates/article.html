@@ -20,6 +20,26 @@
       </div>
     </div>
 
+
+    <!--
+      Optional article hero. A single composition serves every width: the
+      reliability hero was rendered and inspected down to a 342px content
+      column and holds, because it carries no type. Heroes that DO carry type
+      need a second composition, as Panel E does - check by rendering, not by
+      assuming.
+
+      Omitted entirely when the post has no hero, rather than rendering an
+      empty frame.
+    -->
+    {{#HERO}}
+    <figure class="figure">
+      <div class="figure__frame">
+        <img src="{{HERO_SRC}}" width="{{HERO_WIDTH}}" height="{{HERO_HEIGHT}}" fetchpriority="high" decoding="async" alt="{{HERO_ALT}}">
+      </div>
+      <figcaption>{{HERO_CAPTION}}</figcaption>
+    </figure>
+    {{/HERO}}
+
     <div class="article__body">
       {{BODY}}
     </div>
