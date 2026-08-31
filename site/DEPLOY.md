@@ -127,3 +127,88 @@ resolve to the Person. Forbidden types are listed in `structured-data.json`.
 When a legal entity exists and its exact registered name is supplied,
 `publisher` moves to a new Organization node and nothing else in the graph
 changes.
+
+---
+
+# Deployment record — 2026-08-31
+
+Deployed to blog_id **257059568** (`novraintelligence.com`). All six pages are
+**drafts**; the site remains **Coming Soon** and was not launched.
+
+| Page | ID | Slug | Status |
+| --- | --- | --- | --- |
+| About | 1 | `about` | draft |
+| Home | 6 | `home` | draft |
+| Insights | 7 | `insights` | draft |
+| Research | 8 | `research` | draft |
+| Contact | 9 | `contact` | draft |
+| Technology | 10 | `technology` | draft |
+
+Edit: `https://novraintelligence.com/wp-admin/post.php?post=<ID>&action=edit`
+Preview: `https://novraintelligence.com/?page_id=<ID>&preview=true`
+
+## Duplicate handling
+
+The site shipped with a default WordPress page at ID 1, slug `about`, holding
+boilerplate ("This is an example of a page…"), unmodified since provisioning.
+Creating a second About would have produced `about-2`, so ID 1 was **updated in
+place** instead. No duplicates exist: `pages.list` returns exactly six.
+
+A default post remains: **ID 3, "Hello World!", published**. It was left alone —
+deletion is destructive and was not authorised. Remove it from wp-admin, or say
+the word and it goes to trash.
+
+## What WordPress actually strips
+
+Confirmed by comparing every submitted payload against its echo.
+
+**1. All inline SVG is removed.** Reported in `_content_warnings`:
+`<svg> <defs> <radialgradient> <stop> <lineargradient> <circle> <ellipse> <g> <path>`.
+
+**2. SVG cannot be uploaded either.** `media.create` rejects `image/svg+xml`.
+Supported: JPEG, PNG, GIF, WebP, BMP, TIFF, PDF, DOC/DOCX, XLS/XLSX, MP3, WAV,
+OGG, MP4, WebM. So the media-upload fallback for SVG does not exist on this plan.
+
+**3. `inset` is stripped from `style` attributes — silently, with no warning.**
+This is the dangerous one. `position:absolute;inset:0` came back as
+`position:absolute`, which collapses the element to zero size while
+`_content_warnings` stays empty. Use longhand
+`top:0;left:0;width:100%;height:100%`, which survives.
+
+The lesson generalises: `_content_warnings` catches stripped *elements*, not
+stripped *CSS properties*. Diff the echoed content against what was sent.
+
+## How the decorative visuals were handled
+
+Rebuilt as pure CSS — layered `radial-gradient` fields, `border-radius:50%`
+rings with `transform:rotate()`, and glow dots via `box-shadow`. Inline styles
+survive sanitisation, so this is the faithful route that actually renders. It
+also costs zero bytes and adds no image request.
+
+The original artwork is preserved in the repo and rasterised for anyone who
+wants the exact composition:
+
+    site/assets/hero-network.svg / .png / .webp
+    site/assets/tech-cubes.svg / .png / .webp
+    site/assets/logo.svg / .png / .webp
+    site/assets/share-card.svg / .png
+
+To use the raster versions instead, upload the `.webp` files through wp-admin
+(Media → Add New) and replace the CSS visual divs with `<img>` tags pointing at
+the resulting URLs.
+
+## Still outstanding
+
+- Additional CSS not yet installed. `tokens.css` + `components.css` must be
+  pasted into Appearance → Customize → Additional CSS (tokens first). **Until
+  that happens the pages will render unstyled** — every class is defined there.
+- Site title, front page, and permalinks need `wpcom/site-settings`.
+- Structured data not yet injected.
+- Articles not published, per instruction.
+- 5 placeholders unresolved.
+
+## Plan note
+
+`wpcom-user-sites` reports this site as **free, in a 30-day MCP grace period**
+(`reason_code: wpcom_free_grace`, created 2026-08-31), not Personal as assumed.
+MCP access to it may lapse around 2026-09-30.

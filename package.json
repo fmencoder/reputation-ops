@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "description": "Search-visibility monitoring for a single named subject.",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
@@ -14,6 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "sharp": "^0.35.4",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"

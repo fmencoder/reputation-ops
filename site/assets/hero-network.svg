@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 420" width="100%" height="auto" fill="none">
+        <defs>
+          <radialGradient id="halo" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.30"/>
+            <stop offset="65%" stop-color="#7b4dff" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#05070f" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#2f6bff"/><stop offset="100%" stop-color="#7b4dff"/>
+          </linearGradient>
+        </defs>
+        <circle cx="260" cy="200" r="200" fill="url(#halo)"/>
+        <circle cx="260" cy="200" r="150" stroke="url(#arc)" stroke-opacity="0.55" stroke-width="1.25"/>
+        <ellipse cx="260" cy="200" rx="150" ry="52" stroke="#2f6bff" stroke-opacity="0.28" stroke-width="1"/>
+        <ellipse cx="260" cy="200" rx="150" ry="52" stroke="#7b4dff" stroke-opacity="0.22" stroke-width="1" transform="rotate(58 260 200)"/>
+        <ellipse cx="260" cy="200" rx="150" ry="52" stroke="#4d84ff" stroke-opacity="0.22" stroke-width="1" transform="rotate(-58 260 200)"/>
+        <g stroke="#4d84ff" stroke-opacity="0.4" stroke-width="0.9">
+          <path d="M150 150 L235 118 L330 158 L392 232 L300 300 L188 268 Z"/>
+          <path d="M235 118 L300 300 M150 150 L392 232 M188 268 L330 158"/>
+        </g>
+        <g fill="#dce6ff"><circle cx="150" cy="150" r="3"/><circle cx="235" cy="118" r="3.6"/><circle cx="330" cy="158" r="3"/><circle cx="392" cy="232" r="3.4"/><circle cx="300" cy="300" r="3"/><circle cx="188" cy="268" r="3.4"/></g>
+        <circle cx="268" cy="196" r="5" fill="#7b4dff" fill-opacity="0.85"/>
+      </svg>
