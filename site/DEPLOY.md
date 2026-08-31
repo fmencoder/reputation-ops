@@ -1,96 +1,113 @@
-# WordPress deployment adapter
+# WordPress deployment
 
-Everything below is ready to run. The only missing input is the site ID.
+Target: `novraintelligence.com` — WordPress.com Personal, Coming Soon, DNS
+verified via Cloudflare.
 
-## The one blocker
+## Status: blocked on MCP abilities, not on the site ID
 
-`wpcom/user-sites` and `wpcom/ai-agent-sites-list` are both disabled in the
-account's MCP settings, so the site cannot be discovered from here. A site ID
-will not be guessed: a wrong identifier writes content into someone else's
-property, and that is not a recoverable mistake.
+The site ID was never the real blocker. With the domain supplied, the connector
+accepts `novraintelligence.com` directly as `wpcom_site` — but **every operation
+is disabled in the account's MCP settings**. `content-authoring` returns an empty
+`operations` array.
 
-Unblock either way:
+Probed 2026-08-31. Exact ability names, all reported as
+*"not enabled in your MCP settings"*:
 
-- send the site URL or numeric blog ID, or
-- enable `wpcom/user-sites` at https://wordpress.com/me/mcp
-
-## Deployment sequence
-
-Once the ID is known, in order:
-
-1. `site.settings.get` — record title, tagline, permalink structure, privacy
-   and visibility state as the pre-change baseline.
-2. `site.plugin.list` — determine whether an SEO plugin already owns the
-   `<head>`. If one does, schema and meta go through it rather than through the
-   theme, or they will be emitted twice.
-3. `site-editor-context theme.active` then `theme.presets` — read the real
-   design tokens. The palette in `tokens.css` maps onto preset slugs; where the
-   active theme already defines an equivalent, use the theme's slug rather than
-   introducing a duplicate custom property.
-4. `content-authoring patterns.list` / `patterns.get` — reuse existing patterns
-   where they fit rather than importing raw HTML.
-5. Create the six pages as **drafts**, in this order: About first (it holds the
-   Person node every Article references), then Home, Technology, Insights,
-   Research, Contact.
-6. Create the two articles as drafts, with `Article` schema pointing at the
-   About page's `#person` id.
-7. Visual comparison against the approved reference; fix discrepancies.
-8. Surface one publish confirmation for the whole set.
-
-## Known permission gaps
-
-These are disabled and will need to be done by hand in wp-admin. They are
-site-level settings the connector cannot write:
-
-| Setting | Operation | Why it matters |
-| --- | --- | --- |
-| Site title / tagline | `settings.update` | Masthead and `WebSite.name` |
-| Theme selection | `theme.set` | Base theme for the block templates |
-| Permalink structure | `settings.update` | `/insights/<slug>/` URL shape |
-| Site visibility / launch | `manage-site.set-visibility` | Taking the site public |
-
-Everything else — pages, posts, media, taxonomies, schema in block markup —
-goes through `content-authoring`, which is enabled.
-
-## Asset mapping
-
-| Local | WordPress destination |
+| Ability | Needed for |
 | --- | --- |
-| `tokens.css` + `components.css` | Additional CSS, or a child theme stylesheet |
-| `assets/favicon.svg` | Site icon |
-| `assets/logo.svg` | Site logo block |
-| `assets/share-card.svg` | Default Open Graph image |
-| `templates/article.html` | Single-post block template |
-| `templates/archive.html` | Archive / category / author templates |
-| `structured-data.json` | Head injection, per the note below |
+| `wpcom/user-sites` | Site discovery |
+| `wpcom/site-settings` | Title, tagline, front page, permalinks, visibility |
+| `wpcom/theme-active` | Reading the active theme and its presets |
+| `wpcom/pages-create` | **Creating the six pages — the critical one** |
+| `wpcom/pages-update` `wpcom/pages-get` `wpcom/pages-list` `wpcom/pages-delete` | Page management and QA verification |
+| `wpcom/posts-create` `wpcom/posts-update` `wpcom/posts-get` `wpcom/posts-list` | Publishing the article drafts |
+| `wpcom/media-create` `wpcom/media-list` `wpcom/media-get` | Logo, favicon, Open Graph card |
+| `wpcom/patterns-list` `wpcom/patterns-get` | Pattern reuse |
+| `wpcom/page-sections-*` `wpcom/post-sections-*` | Block-level editing |
+| `wpcom/categories-*` `wpcom/tags-*` | Taxonomy |
+| `wpcom/comments-*` | Comment management |
+| `wpcom/content-search` | Duplicate-content QA |
 
-## Structured data
+Enable at **https://wordpress.com/me/mcp**.
 
-Emit `website` and `person` sitewide, `article_template` per post.
+Minimum set to deploy anything: `wpcom/pages-create`, `wpcom/pages-list`,
+`wpcom/media-create`, `wpcom/site-settings`. Add `wpcom/posts-create` for the
+articles.
 
-**Do not emit any Organization node.** NOVRA AI is a masthead, not a registered
-entity, and asserting otherwise in machine-readable form is a false claim to
-search engines. `structured-data.json` lists the forbidden types explicitly.
-That restriction lifts only when a legal entity exists and its exact registered
-name is supplied — at which point `publisher` moves from the Person to the new
-Organization node, and nothing else in the graph changes.
+Nothing was guessed and nothing was written. No site was modified.
 
-## Placeholders that must not reach production
+## What is ready
 
-The build will happily ship these. Check before publishing:
+`node site/wp-export.mjs` generates `site/wp-payload/` — one JSON per page
+containing the exact `pages.create` parameter object, in deployment order, plus
+`manifest.json`. Once the abilities are on, deployment is a loop over those
+files. Nothing about what gets published is decided at deploy time.
 
-- `PLACEHOLDER_DOMAIN` — pass the real domain: `node site/build.mjs --domain example.com`
-- `PLACEHOLDER_BIO_PARAGRAPH_1` / `_2` — About page, written from fact
-- `PLACEHOLDER_CONTACT_EMAIL` — Contact page
-- `PLACEHOLDER_ONE_SENTENCE_VERIFIED` — Person description
-- `PLACEHOLDER_VERIFIED_PROFILE_URL` — `sameAs`, only profiles that resolve and are controlled
+    01-about.json        <- first: holds the Person node every Article references
+    02-home.json         <- set as static front page after creation
+    03-technology.json
+    04-insights.json
+    05-research.json
+    06-contact.json
+    manifest.json
 
-Grep for `PLACEHOLDER` across `site/` before any publish. A non-empty result
-means the site is not ready.
+## How the design transfers on a Personal plan
 
-## Not rendered, by design
+No theme upload, no file access, no GitHub deployment. The approved design is a
+custom system rather than a theme, so the markup travels inside `core/html`
+blocks and the two stylesheets go into **Appearance → Customize → Additional
+CSS** (concatenate `tokens.css` then `components.css`).
 
-The reference's metric counters (1,248 / 87 / 342 / 98.7%, and 10+ Years /
-50+ Research Papers) are design placeholders. They are absent from the markup
-rather than zeroed, and the layouts close over the gap so nothing looks broken.
-They return only if each becomes a real countable number.
+Rebuilding the layout from core blocks would mean re-deriving the design through
+whatever the active theme imposes — the stock-theme outcome the brief rules out.
+
+Two honest caveats:
+
+- `core/html` content is not meaningfully editable in the block editor. Edits
+  happen in this repository and redeploy. That is consistent with the repo being
+  the source of truth, but it is a real constraint, not a free lunch.
+- WordPress silently strips markup it disallows. **Check `_content_warnings` on
+  every create response** rather than assuming the payload landed intact. If the
+  inline SVGs are stripped, they move to media uploads and `<img>` references.
+
+## Deployment order
+
+1. Site identity, title, canonical URL — needs `wpcom/site-settings`
+2. Logo, favicon, site icon — needs `wpcom/media-create`
+3. Additional CSS: `tokens.css` + `components.css`
+4. Pages, in payload order; About first
+5. Home set as static front page
+6. Article drafts — needs `wpcom/posts-create`
+7. Structured data from `structured-data.json`
+8. Open Graph assets
+9. Responsive verification
+10. Publication gates, then visibility change
+
+Site stays **Coming Soon** throughout. Visibility is the last step and is not
+automated.
+
+## Placeholder gate
+
+`node site/wp-export.mjs` fails loudly on unresolved placeholders and lists them
+per page. Current state:
+
+| Page | Placeholder | Needs |
+| --- | --- | --- |
+| `about` | `PLACEHOLDER_BIO_PARAGRAPH_1` / `_2` | Two short paragraphs, written from fact |
+| `contact` | `PLACEHOLDER_CONTACT_EMAIL` | A working address |
+| `structured-data.json` | `PLACEHOLDER_ONE_SENTENCE_VERIFIED` | Person description |
+| `structured-data.json` | `PLACEHOLDER_VERIFIED_PROFILE_URL` | `sameAs` — only profiles that resolve and are controlled |
+
+Pages may be created as drafts with placeholders present. None may be published
+with them. Run `grep -R "PLACEHOLDER" site/ --exclude-dir=dist --exclude-dir=wp-payload`
+before any visibility change.
+
+## Entity rules
+
+`NOVRA_LEGAL_ENTITY = NOT_YET_ASSERTED`. No Organization node is emitted.
+`WebSite.name` carries the masthead; `publisher` and `Article.author` both
+resolve to the Person. Forbidden types are listed in `structured-data.json`.
+
+When a legal entity exists and its exact registered name is supplied,
+`publisher` moves to a new Organization node and nothing else in the graph
+changes.

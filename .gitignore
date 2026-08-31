@@ -6,3 +6,4 @@ dist/
 *.log
 coverage/
 site/dist/
+site/wp-payload/

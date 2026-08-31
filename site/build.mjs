@@ -17,27 +17,27 @@ const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = join(ROOT, "dist");
 
 const domainArg = process.argv.indexOf("--domain");
-const DOMAIN = domainArg > -1 ? process.argv[domainArg + 1] : "PLACEHOLDER_DOMAIN";
+const DOMAIN = domainArg > -1 ? process.argv[domainArg + 1] : "novraintelligence.com";
 
 /** Page metadata. `path` is the deployed URL; `nav` marks the active nav item. */
 const PAGES = [
   { file: "home.html", path: "/", nav: "HOME",
-    title: "NOVRA AI — Intelligent Systems, Digital Infrastructure",
+    title: "NOVRA Intelligence — Intelligent Systems, Digital Infrastructure",
     description: "Research and perspectives on artificial intelligence, autonomous systems, blockchain infrastructure, and financial technology." },
   { file: "insights.html", path: "/insights/", nav: "INSIGHTS",
-    title: "Insights — NOVRA AI",
+    title: "Insights — NOVRA Intelligence",
     description: "In-depth analysis and original research on the technologies and systems reshaping how software is built and operated." },
   { file: "research.html", path: "/research/", nav: "RESEARCH",
-    title: "Research — NOVRA AI",
+    title: "Research — NOVRA Intelligence",
     description: "Longer-form investigation into agentic system reliability, evaluation methodology, and AI governance." },
   { file: "technology.html", path: "/technology/", nav: "TECHNOLOGY",
-    title: "Technology — NOVRA AI",
+    title: "Technology — NOVRA Intelligence",
     description: "The four areas of focus: AI systems and agents, blockchain infrastructure, financial technology, and digital infrastructure." },
   { file: "about.html", path: "/about/", nav: "ABOUT",
-    title: "About — NOVRA AI",
-    description: "About NOVRA AI and Fredrick Mendez, who writes it." },
+    title: "About — NOVRA Intelligence",
+    description: "About NOVRA Intelligence and Fredrick Mendez, who writes it." },
   { file: "contact.html", path: "/contact/", nav: "CONTACT",
-    title: "Contact — NOVRA AI",
+    title: "Contact — NOVRA Intelligence",
     description: "Get in touch." },
 ];
 

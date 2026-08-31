@@ -1,9 +1,9 @@
 {
   "_README": [
-    "Structured data for the NOVRA AI site. Three graphs: WebSite, Person, Article.",
+    "Structured data for the NOVRA Intelligence site. Three graphs: WebSite, Person, Article.",
     "",
     "NO Organization node is emitted, and none may be added until a legal entity",
-    "exists and its exact registered name is supplied. NOVRA AI is currently a",
+    "exists and its exact registered name is supplied. NOVRA Intelligence is currently a",
     "masthead — a publication name — not a company. Emitting Organization schema",
     "would assert to search engines that a legal organization exists, which would",
     "be a false machine-readable claim and is explicitly out of scope.",
@@ -19,12 +19,12 @@
   "website": {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://PLACEHOLDER_DOMAIN/#website",
-    "name": "NOVRA AI",
-    "url": "https://PLACEHOLDER_DOMAIN/",
+    "@id": "https://novraintelligence.com/#website",
+    "name": "NOVRA Intelligence",
+    "url": "https://novraintelligence.com/",
     "description": "Research and perspectives on artificial intelligence, autonomous systems, blockchain infrastructure, financial technology, and emerging digital systems.",
     "inLanguage": "en-US",
-    "publisher": { "@id": "https://PLACEHOLDER_DOMAIN/about/#person" }
+    "publisher": { "@id": "https://novraintelligence.com/about/#person" }
   },
 
   "_publisher_note": [
@@ -36,9 +36,9 @@
   "person": {
     "@context": "https://schema.org",
     "@type": "Person",
-    "@id": "https://PLACEHOLDER_DOMAIN/about/#person",
+    "@id": "https://novraintelligence.com/about/#person",
     "name": "Fredrick Mendez",
-    "url": "https://PLACEHOLDER_DOMAIN/about/",
+    "url": "https://novraintelligence.com/about/",
     "description": "PLACEHOLDER_ONE_SENTENCE_VERIFIED",
     "knowsAbout": [
       "Artificial intelligence",
@@ -71,18 +71,18 @@
     "description": "PLACEHOLDER_META_DESCRIPTION",
     "datePublished": "PLACEHOLDER_ISO_DATE",
     "dateModified": "PLACEHOLDER_ISO_DATE",
-    "author": { "@id": "https://PLACEHOLDER_DOMAIN/about/#person" },
-    "publisher": { "@id": "https://PLACEHOLDER_DOMAIN/about/#person" },
-    "isPartOf": { "@id": "https://PLACEHOLDER_DOMAIN/#website" },
-    "mainEntityOfPage": "https://PLACEHOLDER_DOMAIN/insights/PLACEHOLDER_SLUG/"
+    "author": { "@id": "https://novraintelligence.com/about/#person" },
+    "publisher": { "@id": "https://novraintelligence.com/about/#person" },
+    "isPartOf": { "@id": "https://novraintelligence.com/#website" },
+    "mainEntityOfPage": "https://novraintelligence.com/insights/PLACEHOLDER_SLUG/"
   },
 
   "breadcrumb_template": {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://PLACEHOLDER_DOMAIN/" },
-      { "@type": "ListItem", "position": 2, "name": "Insights", "item": "https://PLACEHOLDER_DOMAIN/insights/" },
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://novraintelligence.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Insights", "item": "https://novraintelligence.com/insights/" },
       { "@type": "ListItem", "position": 3, "name": "PLACEHOLDER_TITLE" }
     ]
   },
