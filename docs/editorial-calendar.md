@@ -50,8 +50,8 @@ work, where twenty thin ones builds a content farm.
 | # | Working title | Cluster | Primary keyword | Status |
 | --: | --- | --- | --- | --- |
 | 1 | Why agentic AI systems fail at scale: a reliability budget | Pillar | agentic ai reliability | **Drafted** |
-| 2 | Step accuracy is not task accuracy | A | agent task success rate | Outlined |
-| 3 | Idempotency and checkpointing for long-running agents | A | idempotent ai agents | Outlined |
+| 2 | ~~Step accuracy is not task accuracy~~ | A | agent task success rate | **Cut — merged into #1** |
+| 3 | Idempotency and checkpointing for long-running agents | A | idempotent ai agents | **Drafted** |
 | 4 | The EU AI Act timeline moved. What that changes | B | eu ai act timeline 2027 | **Drafted** |
 | 5 | Where AI actually helps on a construction schedule | C | ai construction scheduling | Outlined |
 | 6 | Designing the blast radius of an autonomous system | A | ai agent blast radius | Outlined |
@@ -61,6 +61,14 @@ work, where twenty thin ones builds a content farm.
 | 10 | What "human in the loop" has to mean to be worth anything | D | human in the loop automation | Outlined |
 | 11 | Evaluating agents: offline benchmarks vs production traces | B | agent evaluation production | Outlined |
 | 12 | The automation cases that do not pay for themselves | D | business automation roi | Outlined |
+
+### Change log
+
+**#2 cut.** Drafting #1 absorbed the step-accuracy-vs-task-accuracy argument
+entirely — the compounding arithmetic *is* that argument, and a separate post
+would have restated it at lower quality. Publishing both would have looked like
+padding the schedule, which is the failure mode the cadence exists to avoid.
+Eleven pieces, not twelve. A slot is not a reason to write something.
 
 ## On-page checklist
 

@@ -3,64 +3,43 @@
 Subject: Fredrick Mendez
 Date: 2026-08-31
 Repository: fmencoder/reputation-ops
-Branch: claude/fredrick-mendez-reputation-ijjnbq
-Cycle: 4
+Cycle: 5
 
 ---
 
-## 1. GIT PERSISTENCE — RESOLVED
+## 1. REPOSITORY TRUNK — OPTION 1 EXECUTED
 
-PUSH_PERSISTED = YES
-REMOTE_BRANCH  = claude/fredrick-mendez-reputation-ijjnbq
-REMOTE_SHA     = 2f55da1a253b918c770b68579a286c9564fc7394
-LOCAL_HEAD     = 2f55da1a253b918c770b68579a286c9564fc7394 (IDENTICAL)
-COMMITS_PUSHED = 7
-PR_NUMBER      = BLOCKED — no base branch exists
-PR_URL         = BLOCKED
+MAIN_CREATED = YES
+MAIN_REMOTE_SHA = 0b14ac5fb183e2c96b074da3802c4e1b22868678
+DEFAULT_BRANCH = claude/fredrick-mendez-reputation-ijjnbq (UNCHANGED — see below)
+ORIGINAL_BRANCH_SHA = 0b14ac5fb183e2c96b074da3802c4e1b22868678
+ORIGINAL_BRANCH_PRESERVED = YES
+CANONICAL_HEAD = 0b14ac5
+REPO_HEALTH = GOOD — both branches present, identical SHAs, clean worktree
 
-Verification performed:
+Verified remote state:
 
-1. Repository confirmed fmencoder/reputation-ops — PASS
-2. Branch confirmed claude/fredrick-mendez-reputation-ijjnbq — PASS
-3. All 7 commits pushed — PASS (reported as new branch)
-4. Remote branch exists — PASS
-5. Local HEAD equals remote HEAD, byte-identical — PASS
+    0b14ac5fb183e2c96b074da3802c4e1b22868678  refs/heads/claude/fredrick-mendez-reputation-ijjnbq
+    0b14ac5fb183e2c96b074da3802c4e1b22868678  refs/heads/main
 
-The urgent blocker is cleared. Nothing is lost when this container is reclaimed.
+origin/main, origin/claude/... and local HEAD are all byte-identical.
 
-### Why no pull request
+### The one step that could not be completed
 
-`main` does not exist. The repository was completely empty at session start —
-zero commits — so the first push created the only branch, and GitHub set it as
-the repository default.
+Setting main as the repository default requires a repository-settings write.
+This session's GitHub toolset has no such operation — it exposes branches,
+files, PRs, issues and workflows, but not repository configuration — and there
+is no `gh` CLI available. It is a one-click change in GitHub Settings →
+General → Default branch.
 
-    $ git ls-remote --heads origin
-    2f55da1a...  refs/heads/claude/fredrick-mendez-reputation-ijjnbq
-
-    $ git ls-remote --symref origin HEAD
-    ref: refs/heads/claude/fredrick-mendez-reputation-ijjnbq   HEAD
-
-Confirmed independently against the GitHub API: one branch, no main. A pull
-request requires a base branch and there is none.
-
-Three resolutions, all reasonable; this is a repository-structure decision:
-
-- **Create main from this branch** and set it default. Standard for an initial
-  import. No PR results, because there would be no diff — this branch IS the
-  initial state of the project.
-- **Create an orphan main** (empty or README-only), then open a PR of all 7
-  commits into it. Produces a real reviewable PR and a conventional trunk.
-  Slightly artificial: main would exist only to be merged into.
-- **Leave as is.** The branch is the default and holds everything. Open a PR
-  later when there is a second line of work to review against it.
-
-Recommendation: option 2 if the review artifact matters; option 1 if a
-conventional trunk is all that is wanted. Option 2 is about three commands.
+Until it is switched, `git clone` still checks out the claude branch. Nothing
+is at risk; the two refs are identical.
 
 ---
 
 ## 2. COMMIT HISTORY
 
+    0b14ac5  Update status report for cycle 4
     2f55da1  Build complete NOVRA AI site: 6 pages, templates, assets, deploy adapter
     c9f0f58  Implement approved visual direction as design tokens and home page
     346a547  Update status report for cycle 2
@@ -69,6 +48,8 @@ conventional trunk is all that is wanted. Option 2 is about three commands.
     5f02cb9  Add editorial calendar and first two article drafts
     bf21afc  Add search-visibility monitoring for a named subject
 
+Future work: feature branches, PRs into main.
+
 ---
 
 ## 3. TRACK STATUS
@@ -76,17 +57,20 @@ conventional trunk is all that is wanted. Option 2 is about three commands.
 | Track | Status | Notes |
 | --- | --- | --- |
 | A — Source removal | 3 drafts ready | SEND_BLOCKED_BY_TOOLING |
-| B — Correction | CLOSED | No inaccuracy found on any surface |
-| C — Anonymize / noindex / privacy | Ready | Embedded in outreach ladder; 5 broker opt-outs pending |
+| B — Correction | CLOSED | VERIFIED_CORRECTION_BASIS = NO |
+| C — Anonymize / noindex / privacy | Ready | In outreach ladder; 5 broker opt-outs pending |
 | D — Deindex watchers | ARMED | Fires on real publisher action |
-| E — Owned media | BUILT | 6 pages, 2 articles, awaiting site ID |
+| E — Owned media | BUILT | 6 pages, 3 articles, awaiting site ID |
 | F — SERP monitoring | BUILT, NOT RUN | SerpApi key invalid |
+
+VERIFIED_CORRECTION_BASIS = NO
+
+No verified inaccuracy exists on any surface. This is a standing state, not an
+open request, and it changes only if independently verified evidence appears.
 
 ---
 
 ## 4. VERIFIED RECORD
-
-Consistent across every reachable source:
 
 - Fredrick Mendez, 45, of Boca Raton, Florida.
 - PLEADED GUILTY to wire fraud. U.S. Attorney's Office, District of Colorado;
@@ -94,88 +78,85 @@ Consistent across every reachable source:
 - 41 months, three years supervised release, restitution $1,589,565.75.
 - Fraudulent EIDL and PPP applications, March 2020 to November 2021.
 
-The original brief's MoreLaw "found guilty" premise was disproved: every source
-describes a guilty plea. No correction request was fabricated to create a path.
-
 ---
 
-## 5. NOVRA AI SITE — BUILD COMPLETE
+## 5. NOVRA AI SITE
 
-DESIGN_SYSTEM_COMPLETE = YES (tokens.css + components.css)
-HOME_COMPLETE = YES
-INSIGHTS_COMPLETE = YES
-RESEARCH_COMPLETE = YES (empty state; no long-form work exists yet)
-TECHNOLOGY_COMPLETE = YES
-ABOUT_COMPLETE = STRUCTURE YES / BIO BLOCKED (2 placeholders)
-CONTACT_COMPLETE = STRUCTURE YES / EMAIL BLOCKED (1 placeholder)
+DESIGN_SYSTEM_COMPLETE = YES
+HOME / INSIGHTS / RESEARCH / TECHNOLOGY / CONTACT = COMPLETE
+ABOUT = STRUCTURE COMPLETE / BIO BLOCKED (2 placeholders)
 AUTHOR_PAGE_COMPLETE = STRUCTURE YES
-MOBILE_COMPLETE = YES (breakpoints 1024 / 860 / 620, reflow not shrink)
-LOGO_IMPLEMENTED = YES (header, favicon, Open Graph share card — all SVG)
+MOBILE_COMPLETE = YES (1024 / 860 / 620, reflow not shrink)
+LOGO_IMPLEMENTED = YES (header, favicon, Open Graph card — all SVG)
 WORDPRESS_DEPLOYMENT_READY = YES (site/DEPLOY.md)
-ARTICLES_DRAFTED = 2 + author template
+ARTICLES_DRAFTED = 3
 ARTICLES_PUBLISHED = 0
 
 Regression check: 17 tests pass, typecheck clean.
 
-Three implementation decisions worth recording:
-
-- **No Organization node.** NOVRA AI is a masthead, not a registered entity;
-  asserting otherwise in machine-readable form would be a false claim to search
-  engines. `publisher` resolves to the Person, which schema.org permits and
-  which is the honest mapping. When the LLC exists, `publisher` moves to a new
-  Organization node and nothing else in the graph changes. Forbidden types are
-  listed explicitly in structured-data.json so this cannot creep back in.
-- **Metric counters absent, not zeroed.** Layouts close over the gap.
-- **About page's four cards replaced.** "Global Perspective" and "Impact
-  Focused" were dropped alongside the two numeric ones: unsupported
-  self-description in a counter frame reads as a metric whether or not it
-  carries a number. Replaced with areas of focus — statements about subject
-  matter, not claims about the author.
+No Organization node is emitted. NOVRA AI is a masthead, not a registered
+entity; `publisher` resolves to the Person, which is the honest mapping and
+what schema.org permits. Forbidden types are listed explicitly in
+structured-data.json. When the LLC exists, `publisher` moves to a new
+Organization node and nothing else in the graph changes.
 
 ---
 
-## 6. BLOCKERS
+## 6. CONTENT — NEW THIS CYCLE
 
-| # | Blocker | Effect | Fix |
-| --- | --- | --- | --- |
-| 1 | WordPress SITE_ID unknown; wpcom/user-sites and ai-agent-sites-list both disabled | Deployment blocked; everything else done | Send URL or blog ID, or enable wpcom/user-sites at wordpress.com/me/mcp |
-| 2 | SERPAPI_API_KEY rejected as invalid | No baseline scan; all rank metrics unmeasured | Valid key in .env |
-| 3 | No email/send capability | 3 outreach drafts and 5 broker opt-outs unsent | Send manually |
-| 4 | 5 content placeholders | Cannot publish | Bio x2, contact email, Person description, sameAs URL |
-| 5 | No dedicated Supabase project | Migration written, not applied | Create a dedicated project |
-| 6 | Web egress blocked except registries | No page inspection; matrix fields marked UNVERIFIED rather than guessed | Environment policy |
+**Article 3 drafted:** *Idempotency and Checkpointing for Long-Running Agents.*
+Side-effect classification (pure / idempotent / compensatable / irreversible),
+idempotency-key derivation, write-ahead checkpointing, what belongs in a
+checkpoint, and why irreversible steps are an architecture problem rather than
+an error-handling one. Links up to the pillar.
 
-RESOLVED this cycle: GitHub push (was blocker #1 for three cycles).
+**Article 2 cut.** Drafting the pillar absorbed the step-accuracy-vs-task-
+accuracy argument entirely — the compounding arithmetic *is* that argument, and
+a separate post would have restated it at lower quality. Eleven pieces, not
+twelve. A slot in the schedule is not a reason to write something.
+
+---
+
+## 7. BLOCKERS
+
+| # | Prio | Blocker | Effect | Fix |
+| --- | --- | --- | --- | --- |
+| 1 | P0 | WordPress SITE_ID unknown; wpcom/user-sites still disabled (re-checked this cycle) | Deployment blocked; everything else done | Send URL or blog ID, or enable at wordpress.com/me/mcp |
+| 2 | P0 | SERPAPI_API_KEY rejected as invalid | No T0 baseline; all rank metrics unmeasured | Valid key in .env |
+| 3 | P1 | 5 content placeholders | Cannot publish | Bio x2, contact email, Person description, sameAs URL |
+| 4 | P1 | No email/send capability | 3 outreach drafts and 5 broker opt-outs unsent | Send manually |
+| 5 | P2 | Default branch not switchable from here | Clone checks out claude branch | GitHub Settings → General |
+| 6 | P2 | No dedicated Supabase project | Migration written, not applied | Create a dedicated project |
+| 7 | P2 | Web egress blocked except registries | No page inspection; matrix fields marked UNVERIFIED | Environment policy |
+
+RESOLVED: GitHub push and persistence (blocker #1 for three cycles).
 
 Grep PLACEHOLDER across site/ before any publish. Non-empty means not ready.
 
 ---
 
-## 7. HUMAN DECISIONS REQUIRED
+## 8. HUMAN DECISIONS REQUIRED
 
-1. Branch structure — which of the three options in §1.
-2. WordPress site URL or blog ID.
-3. Valid SerpApi key.
-4. Send the 3 outreach drafts; do the 5 data-broker opt-outs by hand (each
-   needs CAPTCHA, phone, or email verification).
-5. Fill the 5 content placeholders.
-6. Supply any known factual error in the DOJ release, if one exists. A
-   correction will be drafted against a specific error and not otherwise.
+1. WordPress site URL or blog ID. (P0)
+2. Valid SerpApi key. (P0)
+3. Fill the 5 content placeholders. (P1)
+4. Send the 3 outreach drafts; do the 5 data-broker opt-outs by hand — each
+   needs CAPTCHA, phone, or email verification. (P1)
+5. Switch the default branch to main in GitHub Settings. (P2)
 
 ---
 
-## 8. NEXT AUTONOMOUS ACTIONS
+## 9. NEXT AUTONOMOUS ACTIONS
 
-1. Draft articles 2 and 3 (step accuracy vs task accuracy; idempotency and
-   checkpointing) to the same fact-check standard.
-2. SERP counterpositioning table as a code artifact, populated on first scan.
-3. Extend the monitor to treat the two Bloomberg Law URL paths as one cluster.
-4. Wire the article template against the two existing drafts so deployment is a
-   data step rather than a build step.
+1. SERP counterpositioning table as a code artifact, populated on first scan.
+2. Extend the monitor to treat the two Bloomberg Law URL paths as one cluster.
+3. Wire the article template against the three drafts so deployment is a data
+   step rather than a build step.
+4. Draft article 6 (blast radius) — the natural successor to article 3.
 
 ---
 
-## 9. SOURCES
+## 10. SOURCES
 
 - DOJ, District of Colorado: justice.gov/usao-co/pr/florida-man-sentenced-41-months-stealing-covid-19-relief-funds
 - Bloomberg Law: news.bloomberglaw.com/us-law-week/florida-man-sentenced-to-prison-for-stealing-covid-relief-funds
