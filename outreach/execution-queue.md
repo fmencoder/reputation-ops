@@ -13,44 +13,49 @@ Everything here is prepared to the point where sending is copy, paste, send.
 
 ## T1 — MoreLaw (P0)
 
-    TARGET                      MoreLaw case + index entries
+    TARGET                      United States of America v. Fredrick Mendez
+    MORELAW_CASE_ID             CO/188850
     DOMAIN                      morelaw.com
-    URL                         UNVERIFIED — see blocker below
+    URL                         Case page — subject to paste exact address
     OWNER/PUBLISHER             MoreLaw; Kent Morlan, Esq., Editor & Publisher
-    CONTACT_ROUTE               verdicts@morelaw.com, info@morelaw.com
-    CONTENT_TYPE               Case-summary aggregation + practice-area indexes
-    CURRENT_INDEX_STATUS        Indexed (category pages surfaced in search)
-    FACTUAL_ERROR               ASSERTED BY SUBJECT, NOT INDEPENDENTLY VERIFIED
-    DUPLICATE_STATUS            Multiple category/index surfaces
-    SOURCE_REMOVAL_PATH         Discretionary — moderate
-    CORRECTION_PATH             Primary route, pending predicate verification
-    ANONYMIZATION_PATH          Fallback B
-    HEADLINE_REMOVAL_PATH       Fallback C
-    URL_SLUG_REMOVAL_PATH       Unknown — needs page inspection
-    CATEGORY_INDEX_REMOVAL_PATH Strongest realistic ask
-    NOINDEX_PATH                Fallback F
-    CANONICALIZATION_PATH       Fallback C
-    PRIVACY_PATH                None — no qualifying PII found
-    SEARCH_ENGINE_PATH          AFTER_SOURCE_CHANGE only
+    CONTACT_ROUTE               verdicts@morelaw.com; cc info@morelaw.com
+    CONTENT_TYPE                Case entry + Colorado practice-area indexes
+    CURRENT_INDEX_STATUS        Indexed; case page itself not search-indexed
+    FACTUAL_ERROR               VERIFIED — Outcome and FAQ state "found guilty";
+                                DOJ states "after pleading guilty to wire fraud"
+    DUPLICATE_STATUS            Multiple entries + category duplication
+    SOURCE_REMOVAL_PATH         Not requested — correction is the stronger route
+    CORRECTION_PATH             PRIMARY — procedural precision only
+    ANONYMIZATION_PATH          Requested at item 3 (index snippets/headings)
+    HEADLINE_REMOVAL_PATH       Requested at item 3
+    URL_SLUG_REMOVAL_PATH       Not requested — slug unknown
+    CATEGORY_INDEX_REMOVAL_PATH Requested at item 3
+    NOINDEX_PATH                Requested at item 5 (fallback for retained dupes)
+    CANONICALIZATION_PATH       Requested at item 4
+    PRIVACY_PATH                None — no qualifying PII
+    SEARCH_ENGINE_PATH          AFTER_SOURCE_CHANGE — arms on any granted item
     PRIORITY                    P0
-    STATUS                      READY (letter drafted, predicate slots empty)
-    NEXT_ACTION                 Subject fills exact URL + verbatim quote, then sends
+    STATUS                      READY
+    MORELAW_CORRECTION_READY    YES
+    MORELAW_REMOVAL_READY       YES
+    MORELAW_SEND_BLOCKER        EMAIL_SEND_ONLY
+    NEXT_ACTION                 Paste case URL, re-confirm wording, send
     FOLLOW_UP_DATE              +10 days from send
 
-**Prior-send check:** no MoreLaw request has been sent at any point in this
-project. Nothing is pending; this is not a duplicate.
+**Predicate.** Verified by the subject from the current live page: the Outcome
+field and FAQ both state "found guilty", against DOJ's "after pleading guilty to
+wire fraud". I could not confirm this independently — morelaw.com is unreachable
+from this environment (egress blocked) and the case page is not search-indexed —
+so the letter is signed and sent by the subject, who has read the page. The
+1-ALT variant is withdrawn; it is no longer needed.
 
-**Blocker on the factual predicate.** Three search sweeps have failed to surface
-either a dedicated MoreLaw case page for this subject or any "found guilty"
-wording. Only Colorado practice-area index pages appear. Direct page fetch is
-impossible — general web egress is blocked in this environment.
+**Prior-send check:** no MoreLaw request has been sent at any point. Nothing
+pending, no duplicate.
 
-I cannot confirm the wording, so I have not written it into the letter as an
-assertion of mine. The letter instead has two required slots the sender fills
-from the page in front of him: the exact URL and the verbatim quoted sentence.
-The letter cannot go out containing a claim nobody has checked.
-
----
+**Why correction leads rather than removal.** MoreLaw publishes case outcomes;
+an incorrect outcome field is a defect in its own product, which makes item 1
+the request most likely to be granted on its merits. Items 2–5 then travel with
+it as ordinary housekeeping rather than arriving as a bare removal demand.
 
 ## T2 — Hoodline (P0)
 

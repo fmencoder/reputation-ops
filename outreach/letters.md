@@ -10,108 +10,101 @@ email or form-submission capability.
 
 ## 1. MoreLaw — Notice of factual inaccuracy and request for remedial editorial action
 
-**To:** verdicts@morelaw.com; cc info@morelaw.com
-**Subject:** Formal request for correction and remedial editorial action — Fredrick Mendez case entries
+**To:** verdicts@morelaw.com
+**Cc:** info@morelaw.com
+**Attn:** Kent Morlan, Esq., Editor & Publisher
+**Subject:** Request for correction and remedial editorial action — United States of America v. Fredrick Mendez, MoreLaw case CO/188850
 
-> ### TWO SLOTS MUST BE FILLED BEFORE SENDING
->
-> `[EXACT_URL]` — the page where you saw the wording.
-> `[VERBATIM_QUOTE]` — the sentence as it actually appears, copied character for character.
->
-> **Do not send this with either slot unfilled, and do not paraphrase the quote.**
-> Three search sweeps from here could not surface a MoreLaw page carrying
-> "found guilty" for this case, and direct page access is blocked in the
-> environment this was drafted in. The wording may well be there — but I could
-> not confirm it, so the letter asserts nothing I have not checked. You have
-> seen the page; the assertion is yours to make, and it needs to be exact.
->
-> If, on checking, the page does **not** say "found guilty", send Letter 1-ALT
-> below instead. It drops the correction claim and asks only for consolidation.
+**Status: SEND-READY.** Predicate verified by the subject from the current live
+page. One slot remains: `[EXACT_URL]`, the case page address — paste it from
+your browser bar. The case number and caption below are already exact.
 
-**Draft:**
-
-> Dear Mr. Morlan,
->
-> I am Fredrick Mendez, the individual named in case material published on
-> MoreLaw. This correspondence is intended to provide precise notice of an
-> inaccuracy and of the affected URLs, and to request specific remedial action.
->
-> **The inaccuracy.** At [EXACT_URL], MoreLaw states: "[VERBATIM_QUOTE]".
->
-> That formulation is inaccurate. The underlying record is a guilty plea, not a
-> verdict after trial. The Department of Justice announcement for this matter,
-> issued by the U.S. Attorney's Office for the District of Colorado in January
-> 2025, states that I "pleaded guilty to wire fraud":
-> https://www.justice.gov/usao-co/pr/florida-man-sentenced-41-months-stealing-covid-19-relief-funds
->
-> Nothing in this request disputes the underlying public record where accurately
-> reported. The conviction, the 41-month sentence and the restitution order are
-> not in dispute. I am not asserting a claim of defamation, and I make no
-> representation about the legal effect of the distinction. I am asking that a
-> legal-research publication describe the disposition of a case correctly,
-> because "found guilty" and "pleaded guilty" are not the same procedural event
-> and your readership is precisely the audience that knows the difference.
->
-> **Requested remedial actions, in order of preference:**
->
-> 1. Correct every "found guilty" formulation in this case material to state
->    accurately that the defendant pleaded guilty to wire fraud.
-> 2. Remove redundant duplicate case entries for this matter.
-> 3. Consolidate the remaining case material to a single canonical URL.
-> 4. Remove this entry from practice-area and category index pages where the
->    case is not substantively relevant to the category.
-> 5. Where editorially feasible, remove my name from titles, headings and index
->    snippets while retaining the case material itself.
-> 6. Apply a noindex directive to duplicate, archive and category pages that
->    reproduce the same case material.
-> 7. Remove stale cached or indexed duplicate URLs for the same entry.
->
-> If complete action on item 1 is not available, please evaluate the narrower
-> remedial measures at items 2 through 7 independently. Redundant multiplication
-> of one case summary across multiple SEO-oriented category pages is not
-> necessary to preserve public access to the underlying record, which remains
-> available in full from the Department of Justice.
->
-> Please treat this as a formal request for editorial review, and please confirm
-> in writing which URLs have been corrected, removed, canonicalised, or excluded
-> from indexing.
->
-> I would be grateful for a response by [DATE +10 DAYS]. I will follow up once.
->
-> Respectfully,
-> Fredrick Mendez
-> [contact address]
+**Pre-send check, thirty seconds:** reload the page and confirm the Outcome and
+FAQ still read "found guilty". If MoreLaw has already amended it, send the
+consolidation requests (items 2–6) without item 1. Sending a correction notice
+against wording that has since changed invites the whole letter to be dismissed.
 
 ---
 
-## 1-ALT. MoreLaw — if the "found guilty" wording is NOT present
-
 > Dear Mr. Morlan,
 >
-> I am Fredrick Mendez, the individual named in case material published on
-> MoreLaw, drawn from a January 2025 Department of Justice announcement.
+> I am Fredrick Mendez, the defendant named in *United States of America v.
+> Fredrick Mendez*, published by MoreLaw as case CO/188850 at [EXACT_URL].
 >
-> I am not disputing the accuracy of the material and I make no legal claim.
-> This is a request for editorial discretion, and I will keep it narrow.
+> This correspondence is intended to provide precise notice of an inaccuracy in
+> that entry and of the remedial actions requested. Please treat it as a formal
+> request for editorial review.
 >
-> The same case summary appears across several Colorado practice-area index
-> pages. Please treat this as a formal request for editorial review of:
+> **The inaccuracy is procedural, and it is specific.**
 >
-> 1. removal of redundant duplicate entries for this matter;
-> 2. consolidation of remaining material to a single canonical URL;
-> 3. removal of the entry from category pages where the case is not
->    substantively relevant to the category;
-> 4. removal of my name from index snippets where editorially feasible;
-> 5. a noindex directive on duplicate and category pages reproducing the entry.
+> The entry's Outcome field states that the defendant was "found guilty", and the
+> FAQ section repeats that formulation. That is not what happened. The matter was
+> resolved by guilty plea, not by verdict after trial.
 >
-> Redundant multiplication across category pages is not necessary to preserve
-> public access to the record, which remains available in full from the DOJ.
+> The authoritative source is the announcement issued by the U.S. Attorney's
+> Office for the District of Colorado in January 2025, which states that I was
+> sentenced "after pleading guilty to wire fraud":
 >
-> Please confirm in writing which URLs have been modified. I would be grateful
-> for a response by [DATE +10 DAYS], and I will follow up once.
+> https://www.justice.gov/usao-co/pr/florida-man-sentenced-41-months-stealing-covid-19-relief-funds
+>
+> I want to be precise about the scope of this request. **Nothing here disputes
+> the underlying public record.** The conviction, the 41-month sentence, the
+> three-year term of supervised release and the restitution order of
+> $1,589,565.75 are accurate and are not in dispute. I am not asserting a claim
+> of defamation, I am not asserting any statutory claim, and I make no
+> representation about the legal consequences of the distinction.
+>
+> What I am asking is that a legal-research publication describe the disposition
+> of a case correctly. "Found guilty" and "pleaded guilty" denote different
+> procedural events, and MoreLaw's readership is precisely the audience for which
+> that difference carries meaning. A publication of case outcomes has its own
+> reason to want the outcome field right.
+>
+> **Requested remedial actions:**
+>
+> **1. Correction.** Amend the Outcome field and the FAQ formulation in case
+> CO/188850 to state accurately that the defendant pleaded guilty to wire fraud —
+> for example, "pleaded guilty to wire fraud" or "sentenced after pleading guilty
+> to wire fraud".
+>
+> **2. Duplicate consolidation.** This case material appears across multiple
+> MoreLaw entries and Colorado practice-area index pages. Please remove the
+> redundant duplicate entries.
+>
+> **3. Category and index removal.** Please remove this entry from practice-area
+> and category index pages where the case is not substantively relevant to the
+> category, and remove my name from index snippets and headings where editorially
+> feasible.
+>
+> **4. Canonicalisation.** Please consolidate the remaining case material behind a
+> single canonical URL.
+>
+> **5. Noindex fallback.** Where a duplicate, archive or category surface is
+> retained, please apply a noindex directive to it rather than leaving multiple
+> indexed copies of one case summary.
+>
+> **6. Written confirmation.** Please confirm in writing which URLs have been
+> corrected, removed, consolidated, canonicalised or excluded from indexing,
+> identifying each one.
+>
+> If item 1 is the only action you are prepared to take, I would still be
+> grateful for it. If you are not prepared to act on item 1, please evaluate
+> items 2 through 5 independently rather than treating this as a single
+> all-or-nothing request.
+>
+> On the duplication point specifically: reproducing one case summary across
+> several category and practice-area surfaces is not necessary to preserve public
+> access to the record. The Department of Justice announcement remains available
+> in full and is unaffected by anything MoreLaw decides here.
+>
+> I would be grateful for a response by [DATE +10 DAYS]. I will follow up once,
+> and I will respect your decision either way.
 >
 > Respectfully,
+>
 > Fredrick Mendez
+> [contact email]
+> [date]
 
 ---
 
