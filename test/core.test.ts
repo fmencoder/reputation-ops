@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { FileCache } from "../src/adapters/cache.js";
 import { SerpApiClient, SerpApiError } from "../src/adapters/serpapi.js";
 import { classify, serpWeight } from "../src/core/classify.js";
+import { clusterIdFor, collapseToClusters } from "../src/core/cluster.js";
 import { computeDeltas, deriveAlerts } from "../src/core/diff.js";
 import { buildQuerySet } from "../src/core/queries.js";
 import { shareOfVoice } from "../src/core/report.js";
@@ -193,5 +194,48 @@ describe("runScan", () => {
     expect(summary.queriesFailed).toBe(1);
     expect(summary.queriesRun).toBe(1);
     expect(summary.resultsSeen).toBe(1);
+  });
+});
+
+describe("clustering", () => {
+  const bloomberg = (path: string, position: number): ClassifiedResult =>
+    classify(
+      { position, title: "Fredrick Mendez sentenced fraud", url: "https://news.bloomberglaw.com" + path, snippet: "" },
+      "q1", "google", OPTS,
+    );
+
+  const PATH_A = "/us-law-week/florida-man-sentenced-to-prison-for-stealing-covid-relief-funds";
+  const PATH_B = "/white-collar-and-criminal-law/florida-man-sentenced-to-prison-for-stealing-covid-relief-funds";
+
+  it("resolves both Bloomberg Law paths to one cluster", () => {
+    expect(clusterIdFor(bloomberg(PATH_A, 1))).toBe(clusterIdFor(bloomberg(PATH_B, 9)));
+  });
+
+  it("keeps unrelated URLs in separate clusters", () => {
+    const other = classify(
+      { position: 1, title: "Fredrick Mendez", url: "https://news.bloomberglaw.com/other-story", snippet: "" },
+      "q1", "google", OPTS,
+    );
+    expect(clusterIdFor(other)).not.toBe(clusterIdFor(bloomberg(PATH_A, 1)));
+  });
+
+  it("collapses duplicates to the best-ranked member", () => {
+    const collapsed = collapseToClusters([bloomberg(PATH_B, 9), bloomberg(PATH_A, 4)]);
+    expect(collapsed).toHaveLength(1);
+    expect(collapsed[0]?.position).toBe(4);
+  });
+
+  it("does not merge the same cluster across different engines", () => {
+    const bing = classify(
+      { position: 3, title: "Fredrick Mendez sentenced fraud", url: "https://news.bloomberglaw.com" + PATH_A, snippet: "" },
+      "q1", "bing", OPTS,
+    );
+    expect(collapseToClusters([bloomberg(PATH_A, 4), bing])).toHaveLength(2);
+  });
+
+  it("stops one article on two paths from double-counting share of voice", () => {
+    const single = shareOfVoice([bloomberg(PATH_A, 4)]);
+    const duplicated = shareOfVoice([bloomberg(PATH_A, 4), bloomberg(PATH_B, 9)]);
+    expect(duplicated.negative).toBe(single.negative);
   });
 });

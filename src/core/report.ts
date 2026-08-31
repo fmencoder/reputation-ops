@@ -1,3 +1,4 @@
+import { collapseToClusters } from "./cluster.js";
 import type { ClassifiedResult, ScanSummary } from "./types.js";
 
 function pct(part: number, whole: number): string {
@@ -17,7 +18,12 @@ export function shareOfVoice(results: readonly ClassifiedResult[]): {
   positive: number;
   total: number;
 } {
-  const firstPage = results.filter((r) => r.position <= 10 && r.sentiment !== "unrelated");
+  // Collapse duplicate surfaces first. One article reachable at two URLs is one
+  // article: counting both would inflate its share and make a later
+  // consolidation look like progress when visibility has not changed.
+  const firstPage = collapseToClusters(results).filter(
+    (r) => r.position <= 10 && r.sentiment !== "unrelated",
+  );
   const sum = (s: ClassifiedResult["sentiment"]): number =>
     firstPage.filter((r) => r.sentiment === s).reduce((acc, r) => acc + r.serpWeight, 0);
 
