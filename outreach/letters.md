@@ -3,8 +3,8 @@
 Send from the subject's own address. No letterhead, no law-firm styling, no
 reference to counsel — no counsel is involved.
 
-Status on all three: **READY / SEND_BLOCKED_BY_TOOLING**. This session has no
-email or form-submission capability.
+Status on all three: **SUBMITTED 2026-08-31** by the subject. Retained as the
+record of what was sent. Do not resend.
 
 ---
 

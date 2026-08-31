@@ -2,12 +2,13 @@
 
 Updated 2026-08-31. Status values per spec.
 
-**Transport reality: this session has no send capability.** There is no email
-tool, no form-submission tool, and general web egress is blocked. Every item
-below is therefore `READY`, never `SUBMITTED`. Marking anything `SUBMITTED`
-would be a false entry in the very record the campaign depends on.
+**All three publisher requests were SENT BY THE SUBJECT on 2026-08-31.**
+Statuses below reflect that. This session still has no send capability — the
+subject sent them from his own address, which was always the correct route for
+correspondence signed in his name.
 
-Everything here is prepared to the point where sending is copy, paste, send.
+**Do not resend any of the three.** Follow-up window opens 2026-09-07 and closes
+2026-09-10. One follow-up per publisher, and only if there is no response.
 
 ---
 
@@ -16,7 +17,7 @@ Everything here is prepared to the point where sending is copy, paste, send.
     TARGET                      United States of America v. Fredrick Mendez
     MORELAW_CASE_ID             CO/188850
     DOMAIN                      morelaw.com
-    URL                         Case page — subject to paste exact address
+    URL                         https://www.morelaw.com/verdicts/case/CO/188850/
     OWNER/PUBLISHER             MoreLaw; Kent Morlan, Esq., Editor & Publisher
     CONTACT_ROUTE               verdicts@morelaw.com; cc info@morelaw.com
     CONTENT_TYPE                Case entry + Colorado practice-area indexes
@@ -35,12 +36,16 @@ Everything here is prepared to the point where sending is copy, paste, send.
     PRIVACY_PATH                None — no qualifying PII
     SEARCH_ENGINE_PATH          AFTER_SOURCE_CHANGE — arms on any granted item
     PRIORITY                    P0
-    STATUS                      READY
+    STATUS                      SUBMITTED
+    SUBMITTED_DATE              2026-08-31
     MORELAW_CORRECTION_READY    YES
     MORELAW_REMOVAL_READY       YES
-    MORELAW_SEND_BLOCKER        EMAIL_SEND_ONLY
-    NEXT_ACTION                 Paste case URL, re-confirm wording, send
-    FOLLOW_UP_DATE              +10 days from send
+    MORELAW_SUBMITTED           YES
+    MORELAW_SEND_BLOCKER        NONE
+    MORELAW_SLOTS_REMAINING     0
+    MORELAW_ALT_LETTER          WITHDRAWN
+    NEXT_ACTION                 Monitor for response or source change. Do not resend.
+    FOLLOW_UP_WINDOW            2026-09-07 to 2026-09-10, one only
 
 **Predicate.** Verified by the subject from the current live page: the Outcome
 field and FAQ both state "found guilty", against DOJ's "after pleading guilty to
@@ -49,8 +54,9 @@ from this environment (egress blocked) and the case page is not search-indexed �
 so the letter is signed and sent by the subject, who has read the page. The
 1-ALT variant is withdrawn; it is no longer needed.
 
-**Prior-send check:** no MoreLaw request has been sent at any point. Nothing
-pending, no duplicate.
+**Sent 2026-08-31.** Exact target now confirmed:
+https://www.morelaw.com/verdicts/case/CO/188850/ — no slots remain. A request is
+pending; any further correspondence before 2026-09-07 would be a duplicate.
 
 **Why correction leads rather than removal.** MoreLaw publishes case outcomes;
 an incorrect outcome field is a defect in its own product, which makes item 1
@@ -79,9 +85,10 @@ it as ordinary housekeeping rather than arriving as a bare removal demand.
     PRIVACY_PATH                None — no qualifying PII
     SEARCH_ENGINE_PATH          AFTER_SOURCE_CHANGE only
     PRIORITY                    P0
-    STATUS                      READY
-    NEXT_ACTION                 Send; escalate to editorial leadership if declined at tier 1
-    FOLLOW_UP_DATE              +10 days, one follow-up only
+    STATUS                      SUBMITTED
+    SUBMITTED_DATE              2026-08-31
+    NEXT_ACTION                 Monitor. Escalate to editorial leadership only if declined at tier 1.
+    FOLLOW_UP_WINDOW            2026-09-07 to 2026-09-10, one only
 
 Worth noting: the headline says "Boca Raton Man", not the subject's name, and
 the slug carries no name either. Items 3, 4 and 6 of the requested ladder are
@@ -112,9 +119,10 @@ therefore already satisfied — the remaining exposure is body text and indexing
     PRIVACY_PATH                None
     SEARCH_ENGINE_PATH          AFTER_SOURCE_CHANGE only
     PRIORITY                    P1
-    STATUS                      READY
-    NEXT_ACTION                 Send, led by the canonicalisation ask
-    FOLLOW_UP_DATE              +10 days, one follow-up only
+    STATUS                      SUBMITTED
+    SUBMITTED_DATE              2026-08-31
+    NEXT_ACTION                 Monitor. Do not resend.
+    FOLLOW_UP_WINDOW            2026-09-07 to 2026-09-10, one only
 
 ---
 
@@ -169,3 +177,30 @@ not index. Verification has to happen on each broker site by hand.
 Every one of these arms the moment a publisher actually changes something. The
 monitor built in `bf21afc` detects the trigger (`dropped_out`, rank and title
 deltas). Submitting any of them now would be a false submission.
+
+
+---
+
+## Source-change watch — armed 2026-08-31
+
+All three publishers now have a live request. Until one of them acts, **no
+search-engine action is eligible** and none has been submitted.
+
+On any verified change to a target page, classify it and act:
+
+| Observed change | Classification | Search-engine action unlocked |
+| --- | --- | --- |
+| Page gone, 404/410 | REMOVED | Google + Bing outdated-content removal |
+| "found guilty" now reads "pleaded guilty" | CORRECTED | Cache/snippet refresh both engines |
+| Name replaced with a description | ANONYMIZED | Cache/snippet refresh both engines |
+| Name gone from title/heading/snippet | NAME_MINIMIZED | Snippet refresh |
+| noindex added | NOINDEXED | Confirm natural drop; no submission needed |
+| Duplicate paths collapse to one | CANONICALIZED | Outdated-content on the retired path |
+| Some but not all of the above | PARTIAL | Whichever of the above the change supports |
+
+Verification rule: the change must be observed on the live page, not inferred
+from a publisher's reply. A promise to act is not a source change, and
+submitting on the strength of one would be a false submission.
+
+The monitor in `bf21afc` detects `dropped_out`, rank and title deltas across all
+three engines and will surface these automatically once a live scan can run.

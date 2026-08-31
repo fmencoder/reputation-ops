@@ -54,15 +54,23 @@ work, where twenty thin ones builds a content farm.
 | 3 | Idempotency and checkpointing for long-running agents | A | idempotent ai agents | **Drafted** |
 | 4 | The EU AI Act timeline moved. What that changes | B | eu ai act timeline 2027 | **Drafted** |
 | 5 | Where AI actually helps on a construction schedule | C | ai construction scheduling | Outlined |
-| 6 | Designing the blast radius of an autonomous system | A | ai agent blast radius | Outlined |
+| 6 | Limiting blast radius in autonomous agent architectures | A | ai agent blast radius | **Drafted** |
 | 7 | Reconciliation is the hard part of finance automation | D | finance automation reconciliation | Outlined |
 | 8 | Mapping NIST AI RMF onto an engineering backlog | B | nist ai rmf implementation | Outlined |
 | 9 | Submittals, RFIs, and document-heavy construction workflows | C | construction document automation | Outlined |
-| 10 | What "human in the loop" has to mean to be worth anything | D | human in the loop automation | Outlined |
+| 10 | Autonomous systems and the architecture of human oversight | B | human in the loop automation | **Drafted** |
 | 11 | Evaluating agents: offline benchmarks vs production traces | B | agent evaluation production | Outlined |
 | 12 | The automation cases that do not pay for themselves | D | business automation roi | Outlined |
 
 ### Change log
+
+**Two more merged into existing pieces.** The suppression brief requested
+"Designing Production AI Agents for Recoverability" and "AI Infrastructure: From
+Prototype Agents to Reliable Systems". Both are already covered: recoverability
+*is* #3 (idempotency and checkpointing), and prototype-to-production *is* #1 (the
+reliability budget). Writing them separately would have produced two articles
+restating existing arguments at lower quality — the content-farm outcome the
+cadence exists to prevent. Five distinct pieces, not six near-duplicates.
 
 **#2 cut.** Drafting #1 absorbed the step-accuracy-vs-task-accuracy argument
 entirely — the compounding arithmetic *is* that argument, and a separate post
