@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="halo" cx="72%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.35"/>
+      <stop offset="70%" stop-color="#7b4dff" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#05070f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2f6bff"/><stop offset="55%" stop-color="#4058e8"/>
+      <stop offset="100%" stop-color="#7b4dff"/></linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#05070f"/>
+  <rect width="1200" height="630" fill="url(#halo)"/>
+  <g transform="translate(80 70) scale(1.6)">
+    <path d="M4 28V4h5.4l13.2 16.4V4H28v24h-5.4L9.4 11.6V28H4z" fill="url(#g)"/>
+  </g>
+  <text x="146" y="118" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="700" fill="#ffffff" letter-spacing="1">NOVRA AI</text>
+  <text x="80" y="330" font-family="Inter, system-ui, sans-serif" font-size="66" font-weight="800" fill="#ffffff">Intelligent systems.</text>
+  <text x="80" y="404" font-family="Inter, system-ui, sans-serif" font-size="66" font-weight="800" fill="#ffffff">Digital infrastructure.</text>
+  <text x="80" y="478" font-family="Inter, system-ui, sans-serif" font-size="66" font-weight="800" fill="#7b4dff">Real impact.</text>
+  <rect x="80" y="530" width="72" height="4" fill="url(#g)"/>
+</svg>

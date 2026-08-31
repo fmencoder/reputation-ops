@@ -1,0 +1,50 @@
+<!--
+  Article template. Placeholders are filled per post at deploy time.
+  Article schema author/publisher both resolve to the Person node - never to a
+  masthead-shaped Organization, which does not exist.
+-->
+<article class="article">
+  <div class="wrap wrap--narrow">
+    <nav class="eyebrow" aria-label="Breadcrumb" style="margin-bottom:var(--s-4)">
+      <a href="/" style="text-decoration:none">Home</a> /
+      <a href="/insights/" style="text-decoration:none">Insights</a>
+    </nav>
+    <h1 class="display" style="font-size:clamp(2rem,4.5vw,3rem)">{{TITLE}}</h1>
+
+    <div class="byline">
+      <div>
+        <a class="byline__name" href="/about/#fredrick-mendez" rel="author">Fredrick Mendez</a>
+        <div class="byline__meta">
+          <time datetime="{{ISO_DATE}}">{{DISPLAY_DATE}}</time> &middot; {{READ_TIME}} min read
+        </div>
+      </div>
+    </div>
+
+    <div class="article__body">
+      {{BODY}}
+    </div>
+
+    <aside class="author-box">
+      <p class="card__kicker">Written by</p>
+      <h2 style="font-size:var(--fs-h3);margin:0 0 var(--s-2)">
+        <a href="/about/#fredrick-mendez" style="text-decoration:none">Fredrick Mendez</a>
+      </h2>
+      <p style="color:var(--c-text-muted);margin:0">{{AUTHOR_SHORT_BIO}}</p>
+    </aside>
+  </div>
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{TITLE}}",
+  "description": "{{DESCRIPTION}}",
+  "datePublished": "{{ISO_DATE}}",
+  "dateModified": "{{ISO_MODIFIED}}",
+  "author": { "@id": "https://{{DOMAIN}}/about/#person" },
+  "publisher": { "@id": "https://{{DOMAIN}}/about/#person" },
+  "isPartOf": { "@id": "https://{{DOMAIN}}/#website" },
+  "mainEntityOfPage": "https://{{DOMAIN}}/insights/{{SLUG}}/"
+}
+</script>

@@ -1,0 +1,28 @@
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div>
+      <div class="brand__name" style="margin-bottom:var(--s-3)">NOVRA <span class="brand__suffix">AI</span></div>
+      <p style="margin:0;max-width:38ch">Research and perspectives on artificial intelligence, autonomous systems, and digital infrastructure. Written by Fredrick Mendez.</p>
+    </div>
+    <div>
+      <a href="/insights/">Insights</a>
+      <a href="/research/">Research</a>
+      <a href="/technology/">Technology</a>
+    </div>
+    <div>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </div>
+  </div>
+</footer>
+<script>
+  (function () {
+    var t = document.querySelector('.nav-toggle'), n = document.getElementById('nav');
+    if (!t || !n) return;
+    t.addEventListener('click', function () {
+      var open = n.getAttribute('data-open') === 'true';
+      n.setAttribute('data-open', String(!open));
+      t.setAttribute('aria-expanded', String(!open));
+    });
+  })();
+</script>

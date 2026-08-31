@@ -1,0 +1,109 @@
+{
+  "_README": [
+    "Structured data for the NOVRA AI site. Three graphs: WebSite, Person, Article.",
+    "",
+    "NO Organization node is emitted, and none may be added until a legal entity",
+    "exists and its exact registered name is supplied. NOVRA AI is currently a",
+    "masthead — a publication name — not a company. Emitting Organization schema",
+    "would assert to search engines that a legal organization exists, which would",
+    "be a false machine-readable claim and is explicitly out of scope.",
+    "",
+    "WebSite.name carries the masthead. Person carries the real author. Article",
+    "author points at the Person, never at the masthead. That is what lets the",
+    "brand front the site while the authority accrues to a real, named human.",
+    "",
+    "Every PLACEHOLDER is unverified and must be filled from fact or deleted.",
+    "A deleted field costs nothing. A false one is the whole liability."
+  ],
+
+  "website": {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://PLACEHOLDER_DOMAIN/#website",
+    "name": "NOVRA AI",
+    "url": "https://PLACEHOLDER_DOMAIN/",
+    "description": "Research and perspectives on artificial intelligence, autonomous systems, blockchain infrastructure, financial technology, and emerging digital systems.",
+    "inLanguage": "en-US",
+    "publisher": { "@id": "https://PLACEHOLDER_DOMAIN/about/#person" }
+  },
+
+  "_publisher_note": [
+    "publisher points at the Person, not an Organization. This is accurate: the",
+    "publication is currently published by an individual. schema.org permits a",
+    "Person as publisher and it is the honest mapping of the real arrangement."
+  ],
+
+  "person": {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://PLACEHOLDER_DOMAIN/about/#person",
+    "name": "Fredrick Mendez",
+    "url": "https://PLACEHOLDER_DOMAIN/about/",
+    "description": "PLACEHOLDER_ONE_SENTENCE_VERIFIED",
+    "knowsAbout": [
+      "Artificial intelligence",
+      "Agentic and autonomous systems",
+      "AI reliability",
+      "AI governance",
+      "Blockchain infrastructure",
+      "Financial technology",
+      "Digital infrastructure",
+      "Business automation"
+    ],
+    "sameAs": [
+      "PLACEHOLDER_VERIFIED_PROFILE_URL"
+    ]
+  },
+
+  "_person_notes": [
+    "jobTitle omitted deliberately — not verified. Add only if true and current.",
+    "worksFor omitted deliberately. It would require an Organization node, and",
+    "BUILDFLOW_PUBLIC_DISCLOSURE=false rules out the one that exists.",
+    "alumniOf, award, hasCredential all omitted: nothing verified.",
+    "sameAs must list only profiles that resolve and that the subject controls.",
+    "A dead or unowned sameAs weakens entity association rather than helping it."
+  ],
+
+  "article_template": {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "PLACEHOLDER_TITLE",
+    "description": "PLACEHOLDER_META_DESCRIPTION",
+    "datePublished": "PLACEHOLDER_ISO_DATE",
+    "dateModified": "PLACEHOLDER_ISO_DATE",
+    "author": { "@id": "https://PLACEHOLDER_DOMAIN/about/#person" },
+    "publisher": { "@id": "https://PLACEHOLDER_DOMAIN/about/#person" },
+    "isPartOf": { "@id": "https://PLACEHOLDER_DOMAIN/#website" },
+    "mainEntityOfPage": "https://PLACEHOLDER_DOMAIN/insights/PLACEHOLDER_SLUG/"
+  },
+
+  "breadcrumb_template": {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://PLACEHOLDER_DOMAIN/" },
+      { "@type": "ListItem", "position": 2, "name": "Insights", "item": "https://PLACEHOLDER_DOMAIN/insights/" },
+      { "@type": "ListItem", "position": 3, "name": "PLACEHOLDER_TITLE" }
+    ]
+  },
+
+  "_forbidden_until_entity_exists": [
+    "Organization",
+    "Corporation",
+    "FinancialService",
+    "InvestmentOrDeposit",
+    "ResearchOrganization",
+    "EducationalOrganization",
+    "aggregateRating",
+    "numberOfEmployees",
+    "foundingDate"
+  ],
+
+  "_copy_rules": [
+    "First person singular throughout. No 'we', 'our team', 'our research'.",
+    "Those imply staff who do not exist, which is the same false claim as",
+    "Organization schema, just in prose where it is harder to audit.",
+    "No counters for papers, projects, systems, clients or years.",
+    "The word 'Research' as a section label is fine; 'Research Papers: 87' is not."
+  ]
+}

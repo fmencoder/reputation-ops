@@ -1,0 +1,30 @@
+<!--
+  Archive / category / author-archive template. One layout serves all three;
+  only the heading and the filtered set differ.
+-->
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">{{ARCHIVE_KICKER}}</p>
+    <h1 class="display">{{ARCHIVE_TITLE}}</h1>
+    <hr class="rule">
+    <p class="lead">{{ARCHIVE_DESCRIPTION}}</p>
+  </div>
+</section>
+
+<section class="wrap" style="padding-bottom:var(--s-24)">
+  <div class="grid grid--2">
+    {{#POSTS}}
+    <a class="card card--link" href="{{POST_URL}}">
+      <p class="card__kicker">{{POST_CATEGORY}}</p>
+      <h2 style="font-size:var(--fs-h3);line-height:var(--lh-snug);margin:0 0 var(--s-3)">{{POST_TITLE}}</h2>
+      <p>{{POST_EXCERPT}}</p>
+      <p class="card__meta"><time datetime="{{POST_ISO_DATE}}">{{POST_DATE}}</time> &middot; {{POST_READ_TIME}} min read</p>
+    </a>
+    {{/POSTS}}
+  </div>
+
+  <!-- Empty state: an archive with no posts says so rather than rendering nothing. -->
+  {{^POSTS}}
+  <div class="card"><h3>No posts here yet</h3><p>Nothing has been published in this section.</p></div>
+  {{/POSTS}}
+</section>
