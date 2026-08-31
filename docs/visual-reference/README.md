@@ -2,37 +2,45 @@
 
 ## Contents
 
-| File | What it is |
+| File | Role |
 | --- | --- |
-| `board.html` | **The committed visual benchmark.** Four panels rebuilt in live HTML/CSS from the shipping tokens. Open in a browser. |
-| `asset-specs.md` | Buildable specifications for panels E–J and article heroes |
-| `README.md` | Palette, typography, graphic language, prohibitions |
-| `novra-concept-board.jpg` | **Absent — see below** |
+| `novra-concept-board.jpg` | **PRIMARY BENCHMARK.** The canonical board, panels A/B/C/D. 1536×1024, 559 KB. |
+| `README.md` | Implementation specification — palette, typography, graphic language, prohibitions |
+| `asset-specs.md` | Buildable specs for panels E–J and article heroes |
+| `board.html` | Secondary. Live HTML/CSS reproduction from the shipping tokens; useful for spotting palette drift in a diff. |
+
+Verified present 2026-08-31 at `0b19196`: valid JPEG, 1536×1024, sha256 `b2c6b471…`,
+all four panels confirmed by inspection.
 
 ---
 
-## The original image is NOT in this directory
+## ONE RULE THAT OVERRIDES THE BOARD
 
-The concept board (panels A/B/C/D) was shown to me in conversation. I can see it,
-but I have no way to write those bytes to disk — the image never existed as a
-file in this environment, and there is no tool here that persists a conversation
-attachment.
+**The metrics rendered in panels C and D are not to be reproduced.** The board is
+canonical for composition, palette, typography and graphic language. It is not
+canonical for content, and six values on it are unsupported:
 
-Requested three times; verified against the filesystem each time. It has never
-arrived as a file.
+| Panel | Rendered on the board | Status |
+| --- | --- | --- |
+| C | 1,248 Projects Tracked | Unsupported — removed from the live site |
+| C | 87 Research Papers | Unsupported — removed |
+| C | 342 Systems Analyzed | Unsupported — removed |
+| C | 98.7% Impact Score | Unsupported — removed |
+| D | 10+ Years of Experience | Unsupported — removed |
+| D | 50+ Research Papers | Unsupported — removed |
 
-**Save it yourself to `docs/visual-reference/novra-concept-board.jpg`** and it
-becomes the canonical raster reference. Meanwhile `board.html` serves the same
-function and has one advantage the JPEG does not: it renders from the actual
-shipping tokens, so if the palette drifts, the reference drifts with it and the
-divergence is visible in a diff.
+The two qualitative D tiles ("Global — Perspective", "Impact — Focused") were
+removed as well: sitting in a counter frame makes them read as metrics whether or
+not they carry a number.
 
-**One deliberate divergence in `board.html`:** the fabricated metrics are not
-reproduced. The original shows 1,248 projects / 87 research papers / 342 systems
-/ 98.7% impact on panel C, and 10+ Years / 50+ Research Papers on panel D. None
-are supportable and all were removed from the live site. A reference that
-contradicts the shipping rules would re-seed them every time someone consulted
-it, so panels C and D show the corrected treatment.
+Live replacements: panel C's modules become topic navigation; panel D's tiles
+become the four focus areas (AI & Autonomous Systems, Blockchain & Smart
+Contracts, Digital Infrastructure, Technology Innovation).
+
+This rule exists because a canonical reference is consulted repeatedly. Without
+it stated at the top, every future contributor reads the board, sees the
+counters, and reintroduces them in good faith. `board.html` renders the corrected
+treatment for exactly this reason.
 
 ---
 
