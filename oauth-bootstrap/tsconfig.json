@@ -1,0 +1,32 @@
+{
+  "//": [
+    "THIS FILE IS THE FIX FOR A PRODUCTION CRASH. Do not delete it.",
+    "",
+    "Without it, a build rooted at oauth-bootstrap/ walks up and inherits the",
+    "repository's tsconfig.json, which targets a bundler: module ES2022,",
+    "moduleResolution bundler. That is correct for the repo, where esbuild and",
+    "vitest resolve extensionless relative imports. It is wrong here, because",
+    "Vercel's Node runtime resolves imports at run time, and Node's ESM resolver",
+    "requires an explicit file extension. The emitted code loads fine under a",
+    "bundler and dies with ERR_MODULE_NOT_FOUND under Node, which surfaces as",
+    "FUNCTION_INVOCATION_FAILED with no useful message.",
+    "",
+    "CommonJS with node resolution makes the extensionless specifiers in this",
+    "directory correct by construction. Reproduced and verified both ways; see",
+    "test/novra/bootstrap-runtime.test.ts, which compiles these entrypoints the",
+    "way the runtime does and invokes them."
+  ],
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "CommonJS",
+    "moduleResolution": "node10",
+    "esModuleInterop": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": ["api/**/*.ts", "lib/**/*.ts"]
+}
