@@ -20,10 +20,10 @@
       "evidence": "no stylesheet can be installed on this site and the gate cannot close as written. novraintelligence.com is on the free plan, where Custom CSS is not available. Three routes were tried against the live site: global-styles styles.css keeps ordinary declarations but drops every custom-property declaration while keeping var() usages; global-styles settings.custom returns {}; a <style> element in a core/html block is stripped by KSES and its text left visible on the page. The design ships as inline styles instead (site/build-inline.mjs). This gate closes only if the plan gains Custom CSS and a hash read back from the site matches site/novra.css."
     },
     "T0_CAPTURED": {
-      "value": false,
+      "value": true,
       "setBy": "automation",
-      "updatedAt": "2026-08-31T00:00:00.000Z",
-      "evidence": "SerpApi rejected the configured key on 2026-08-31; no baseline exists."
+      "updatedAt": "2026-09-01T04:05:00.000Z",
+      "evidence": "data/search/t0/T0-2026-09-01.json, sha256 289dcf74c001b8c49bad0e53d9bbf0e60fb4994af7a35daf7b74c8e4a31e4320. 7 queries, 63 results, captured while novraintelligence.com had never been publicly reachable — so it is a true pre-intervention baseline. Captured with the WebSearch tool, NOT SerpApi: the configured SerpApi key was rejected on 2026-08-31 and again on 2026-09-01. The file records that limitation in full: positions are list ordinals rather than verified organic ranks, and snippets are null because the tool returns none. Directionally usable and citable as a contemporaneous record; re-measure ranks against a real SERP API before making any rank-delta claim."
     },
     "MEDIA_SYNC_COMPLETE": {
       "value": false,

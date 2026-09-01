@@ -12,8 +12,9 @@ hero_alt: "Twelve nodes in a chain, each dimmer than the last. A dashed line acr
 hero_caption: "Per-step reliability read as if it were end-to-end reliability. The shaded wedge is the error in that reading, and it widens with every step."
 status: draft
 internal_links:
-  - { to: "step-accuracy-vs-task-accuracy", anchor: "the gap between step accuracy and task accuracy" }
-  - { to: "idempotent-agents-checkpointing", anchor: "idempotency and checkpointing" }
+  - { to: "recoverability-architecture", anchor: "bounding failure so retries are safe" }
+  - { to: "context-engineering-production-ai", anchor: "the context each verification step is given" }
+  - { to: "human-oversight-architecture", anchor: "where a human still has time to intervene" }
 sources:
   - https://airc.nist.gov/airmf-resources/airmf/5-sec-core/
 ---

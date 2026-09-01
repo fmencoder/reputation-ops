@@ -5,10 +5,11 @@ meta_description: "High-risk AI obligations were deferred to December 2027 and A
 primary_keyword: eu ai act timeline 2027
 cluster: governance
 schema: Article
-status: draft
+status: backlog
+backlog_note: "Not in the launch corpus. Before it is ever scheduled, re-verify against Regulation (EU) 2026/1744 (the Digital Omnibus on AI), published in the OJ on 24 July 2026 and in force from 27 July 2026 — the deferral this draft describes is now enacted law rather than a proposal, and the article is written as though it were pending."
 internal_links:
   - { to: "agentic-ai-reliability-budget", anchor: "budgeting reliability across an agentic system" }
-  - { to: "nist-ai-rmf-engineering-backlog", anchor: "mapping NIST AI RMF onto an engineering backlog" }
+  - { to: "human-oversight-architecture", anchor: "mapping NIST AI RMF onto an engineering backlog" }
 sources:
   - https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
   - https://artificialintelligenceact.eu/implementation-timeline/

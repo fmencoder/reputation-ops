@@ -5,7 +5,9 @@ meta_description: "Retry is the obvious fix when an agent dies mid-task. It is a
 primary_keyword: idempotent ai agents
 cluster: reliability
 schema: Article
-status: draft
+status: superseded
+superseded_by: recoverability-architecture
+superseded_note: "Folded into content/011-recoverability-architecture.md, which keeps this material and adds durable execution, replay semantics, auditability and the financial-systems implications. Do not schedule both."
 internal_links:
   - { to: "agentic-ai-reliability-budget", anchor: "budgeting reliability across an agentic system" }
 ---

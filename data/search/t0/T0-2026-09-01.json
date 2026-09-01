@@ -1,0 +1,777 @@
+{
+  "_immutable": "PRE-LAUNCH T0. This file records the state of search BEFORE any NOVRA content was publicly reachable. It is never edited. Later measurements go in sibling files and are compared against this one.",
+  "capturedAt": "2026-09-01T04:05:00Z",
+  "capturedBefore": "novraintelligence.com has never been publicly accessible. Site visibility was coming_soon at capture time and no NOVRA page has ever been served to an anonymous request.",
+  "source": {
+    "tool": "Claude WebSearch",
+    "engine": "undisclosed web index, US locale",
+    "serpapi_status": "UNAVAILABLE - the configured SerpApi key was rejected with 'Invalid SerpApi API key' on 2026-08-31 and again on 2026-09-01. Two failures on different days; treated as a standing outage, not a transient one."
+  },
+  "limitations": [
+    "Not a verified Google SERP. The engine behind the WebSearch tool is not disclosed and results are not guaranteed to match what a given user sees on google.com.",
+    "'position' is the ordinal in the list the tool returned. It is NOT a confirmed organic rank. Ranks must be re-measured against a real SERP API before any rank-delta claim is made.",
+    "Snippets are null throughout. The tool returns titles and URLs only; no snippet text was supplied, and none has been invented.",
+    "No result counts, no SERP features (knowledge panel, people-also-ask, image pack), no personalisation or geo controls.",
+    "Titles are recorded as the tool returned them; three were abbreviated by the tool and are stored in full form where the full form was unambiguous.",
+    "This baseline is directionally usable and legally citable as a contemporaneous record. It is not a substitute for a rank-tracking baseline, and the T0_CAPTURED gate should be re-satisfied with a real SERP API when one is available."
+  ],
+  "identityHandling": [
+    "subject-or-namesake: the result concerns the DOJ matter previously acknowledged by the site owner as an independently verified predicate. Recorded factually; this file makes no further identity assertion.",
+    "different-person: a demonstrably different individual surfaced by name similarity. These must never be characterised as being about the subject. The FDLE record in particular is a different name and a different person.",
+    "unverified-identity: name matches but nothing in this evidence establishes identity either way.",
+    "unrelated-entity: a different organisation that holds the NOVRA name."
+  ],
+  "queries": [
+    {
+      "query": "\"Fredrick Mendez\"",
+      "results": [
+        {
+          "position": 1,
+          "title": "District of Colorado",
+          "url": "https://www.justice.gov/usao-co/pr/florida-man-sentenced-41-months-stealing-covid-19-relief-funds",
+          "domain": "justice.gov",
+          "snippet": null,
+          "classification": "legal-record",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative",
+          "note": "US Attorney's Office press release. Dominant result for the bare-name query."
+        },
+        {
+          "position": 2,
+          "title": "Florida Man Sentenced to Prison for Stealing Covid Relief Funds",
+          "url": "https://news.bloomberglaw.com/payroll/florida-man-sentenced-to-prison-for-stealing-covid-relief-funds?context=search&index=3",
+          "domain": "news.bloomberglaw.com",
+          "snippet": null,
+          "classification": "news-coverage",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 3,
+          "title": "Boca Raton Man Sentenced to Over 3 Years for Fraudulently Obtaining COVID-19 Relief Funds",
+          "url": "https://hoodline.com/2025/01/boca-raton-man-sentenced-to-over-3-years-for-fraudulently-obtaining-covid-19-relief-funds/",
+          "domain": "hoodline.com",
+          "snippet": null,
+          "classification": "news-aggregator",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 4,
+          "title": "Fredrick MENDEZ personal appointments - Companies House",
+          "url": "https://find-and-update.company-information.service.gov.uk/officers/04LBKo5CTGUKBTTiLVthSjuLq9g/appointments",
+          "domain": "find-and-update.company-information.service.gov.uk",
+          "snippet": null,
+          "classification": "corporate-registry",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral",
+          "note": "UK registry. No basis on this evidence to connect it to any US person of the same name."
+        },
+        {
+          "position": 5,
+          "title": "Detail by Entity Name (Fredrick Mendez Ministries International Inc.)",
+          "url": "https://search.sunbiz.org/Inquiry/corporationsearch/SearchResultDetail?inquirytype=EntityName&directionType=Initial&searchNameOrder=FREDRICKMENDEZMINISTRIESINTERN+N220000130270&aggregateId=domnp-n22000013027-6b991b55-30ef-4e75-9326-08d4b44675df&searchTerm=FREDRICK+H.L.+MCCLURE,+P.A.&listNameOrder=FREDRICKHLMCCLUREPA+P060000457070",
+          "domain": "search.sunbiz.org",
+          "snippet": null,
+          "classification": "corporate-registry",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 6,
+          "title": "Fredrick Mendez",
+          "url": "https://www.facebook.com/fredrick.mendez.1/",
+          "domain": "facebook.com",
+          "snippet": null,
+          "classification": "social-profile",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 7,
+          "title": "Leiley Fredrick-Mendez on Hudl",
+          "url": "https://www.hudl.com/profile/10445721",
+          "domain": "hudl.com",
+          "snippet": null,
+          "classification": "sports-profile",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral",
+          "note": "Hyphenated surname; a different individual."
+        },
+        {
+          "position": 8,
+          "title": "Tony Mendez",
+          "url": "https://en.wikipedia.org/wiki/Tony_Mendez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral",
+          "note": "Surname-only match. Present because the index has little else to rank."
+        },
+        {
+          "position": 9,
+          "title": "Harold Mendez",
+          "url": "https://en.wikipedia.org/wiki/Harold_Mendez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 10,
+          "title": "freddie william mendez - Sexual Offender and Predator Search",
+          "url": "https://offender.fdle.state.fl.us/offender/sops/flyer.jsf?personId=83945",
+          "domain": "offender.fdle.state.fl.us",
+          "snippet": null,
+          "classification": "government-registry",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "negative",
+          "note": "DIFFERENT NAME AND DIFFERENT PERSON. Recorded only because a name-similarity match surfaces it on this query; it must never be described as being about the subject."
+        }
+      ]
+    },
+    {
+      "query": "\"Fredrick Mendez\" Florida",
+      "results": [
+        {
+          "position": 1,
+          "title": "Boca Raton Man Sentenced to Over 3 Years for Fraudulently Obtaining COVID-19 Relief Funds",
+          "url": "https://hoodline.com/2025/01/boca-raton-man-sentenced-to-over-3-years-for-fraudulently-obtaining-covid-19-relief-funds/",
+          "domain": "hoodline.com",
+          "snippet": null,
+          "classification": "news-aggregator",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 2,
+          "title": "District of Colorado",
+          "url": "https://www.justice.gov/usao-co/pr/florida-man-sentenced-41-months-stealing-covid-19-relief-funds",
+          "domain": "justice.gov",
+          "snippet": null,
+          "classification": "legal-record",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 3,
+          "title": "Florida Man Sentenced to Prison for Stealing Covid Relief Funds",
+          "url": "https://news.bloomberglaw.com/payroll/florida-man-sentenced-to-prison-for-stealing-covid-relief-funds?context=search&index=3",
+          "domain": "news.bloomberglaw.com",
+          "snippet": null,
+          "classification": "news-coverage",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 4,
+          "title": "District of Colorado (PPP press-release index)",
+          "url": "https://www.justice.gov/usao-co/pr?search_api_fulltext=PPP&page=0",
+          "domain": "justice.gov",
+          "snippet": null,
+          "classification": "legal-record",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 5,
+          "title": "Detail by Entity Name (Fredrick Mendez Ministries International Inc.)",
+          "url": "https://search.sunbiz.org/Inquiry/corporationsearch/SearchResultDetail?inquirytype=EntityName&directionType=Initial&searchNameOrder=FREDRICKMENDEZMINISTRIESINTERN+N220000130270&aggregateId=domnp-n22000013027-6b991b55-30ef-4e75-9326-08d4b44675df&searchTerm=FREDRICK+H.L.+MCCLURE,+P.A.&listNameOrder=FREDRICKHLMCCLUREPA+P060000457070",
+          "domain": "search.sunbiz.org",
+          "snippet": null,
+          "classification": "corporate-registry",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 6,
+          "title": "ACUMEN HOLDING GROUP LLC :: Florida (US) :: OpenCorporates",
+          "url": "https://opencorporates.com/companies/us_fl/M12000000184",
+          "domain": "opencorporates.com",
+          "snippet": null,
+          "classification": "corporate-registry",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "neutral",
+          "note": "Entity named in the DOJ release."
+        },
+        {
+          "position": 7,
+          "title": "freddie william mendez - Sexual Offender and Predator Search",
+          "url": "https://offender.fdle.state.fl.us/offender/sops/flyer.jsf?personId=83945",
+          "domain": "offender.fdle.state.fl.us",
+          "snippet": null,
+          "classification": "government-registry",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "negative",
+          "note": "DIFFERENT NAME AND DIFFERENT PERSON."
+        },
+        {
+          "position": 8,
+          "title": "Fredrick Mendez",
+          "url": "https://www.facebook.com/fredrick.mendez.1/",
+          "domain": "facebook.com",
+          "snippet": null,
+          "classification": "social-profile",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 9,
+          "title": "frederick mendez - Veromi People Search",
+          "url": "https://www.veromi.com/frederick-mendez",
+          "domain": "veromi.com",
+          "snippet": null,
+          "classification": "data-broker",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 10,
+          "title": "Fredrick Mendez Email & Phone Number",
+          "url": "https://rocketreach.co/fredrick-mendez-email_118861805",
+          "domain": "rocketreach.co",
+          "snippet": null,
+          "classification": "data-broker",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        }
+      ]
+    },
+    {
+      "query": "\"Fredrick Mendez\" Denver",
+      "results": [
+        {
+          "position": 1,
+          "title": "District of Colorado (PPP press-release index)",
+          "url": "https://www.justice.gov/usao-co/pr?search_api_fulltext=PPP&page=0",
+          "domain": "justice.gov",
+          "snippet": null,
+          "classification": "legal-record",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 2,
+          "title": "Antonio Tobias Mendez",
+          "url": "https://en.wikipedia.org/wiki/Antonio_Tobias_Mendez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 3,
+          "title": "Tony Mendez",
+          "url": "https://en.wikipedia.org/wiki/Tony_Mendez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 4,
+          "title": "Florida Man Sentenced to Prison for Stealing Covid Relief Funds",
+          "url": "https://news.bloomberglaw.com/payroll/florida-man-sentenced-to-prison-for-stealing-covid-relief-funds?context=search&index=3",
+          "domain": "news.bloomberglaw.com",
+          "snippet": null,
+          "classification": "news-coverage",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 5,
+          "title": "Fredrick Mendez",
+          "url": "https://www.facebook.com/fredrick.mendez.1/",
+          "domain": "facebook.com",
+          "snippet": null,
+          "classification": "social-profile",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 6,
+          "title": "ACUMEN HOLDING GROUP LLC :: Florida (US) :: OpenCorporates",
+          "url": "https://opencorporates.com/companies/us_fl/M12000000184",
+          "domain": "opencorporates.com",
+          "snippet": null,
+          "classification": "corporate-registry",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 7,
+          "title": "Victor Mendez",
+          "url": "https://en.wikipedia.org/wiki/Victor_Mendez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 8,
+          "title": "Wilfredo Méndez",
+          "url": "https://en.wikipedia.org/wiki/Wilfredo_M%C3%A9ndez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 9,
+          "title": "Javier Mendez (mixed martial arts trainer)",
+          "url": "https://en.wikipedia.org/wiki/Javier_Mendez_(mixed_martial_arts_trainer)",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 10,
+          "title": "Obituary for Fred Mendez Jr.",
+          "url": "https://www.ridgelawnfuneralhome.com/obituary/Fred-MendezJr",
+          "domain": "ridgelawnfuneralhome.com",
+          "snippet": null,
+          "classification": "obituary",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        }
+      ]
+    },
+    {
+      "query": "\"Fredrick Mendez\" AI",
+      "results": [
+        {
+          "position": 1,
+          "title": "Fredrick Mendez, MBA on LinkedIn (SPAC / mergers and acquisitions post)",
+          "url": "https://www.linkedin.com/posts/fredrick-mendez-mba-56042135_spac-mergersandacquisitions-capitalmarkets-activity-7001247847551508480-xCXo",
+          "domain": "linkedin.com",
+          "snippet": null,
+          "classification": "social-profile",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral",
+          "note": "Highest-ranking non-negative result on any subject query in this baseline. Identity not verified here."
+        },
+        {
+          "position": 2,
+          "title": "Florida Man Sentenced to Prison for Stealing Covid Relief Funds",
+          "url": "https://news.bloomberglaw.com/white-collar-and-criminal-law/florida-man-sentenced-to-prison-for-stealing-covid-relief-funds",
+          "domain": "news.bloomberglaw.com",
+          "snippet": null,
+          "classification": "news-coverage",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 3,
+          "title": "Detail by Entity Name (Fredrick Mendez Ministries International Inc.)",
+          "url": "https://search.sunbiz.org/Inquiry/corporationsearch/SearchResultDetail?inquirytype=EntityName&directionType=Initial&searchNameOrder=FREDRICKMENDEZMINISTRIESINTERN+N220000130270&aggregateId=domnp-n22000013027-6b991b55-30ef-4e75-9326-08d4b44675df&searchTerm=FREDRICK+H.L.+MCCLURE,+P.A.&listNameOrder=FREDRICKHLMCCLUREPA+P060000457070",
+          "domain": "search.sunbiz.org",
+          "snippet": null,
+          "classification": "corporate-registry",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 4,
+          "title": "Ivar Mendez",
+          "url": "https://en.wikipedia.org/wiki/Ivar_Mendez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 5,
+          "title": "Tony Mendez",
+          "url": "https://en.wikipedia.org/wiki/Tony_Mendez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 6,
+          "title": "Harold Mendez",
+          "url": "https://en.wikipedia.org/wiki/Harold_Mendez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 7,
+          "title": "Javier Mendez (mixed martial arts trainer)",
+          "url": "https://en.wikipedia.org/wiki/Javier_Mendez_(mixed_martial_arts_trainer)",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 8,
+          "title": "Saúl Méndez",
+          "url": "https://en.wikipedia.org/wiki/Sa%C3%BAl_M%C3%A9ndez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 9,
+          "title": "frederick mendez - Veromi People Search",
+          "url": "https://www.veromi.com/frederick-mendez",
+          "domain": "veromi.com",
+          "snippet": null,
+          "classification": "data-broker",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        }
+      ]
+    },
+    {
+      "query": "\"Fredrick Mendez\" NOVRA",
+      "results": [
+        {
+          "position": 1,
+          "title": "Boca Raton Man Sentenced to Over 3 Years for Fraudulently Obtaining COVID-19 Relief Funds",
+          "url": "https://hoodline.com/2025/01/boca-raton-man-sentenced-to-over-3-years-for-fraudulently-obtaining-covid-19-relief-funds/",
+          "domain": "hoodline.com",
+          "snippet": null,
+          "classification": "news-aggregator",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 2,
+          "title": "District of Colorado",
+          "url": "https://www.justice.gov/usao-co/pr/florida-man-sentenced-41-months-stealing-covid-19-relief-funds",
+          "domain": "justice.gov",
+          "snippet": null,
+          "classification": "legal-record",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 3,
+          "title": "Florida Man Sentenced to Prison for Stealing Covid Relief Funds",
+          "url": "https://news.bloomberglaw.com/payroll/florida-man-sentenced-to-prison-for-stealing-covid-relief-funds?context=search&index=3",
+          "domain": "news.bloomberglaw.com",
+          "snippet": null,
+          "classification": "news-coverage",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 4,
+          "title": "District of Colorado (PPP press-release index)",
+          "url": "https://www.justice.gov/usao-co/pr?search_api_fulltext=PPP&page=0",
+          "domain": "justice.gov",
+          "snippet": null,
+          "classification": "legal-record",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "negative"
+        },
+        {
+          "position": 5,
+          "title": "Fredderick Vida",
+          "url": "https://en.wikipedia.org/wiki/Fredderick_Vida",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 6,
+          "title": "Detail by Entity Name (Fredrick Mendez Ministries International Inc.)",
+          "url": "https://search.sunbiz.org/Inquiry/corporationsearch/SearchResultDetail?inquirytype=EntityName&directionType=Initial&searchNameOrder=FREDRICKMENDEZMINISTRIESINTERN+N220000130270&aggregateId=domnp-n22000013027-6b991b55-30ef-4e75-9326-08d4b44675df&searchTerm=FREDRICK+H.L.+MCCLURE,+P.A.&listNameOrder=FREDRICKHLMCCLUREPA+P060000457070",
+          "domain": "search.sunbiz.org",
+          "snippet": null,
+          "classification": "corporate-registry",
+          "subject": "unverified-identity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 7,
+          "title": "Tony Mendez",
+          "url": "https://en.wikipedia.org/wiki/Tony_Mendez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 8,
+          "title": "ACUMEN HOLDING GROUP LLC :: Florida (US) :: OpenCorporates",
+          "url": "https://opencorporates.com/companies/us_fl/M12000000184",
+          "domain": "opencorporates.com",
+          "snippet": null,
+          "classification": "corporate-registry",
+          "subject": "subject-or-namesake",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 9,
+          "title": "Obituary for Fred Mendez Jr.",
+          "url": "https://www.ridgelawnfuneralhome.com/obituary/Fred-MendezJr",
+          "domain": "ridgelawnfuneralhome.com",
+          "snippet": null,
+          "classification": "obituary",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 10,
+          "title": "Saúl Méndez",
+          "url": "https://en.wikipedia.org/wiki/Sa%C3%BAl_M%C3%A9ndez",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "different-person",
+          "controlled": false,
+          "sentiment": "neutral"
+        }
+      ],
+      "observation": "No NOVRA-related result. The term contributes nothing to the ranking; the engine falls back to the bare-name result set."
+    },
+    {
+      "query": "\"NOVRA Intelligence\"",
+      "results": [
+        {
+          "position": 1,
+          "title": "Novra Technologies Inc (NVI) AI Stock Analysis",
+          "url": "https://www.tipranks.com/stocks/tse:nvi/stock-analysis",
+          "domain": "tipranks.com",
+          "snippet": null,
+          "classification": "finance-data",
+          "subject": "unrelated-entity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 2,
+          "title": "Novra Receives US $3.2 Million and a New Loan Agreement Signed with SNAPS",
+          "url": "https://www.novragroup.com/blog/news-events-10/novra-receives-us-3-2-million-and-a-new-loan-agreement-signed-with-snaps-76",
+          "domain": "novragroup.com",
+          "snippet": null,
+          "classification": "corporate-news",
+          "subject": "unrelated-entity",
+          "controlled": false,
+          "sentiment": "neutral",
+          "note": "Novra Technologies Inc. (TSX-V: NVI), satellite data distribution. Pre-existing holder of the NOVRA name."
+        },
+        {
+          "position": 3,
+          "title": "Novra Announces Strategic Initiative to Extend Focus on AIoT Market",
+          "url": "https://www.novragroup.com/blog/news-events-10/novra-announces-strategic-initiative-to-extend-focus-on-aiot-market-77",
+          "domain": "novragroup.com",
+          "snippet": null,
+          "classification": "corporate-news",
+          "subject": "unrelated-entity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 4,
+          "title": "Investors",
+          "url": "https://www.novragroup.com/investors",
+          "domain": "novragroup.com",
+          "snippet": null,
+          "classification": "corporate-site",
+          "subject": "unrelated-entity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 5,
+          "title": "NOVRA — AI Automation Agency for Small Businesses",
+          "url": "https://novra.co.in/",
+          "domain": "novra.co.in",
+          "snippet": null,
+          "classification": "corporate-site",
+          "subject": "unrelated-entity",
+          "controlled": false,
+          "sentiment": "neutral",
+          "note": "Closest brand collision: another NOVRA operating in AI."
+        },
+        {
+          "position": 6,
+          "title": "novracorp.com - Strategic Marketing for Intentional Brand Growth",
+          "url": "https://novracorp.com/",
+          "domain": "novracorp.com",
+          "snippet": null,
+          "classification": "corporate-site",
+          "subject": "unrelated-entity",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 7,
+          "title": "State Intelligence Agency (Bulgaria)",
+          "url": "https://en.wikipedia.org/wiki/State_Intelligence_Agency_(Bulgaria)",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "term-match-only",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 8,
+          "title": "List of Indian intelligence agencies",
+          "url": "https://en.wikipedia.org/wiki/List_of_Indian_intelligence_agencies",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "term-match-only",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 9,
+          "title": "Intelligence-Security Agency of Bosnia and Herzegovina",
+          "url": "https://en.wikipedia.org/wiki/Intelligence-Security_Agency_of_Bosnia_and_Herzegovina",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "term-match-only",
+          "controlled": false,
+          "sentiment": "neutral"
+        }
+      ],
+      "observation": "NOVRA Intelligence does not appear. The exact-phrase query returns no result for the publication; the name is contested by at least three unrelated commercial NOVRAs."
+    },
+    {
+      "query": "novraintelligence.com",
+      "results": [
+        {
+          "position": 1,
+          "title": "Novero",
+          "url": "https://en.wikipedia.org/wiki/Novero",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "term-match-only",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 2,
+          "title": "Noventiq",
+          "url": "https://en.wikipedia.org/wiki/Noventiq",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "term-match-only",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 3,
+          "title": "Novus",
+          "url": "https://en.wikipedia.org/wiki/Novus",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "term-match-only",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 4,
+          "title": "Novus International",
+          "url": "https://en.wikipedia.org/wiki/Novus_International",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "term-match-only",
+          "controlled": false,
+          "sentiment": "neutral"
+        },
+        {
+          "position": 5,
+          "title": "NOV Inc.",
+          "url": "https://en.wikipedia.org/wiki/NOV_Inc.",
+          "domain": "en.wikipedia.org",
+          "snippet": null,
+          "classification": "encyclopedia",
+          "subject": "term-match-only",
+          "controlled": false,
+          "sentiment": "neutral"
+        }
+      ],
+      "observation": "Zero results for the domain. It is not indexed. This is the expected state for a site that has never been publicly reachable, and it is the cleanest single measurement in this baseline."
+    }
+  ],
+  "summary": {
+    "queriesCaptured": 7,
+    "resultsCaptured": 63,
+    "controlledResults": 0,
+    "negativeResults": 16,
+    "neutralResults": 47,
+    "positiveResults": 0,
+    "distinctDomains": 18,
+    "headline": "Zero owned or controlled results across all seven queries. No NOVRA property appears anywhere. The domain returns nothing at all. On the three bare-subject queries the first page is led by the DOJ release and its downstream coverage, and the remainder is filled by name-collision results the index ranks only because there is nothing else to rank. That vacuum, rather than the volume of negative coverage, is what this baseline actually measures."
+  }
+}

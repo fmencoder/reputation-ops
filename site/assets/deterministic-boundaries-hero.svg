@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img">
+  <title>A probabilistic field resolving through an authorization gate into a deterministic lattice, with an oracle path re-entering behind the gate.</title>
+  <defs>
+    <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse">
+      <path d="M52 0H0V52" fill="none" stroke="#4d84ff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="focal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.34"/>
+      <stop offset="55%" stop-color="#7b4dff" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="#05070f" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-180%" y="-180%" width="460%" height="460%">
+      <feGaussianBlur stdDeviation="8.5"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="#05070f"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <!-- Left: probabilistic field. Right: deterministic lattice. Between: the gate. -->
+  <ellipse cx="330" cy="430" rx="330" ry="290" fill="url(#focal)"/>
+  <ellipse cx="470" cy="560" rx="230" ry="200" fill="url(#focal)" opacity="0.7"/>
+  <circle cx="385" cy="481" r="7.2" fill="#a07cff" fill-opacity="0.51"/>
+  <circle cx="414" cy="495" r="3.8" fill="#dce6ff" fill-opacity="0.54"/>
+  <circle cx="478" cy="602" r="3.4" fill="#dce6ff" fill-opacity="0.43"/>
+  <circle cx="197" cy="611" r="6.1" fill="#a07cff" fill-opacity="0.30"/>
+  <circle cx="661" cy="692" r="5.9" fill="#dce6ff" fill-opacity="0.59"/>
+  <circle cx="232" cy="198" r="5.4" fill="#dce6ff" fill-opacity="0.31"/>
+  <circle cx="249" cy="316" r="3.1" fill="#a07cff" fill-opacity="0.51"/>
+  <circle cx="379" cy="628" r="5.3" fill="#dce6ff" fill-opacity="0.60"/>
+  <circle cx="410" cy="534" r="5.1" fill="#dce6ff" fill-opacity="0.42"/>
+  <circle cx="669" cy="708" r="6.8" fill="#a07cff" fill-opacity="0.63"/>
+  <circle cx="314" cy="309" r="4.3" fill="#dce6ff" fill-opacity="0.32"/>
+  <circle cx="548" cy="398" r="6.8" fill="#dce6ff" fill-opacity="0.47"/>
+  <circle cx="648" cy="631" r="3.0" fill="#a07cff" fill-opacity="0.38"/>
+  <circle cx="623" cy="434" r="7.4" fill="#dce6ff" fill-opacity="0.48"/>
+  <circle cx="188" cy="517" r="6.5" fill="#dce6ff" fill-opacity="0.41"/>
+  <circle cx="195" cy="363" r="7.3" fill="#a07cff" fill-opacity="0.66"/>
+  <text x="330" y="806" fill="#a07cff" fill-opacity="0.86" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" letter-spacing="2.6" font-weight="600">PROBABILISTIC</text>
+  <rect x="786" y="196" width="20" height="508" rx="10" fill="#4d84ff" fill-opacity="0.32" filter="url(#soft)"/>
+  <rect x="791" y="204" width="10" height="492" rx="5" fill="#dce6ff" fill-opacity="0.95"/>
+  <text x="796" y="806" fill="#4d84ff" fill-opacity="0.95" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" letter-spacing="2.6" font-weight="600">AUTHORIZATION</text>
+  <!-- Uniform spacing is the point: deterministic execution has no variance. -->
+  <line x1="940" y1="230" x2="940" y2="590" stroke="#4d84ff" stroke-opacity="0.20" stroke-width="1.1"/>
+  <line x1="1080" y1="230" x2="1080" y2="590" stroke="#4d84ff" stroke-opacity="0.20" stroke-width="1.1"/>
+  <line x1="1220" y1="230" x2="1220" y2="590" stroke="#4d84ff" stroke-opacity="0.20" stroke-width="1.1"/>
+  <line x1="1360" y1="230" x2="1360" y2="590" stroke="#4d84ff" stroke-opacity="0.20" stroke-width="1.1"/>
+  <line x1="1470" y1="230" x2="1470" y2="590" stroke="#4d84ff" stroke-opacity="0.20" stroke-width="1.1"/>
+  <line x1="940" y1="230" x2="1470" y2="230" stroke="#4d84ff" stroke-opacity="0.20" stroke-width="1.1"/>
+  <line x1="940" y1="350" x2="1470" y2="350" stroke="#4d84ff" stroke-opacity="0.20" stroke-width="1.1"/>
+  <line x1="940" y1="470" x2="1470" y2="470" stroke="#4d84ff" stroke-opacity="0.20" stroke-width="1.1"/>
+  <line x1="940" y1="590" x2="1470" y2="590" stroke="#4d84ff" stroke-opacity="0.20" stroke-width="1.1"/>
+  <circle cx="940" cy="230" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="940" cy="350" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="940" cy="470" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="940" cy="590" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1080" cy="230" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1080" cy="350" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1080" cy="470" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1080" cy="590" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1220" cy="230" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1220" cy="350" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1220" cy="470" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1220" cy="590" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1360" cy="230" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1360" cy="350" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1360" cy="470" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1360" cy="590" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1470" cy="230" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1470" cy="350" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1470" cy="470" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <circle cx="1470" cy="590" r="4.5" fill="#dce6ff" fill-opacity="0.62"/>
+  <text x="1205" y="806" fill="#4d84ff" fill-opacity="0.86" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" letter-spacing="2.6" font-weight="600">DETERMINISTIC</text>
+  <path d="M806 450 L 930 450" fill="none" stroke="#dce6ff" stroke-opacity="0.55" stroke-width="1.6"/>
+  <!-- The oracle: non-determinism re-entering behind the gate. -->
+  <path d="M700 856 C 900 856, 1120 800, 1220 604" fill="none" stroke="#a07cff" stroke-opacity="0.58" stroke-width="1.6" stroke-dasharray="10 8"/>
+  <circle cx="1220" cy="590" r="9" fill="#a07cff" fill-opacity="0.90"/>
+  <text x="690" y="862" fill="#a07cff" fill-opacity="0.88" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" letter-spacing="2.6" font-weight="600">ORACLE</text>
+</svg>

@@ -4,7 +4,7 @@
     "",
     "NO Organization node is emitted, and none may be added until a legal entity",
     "exists and its exact registered name is supplied. NOVRA Intelligence is currently a",
-    "masthead \u2014 a publication name \u2014 not a company. Emitting Organization schema",
+    "masthead — a publication name — not a company. Emitting Organization schema",
     "would assert to search engines that a legal organization exists, which would",
     "be a false machine-readable claim and is explicitly out of scope.",
     "",
@@ -80,7 +80,7 @@
     "isPartOf": {
       "@id": "https://novraintelligence.com/#website"
     },
-    "mainEntityOfPage": "https://novraintelligence.com/insights/PLACEHOLDER_SLUG/"
+    "mainEntityOfPage": "RESOLVE_AT_PUBLISH"
   },
   "breadcrumb_template": {
     "@context": "https://schema.org",
@@ -122,5 +122,71 @@
     "Organization schema, just in prose where it is harder to audit.",
     "No counters for papers, projects, systems, clients or years.",
     "The word 'Research' as a section label is fine; 'Research Papers: 87' is not."
+  ],
+  "_article_url_note": [
+    "The earlier template guessed https://novraintelligence.com/insights/{slug}/. That is not the",
+    "permalink structure this site uses. The one published article confirms the real pattern:",
+    "https://novraintelligence.com/YYYY/MM/DD/{slug}/ — e.g. /2026/08/31/agentic-ai-reliability-budget/.",
+    "mainEntityOfPage is therefore filled from the 'link' field of the posts.create response at",
+    "publish time, never predicted. /insights/ is the index page, not an article namespace."
+  ],
+  "articles": [
+    {
+      "_status": "published",
+      "slug": "agentic-ai-reliability-budget",
+      "headline": "Why Agentic AI Systems Fail at Scale: A Reliability Budget",
+      "description": "A 99%-reliable step sounds excellent until you chain fifty of them. How to budget reliability across an agentic system instead of tuning prompts.",
+      "datePublished": "2026-09-01",
+      "dateModified": "2026-09-01",
+      "mainEntityOfPage": "https://novraintelligence.com/2026/08/31/agentic-ai-reliability-budget/",
+      "image": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/reliability-budget-agentic-ai.webp"
+    },
+    {
+      "_status": "draft-awaiting-editorial-approval",
+      "slug": "context-engineering-production-ai",
+      "headline": "Context Engineering Is Becoming the Operating System for Production AI",
+      "description": "Model choice is no longer the main variable in production AI. The decisive layer is the context system — what the model is shown, from where, under whose authority, and for how long.",
+      "datePublished": "RESOLVE_AT_PUBLISH",
+      "dateModified": "RESOLVE_AT_PUBLISH",
+      "mainEntityOfPage": "RESOLVE_AT_PUBLISH",
+      "image": "/assets/context-engineering-hero.webp"
+    },
+    {
+      "_status": "draft-awaiting-editorial-approval",
+      "slug": "deterministic-boundaries-ai-smart-contracts",
+      "headline": "When AI Meets Smart Contracts: Designing Deterministic Boundaries for Probabilistic Systems",
+      "description": "AI systems reason probabilistically; smart contracts execute deterministically. The strongest architectures use that difference on purpose, putting authorization and settlement behind deterministic control.",
+      "datePublished": "RESOLVE_AT_PUBLISH",
+      "dateModified": "RESOLVE_AT_PUBLISH",
+      "mainEntityOfPage": "RESOLVE_AT_PUBLISH",
+      "image": "/assets/deterministic-boundaries-hero.webp"
+    },
+    {
+      "_status": "draft-awaiting-editorial-approval",
+      "slug": "human-oversight-architecture",
+      "headline": "Human Oversight Fails When It Is Designed as a Button",
+      "description": "Human-in-the-loop appears in contracts and regulation as though it were a control. Most implementations cannot function. Oversight is an architecture with a latency budget, not an approval step.",
+      "datePublished": "RESOLVE_AT_PUBLISH",
+      "dateModified": "RESOLVE_AT_PUBLISH",
+      "mainEntityOfPage": "RESOLVE_AT_PUBLISH",
+      "image": "/assets/human-oversight-hero.webp"
+    },
+    {
+      "_status": "draft-awaiting-editorial-approval",
+      "slug": "recoverability-architecture",
+      "headline": "From AI Prototype to Production System: The Architecture of Recoverability",
+      "description": "A production AI system is not one that avoids failure. It is one whose failures are bounded, observable and recoverable. What that requires, concretely, at the architecture level.",
+      "datePublished": "RESOLVE_AT_PUBLISH",
+      "dateModified": "RESOLVE_AT_PUBLISH",
+      "mainEntityOfPage": "RESOLVE_AT_PUBLISH",
+      "image": "/assets/recoverability-hero.webp"
+    }
+  ],
+  "_articles_note": [
+    "Each entry inherits author, publisher, isPartOf and @type from article_template.",
+    "author and publisher both resolve to the Person node. No Organization node is emitted:",
+    "NOVRA AI is not a registered legal entity, and claiming one in schema is a factual claim",
+    "about the world, not a formatting choice.",
+    "image is a repo path until the asset is uploaded, then the Media Library URL."
   ]
 }

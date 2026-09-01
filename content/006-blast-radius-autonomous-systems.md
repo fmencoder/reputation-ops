@@ -5,10 +5,11 @@ meta_description: "You cannot make every agent step reliable. You can decide, in
 primary_keyword: ai agent blast radius
 cluster: reliability
 schema: Article
-status: draft
+status: backlog
+backlog_note: "Not in the launch corpus. Overlaps the containment material now carried in human-oversight-architecture and recoverability-architecture; needs a distinct thesis before it is scheduled."
 internal_links:
   - { to: "agentic-ai-reliability-budget", anchor: "budgeting reliability across an agentic system" }
-  - { to: "idempotent-agents-checkpointing", anchor: "idempotency and checkpointing" }
+  - { to: "recoverability-architecture", anchor: "idempotency and checkpointing" }
 ---
 
 # Limiting Blast Radius in Autonomous Agent Architectures
