@@ -338,6 +338,44 @@ rather than trusting ones transcribed from memory.
 
 ---
 
+## Troubleshooting: WordPress rejects the token
+
+`auth_check` prints a length and a truncated SHA-256 of the token **before** it
+contacts WordPress, and the bootstrap prints the same pair for the token it
+issued. Comparing them settles where a fault is without either end revealing
+anything.
+
+Read `TOKEN_NORMALIZATION_APPLIED` first — it is the cheapest signal:
+
+| Reading | Meaning |
+| --- | --- |
+| `YES` | The stored secret carried a clipboard artifact. It was repaired for this run, but fix the secret: something is arriving that was not typed. |
+| `NO` + rejection | The stored bytes are clean and well-formed. **Do not re-copy.** A clean value that WordPress refuses is not a transfer problem. |
+
+When the value is clean and still rejected, check these in order, because the
+first two cost seconds and the third costs a token:
+
+1. **Is the secret defined in more than one place?** An *environment* secret
+   overrides a *repository* secret of the same name. Updating the repository one
+   leaves a stale environment value silently winning — and a stale token is
+   perfectly well-formed, so every byte-level check passes. The secret must be
+   set on the environment named `production`.
+
+2. **Was the OAuth flow run again after the token was copied?** Re-authorising
+   the same application can supersede the previous token. The token that works
+   is the one from the *last* authorisation; an earlier one is well-formed and
+   dead.
+
+3. **Only then** issue a fresh token, and compare its fingerprint against the
+   one the auth check prints. Matching fingerprints with a continued rejection
+   means the credential itself is the defect and re-copying will not help.
+
+Never respond to `invalid_token` by regenerating in a loop. Each cycle
+invalidates the previous token, which manufactures more of exactly the symptom
+being chased.
+
+---
+
 ## Rollback
 
 `site/deploy-report.json` carries a rollback record per page: the previous raw
