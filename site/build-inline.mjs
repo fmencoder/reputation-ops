@@ -54,6 +54,21 @@ const v = (name) => {
 };
 
 /** Resolve var(--x) to a literal, repeatedly, since tokens reference tokens. */
+/**
+ * Properties WordPress.com's sanitiser strips from inline styles. Measured by
+ * diffing what was sent against what the REST API reads back from the live
+ * site, not guessed.
+ *
+ * Only background-clip is dangerous — paired with color:transparent it renders
+ * text invisible. The rest degrade harmlessly (box-sizing widens a column,
+ * clip is redundant next to overflow:hidden). Emitting any of them means the
+ * deployed page differs from what was tested, so the build fails instead.
+ */
+const STRIPPED_BY_WPCOM = [
+  "background-clip", "-webkit-background-clip", "box-sizing",
+  "-webkit-font-smoothing", "clip",
+];
+
 function dedupe(declarations) {
   const seen = new Map();
   for (const part of declarations.split(";")) {
@@ -128,9 +143,19 @@ const RULES = {
 
   "sr-only": "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap",
 
-  // .accent is a gradient-filled span; -webkit-background-clip must come first
-  // so the standard property is the one that wins where both are supported.
-  accent: "background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent",
+  /*
+   * .accent is a gradient-filled span in the authored stylesheet. It CANNOT be
+   * that here: WordPress.com's sanitiser strips background-clip (and its
+   * -webkit- prefix) from inline styles while keeping `background` and
+   * `color:transparent`. The result is transparent text sitting on a solid
+   * gradient block — an invisible headline inside a coloured bar, which is
+   * exactly what shipped to production before this was caught.
+   *
+   * So the flattened build uses a solid accent instead. novra.css keeps the
+   * gradient treatment for the day a plan can host it; nothing here may emit
+   * background-clip, and the guard below enforces that.
+   */
+  accent: "color:var(--c-accent-bright)",
 };
 
 /**
@@ -326,6 +351,18 @@ for (const name of readdirSync(SRC).filter((f) => /^\d/.test(f))) {
     if (attr.includes("var(")) throw new Error(`${name}: unresolved var() in a style attribute`);
   }
   if (/style='/.test(payload.params.content)) throw new Error(`${name}: single-quoted style attribute`);
+  for (const property of STRIPPED_BY_WPCOM) {
+    if (property === "box-sizing" || property === "-webkit-font-smoothing" || property === "clip") continue;
+    if (new RegExp(`(^|;|")\\s*${property}\\s*:`).test(payload.params.content)) {
+      throw new Error(
+        `${name} emits ${property}, which WordPress.com strips. Paired with color:transparent ` +
+        `that renders the text invisible on the live site. Use a solid colour.`,
+      );
+    }
+  }
+  if (/color:\s*transparent/.test(payload.params.content)) {
+    throw new Error(`${name} emits color:transparent — with background-clip stripped, that is invisible text.`);
+  }
   payload._generated = "site/build-inline.mjs — do not edit; edit site/wp-payload/ and rebuild";
   writeFileSync(join(OUT, name), `${JSON.stringify(payload, null, 2)}\n`);
   count++;

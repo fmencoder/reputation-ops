@@ -181,6 +181,21 @@ img { max-width: 100%; height: auto; }
   font-size: var(--fs-h1); line-height: var(--lh-tight);
   letter-spacing: var(--tracking-hero); font-weight: 800; margin: 0 0 var(--s-6);
 }
+/*
+ * Gradient-filled display text.
+ *
+ * This rule is SAFE HERE and UNSAFE INLINE. WordPress.com strips
+ * `background-clip` and `-webkit-background-clip` from style attributes while
+ * keeping `background` and `color: transparent` — which turns the headline
+ * into invisible text sitting on a solid gradient block. That shipped to the
+ * live site once, on four public headlines, before it was caught.
+ *
+ * site/build-inline.mjs therefore flattens `.accent` to a solid
+ * var(--c-accent-bright) and throws at build time if either property is ever
+ * emitted into an inline style. Keep that guard in place if this file is one
+ * day installed as a real stylesheet on a plan that allows Custom CSS — at
+ * that point this rule works as written, and only the inline path stays banned.
+ */
 .display .accent {
   background: var(--grad-brand);
   -webkit-background-clip: text; background-clip: text; color: transparent;

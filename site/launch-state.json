@@ -57,5 +57,27 @@
     "prelaunchCheck": "Read-only and matched before the write: blog_id 257059568, primary_domain novraintelligence.com, 6 published pages, 5 published posts each with a featured image, Home (21) serving at the site root as the static front page, contact@novraintelligence.com live on the Contact page, visibility coming_soon.",
     "readBack": "launch_status=launched, visibility=public, has_active_subscribers=false.",
     "verificationLimit": "Public HTTP verification could NOT be performed from this environment. The sandbox egress proxy answers 403 to CONNECT for novraintelligence.com — and for unrelated hosts such as www.google.com — so both curl and WebFetch are blocked. This is a restriction on the agent sandbox, not evidence about the site. Every check that can be made server-side through the WordPress API was made and passed; browser confirmation is outstanding and belongs to the owner."
+  },
+  "visualCorrectionPass": {
+    "performedAt": "2026-09-01T23:00:00.000Z",
+    "priority": "P0",
+    "plan": "free (wpcom_free_grace), platform simple, custom domain novraintelligence.com, launched/public",
+    "defectsFixed": [
+      "INVISIBLE HEADLINES (live regression). The flattener emitted .accent as a gradient with background-clip:text and color:transparent. WordPress.com strips background-clip and its -webkit- prefix from inline styles but keeps the gradient and the transparent colour, so four public headlines rendered as invisible text inside a coloured bar. .accent is now a solid #4d84ff, and site/build-inline.mjs throws at build time on either background-clip or color:transparent. Home 21, Research 19, Insights 20 and Technology 24 were rebuilt and re-pushed.",
+      "TEMPLATE PLACEHOLDER CONTENT. pub/assembler//footer shipped '123 Example Street', 'San Francisco, CA 12345', 'Monday-Friday 8am - 6pm', 'hi@example.com', '(123) 456-7890' and a 'Designed with WordPress' credit. Replaced with a NOVRA footer carrying only content that is true: the wordmark, one descriptive line, contact@novraintelligence.com, and a five-link nav row. No address, phone number, business hours or legal entity was invented to replace them.",
+      "THEME CTA. The 'Learn more' button in pub/assembler//header was removed.",
+      "CONTENT WIDTH. wp:post-content used constrained layout on the page and single templates, which caps every direct child at the theme's 620px content size and squeezed the whole NOVRA payload. Both now use layout type default; each page supplies its own wrap width (1200px, 760px for articles).",
+      "DUPLICATE ARTICLE HERO. pub/assembler//single rendered wp:post-featured-image at 4/3 in addition to the 16:9 hero already inside each article body, so every article showed its hero twice with the theme copy cropped. The template block was removed; the featured image is still set on each post and still used for social cards and listing cards.",
+      "DEFAULT COMMENT UI. The comments block was removed from single, and comment_status was set to closed on all five posts (the six pages were already closed).",
+      "NAV COLOURS. The header navigation referenced the theme's greyscale presets (theme-1 text, theme-5 overlay), which resolve to near-black against the new dark shell. Replaced with explicit NOVRA hexes, including the mobile overlay.",
+      "THEME-DEFAULT LISTING AND ERROR PAGES. index, archive, home, search and 404 shipped the Assembler defaults: a fixed 3-column grid of 4/3 crops that cannot reflow at 390px, a light-theme search field, and a bare 'Page Not Found'. All five were rewritten in the NOVRA system, with the grid switched from columnCount to minimumColumnWidth 320px so it reflows.",
+      "DEFAULT CATEGORY. All five posts sat in 'Uncategorized', publicly reachable at /category/uncategorized/. Term 1 renamed to Analysis (slug analysis)."
+    ],
+    "darkShell": "global-styles.update persists styles.color.background #05070f, text #ffffff, link #4d84ff, heading #ffffff, read back and confirmed. Notable: block-level global styles DO apply on this free plan even though Custom CSS and settings.custom do not.",
+    "notRemovable": {
+      "wordpressFooterCredit": "'Blog at WordPress.com.' is injected by the platform for free Simple sites. It is not in pub/assembler//footer, which was read back after the rewrite and contains no WordPress credit. No operation exposed by the WordPress.com MCP surface (site settings, global styles, templates, template parts, newsletter settings) removes it. The supported remedy is a paid plan, which the owner has excluded. No unsupported hack was attempted.",
+      "subscribeChrome": "Every subscribe surface that IS controllable was already or is now off: post-end, modal, overlay, floating button and navigation were already false; subscribe_in_comments and subscribe_to_comments were set false in this pass. Any remaining subscribe affordance belongs to the same platform-injected free-plan footer bar as the credit above."
+    },
+    "verificationLimit": "Still not verified in a browser. The sandbox egress proxy answers 403 to CONNECT for novraintelligence.com on every path tried in this pass: curl, WebFetch, and by extension the bundled Chromium, which uses the same proxy. Every claim above is from a write followed by a read-back of stored state through the WordPress.com API, plus QA against the exact markup deployed. Rendered visual parity is NOT claimed."
   }
 }
