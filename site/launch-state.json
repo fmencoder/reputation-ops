@@ -2,10 +2,10 @@
   "siteVisibility": "COMING_SOON",
   "gates": {
     "CONTACT_EMAIL_CONFIRMED": {
-      "value": false,
+      "value": true,
       "setBy": "human",
-      "updatedAt": "2026-08-31T00:00:00.000Z",
-      "evidence": "no address supplied; PLACEHOLDER_CONTACT_EMAIL is still on the Contact page"
+      "updatedAt": "2026-09-01T00:00:00.000Z",
+      "evidence": "contact@novraintelligence.com supplied directly by the site owner. A role address on the owned domain; no personal mailbox is published."
     },
     "HUMAN_LAUNCH_APPROVAL": {
       "value": false,

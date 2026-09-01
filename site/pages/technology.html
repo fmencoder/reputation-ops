@@ -35,10 +35,15 @@
   and rasterised with sharp; the SVG is the editable original and is NOT
   uploaded (WordPress rejects image/svg+xml and strips inline SVG).
 
-  Two compositions, not one image scaled. At a 620px viewport the desktop
-  composition's rotated control labels are already illegible - verified by
-  rendering, not assumed - so a portrait composition with horizontal labels
-  takes over below that breakpoint.
+  One img, no picture element and no source. WordPress.com strips both tags,
+  and strips them inside HTML comments as well - which broke this very comment
+  out of its own delimiters on the first save and printed the remains on the
+  page. So there is no tag syntax anywhere in this comment either.
+
+  The portrait composition for narrow viewports is authored and rasterised but
+  not yet in the media library. When it is, it goes in as a second img carrying
+  class figure__mobile, which is the mechanism novra.css already holds for
+  exactly this restriction - not as a source element, which cannot survive.
 
   The surrounding prose carries every label in the diagram. The figure is an
   aid to reading, never the only place the information appears.
@@ -52,10 +57,7 @@
 
   <figure class="figure">
     <div class="figure__frame">
-      <picture>
-        <source media="(max-width: 620px)" srcset="/assets/novra-convergence-architecture-mobile.webp" width="900" height="1200">
-        <img src="/assets/novra-convergence-architecture.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Architecture diagram. Data and events enter at the top and pass down through an AI and intelligence layer, autonomous agents, a highlighted policy and authorization layer, smart contracts, blockchain and distributed state, and digital and financial infrastructure, emerging as verified outcomes. The six middle layers sit inside a containment boundary marked security and governance on one edge and observability and human oversight on the other.">
-      </picture>
+      <img src="/assets/novra-convergence-architecture.webp" width="1000" height="563" loading="lazy" alt="Architecture diagram. Data and events enter at the top and pass down through an AI and intelligence layer, autonomous agents, a highlighted policy and authorization layer, smart contracts, blockchain and distributed state, and digital and financial infrastructure, emerging as verified outcomes. The six middle layers sit inside a containment boundary marked security and governance on one edge and observability and human oversight on the other.">
     </div>
     <figcaption>The convergence path, with the authorization gate as the load-bearing element. Input and verified output sit outside the containment boundary; everything that acts sits inside it.</figcaption>
   </figure>

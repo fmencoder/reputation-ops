@@ -39,7 +39,12 @@ const MEDIA_MAP = join(ROOT, "wp-media.json");
 const domainArg = process.argv.indexOf("--domain");
 const DOMAIN = domainArg > -1 ? process.argv[domainArg + 1] : "novraintelligence.com";
 
-/** Set only after a read-back proves WordPress stripped <picture>/<source>. */
+/**
+ * Kept for the day a target install supports <picture>. It does not apply to
+ * novraintelligence.com: a read-back there returned
+ * elements_removed: ["<picture>", "<source>"], so the page sources carry a
+ * single <img> and there is no <picture> left for this transform to rewrite.
+ */
 const PICTURE_FALLBACK = process.argv.includes("--picture-fallback");
 
 /** Deployment order matters: About first, because it holds the Person node. */
@@ -222,7 +227,7 @@ async function main() {
 
   console.log(`\n${PAGES.length} payloads written to wp-payload/ (domain: ${DOMAIN})`);
   console.log(
-    `picture strategy: ${PICTURE_FALLBACK ? "FALLBACK (dual <img>)" : "PRIMARY (<picture>)"}`,
+    `picture strategy: ${PICTURE_FALLBACK ? "FALLBACK (dual <img>)" : "n/a — no <picture> in the page sources"}`,
   );
   if (allPlaceholders.size) {
     console.log("\nBLOCKED — unresolved placeholders:");

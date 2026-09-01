@@ -38,6 +38,7 @@
     "@id": "https://novraintelligence.com/about/#person",
     "name": "Fredrick Mendez",
     "url": "https://novraintelligence.com/about/",
+    "email": "mailto:contact@novraintelligence.com",
     "description": "Technology executive and strategist focused on artificial intelligence, autonomous systems, blockchain technology, smart contracts, software architecture, and next-generation digital infrastructure.",
     "knowsAbout": [
       "Artificial Intelligence",
@@ -60,7 +61,8 @@
     "sameAs REMOVED entirely rather than shipped with a placeholder. A sameAs array",
     "containing a guess is worse than no sameAs at all - it tells search engines to",
     "consolidate an entity with a profile that may belong to someone else. Re-add only",
-    "after a specific URL is confirmed to resolve publicly and be controlled by the subject."
+    "after a specific URL is confirmed to resolve publicly and be controlled by the subject.",
+    "email added 2026-09-01: contact@novraintelligence.com, the single canonical public address. A role address on the owned domain, not a personal mailbox."
   ],
   "article_template": {
     "@context": "https://schema.org",

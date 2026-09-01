@@ -11,3 +11,4 @@ site/deploy-report.json
 site/dist/
 site/wp-payload-fallback/
 site/wp-payload/
+site/wp-payload-inline/

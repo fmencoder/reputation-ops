@@ -184,7 +184,7 @@ per page. Current state:
 
 | Page | Placeholder | Needs |
 | --- | --- | --- |
-| `contact` | `PLACEHOLDER_CONTACT_EMAIL` | A working address. **The only one blocking launch.** |
+| _(none)_ | — | Resolved 2026-09-01: `contact@novraintelligence.com`, the single canonical public address. |
 | `structured-data.json` | `PLACEHOLDER_TITLE` / `_META_DESCRIPTION` / `_ISO_DATE` / `_SLUG` | Per-article, filled from each post's front matter at publish. Not launch blockers. |
 
 Resolved since the last pass: the About bio paragraphs and the Person
@@ -289,7 +289,7 @@ the resulting URLs.
 - Site title, front page, and permalinks need `wpcom/site-settings`.
 - Structured data not yet injected.
 - Articles not published, per instruction.
-- `PLACEHOLDER_CONTACT_EMAIL` unresolved — the one launch blocker.
+- Contact address resolved. No public-content placeholder remains.
 
 ## Plan note
 

@@ -179,8 +179,9 @@ Three modes, gated differently:
 
 ### Why `auth_check` skips the content gate
 
-`site:validate` fails while `PLACEHOLDER_CONTACT_EMAIL` remains, and that is
-correct — the site is not fit to publish. But "is the site fit to publish" and
+`site:validate` failed while `PLACEHOLDER_CONTACT_EMAIL` remained, and that was
+correct — the site was not fit to publish. That placeholder is now resolved, but
+the reasoning stands for any future content blocker: "is the site fit to publish" and
 "does the token authenticate" are different questions. Gating the second on the
 first means the first live deployment attempt is also the first time anyone
 finds out the token is wrong, which is the worst possible moment to discover it.

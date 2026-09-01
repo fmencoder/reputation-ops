@@ -187,6 +187,22 @@ img { max-width: 100%; height: auto; }
 }
 .lead { color: var(--c-text-muted); font-size: var(--fs-lead); max-width: 52ch; }
 
+/*
+ * Home hero: heading column beside the decorative orbit.
+ *
+ * This is a class and not a style attribute because an inline
+ * grid-template-columns cannot be overridden by a media query at any
+ * specificity. The first deployed Home page set `1fr 1fr` inline, which held
+ * two columns all the way down to a 390px viewport and left the heading column
+ * about 170px wide. Nothing errored; it simply looked broken.
+ */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-16);
+  align-items: center;
+}
+
 .rule { height: 2px; width: 64px; background: var(--grad-rule); border: 0; margin: 0 0 var(--s-6); }
 
 .grid { display: grid; gap: var(--s-6); }
@@ -204,12 +220,23 @@ img { max-width: 100%; height: auto; }
 }
 .card:hover { border-color: var(--c-border-strong); transform: translateY(-2px); }
 .card__icon { width: 36px; height: 36px; color: var(--c-accent-2-soft); margin-bottom: var(--s-4); }
+/*
+ * Qualified with .card p on purpose. `.card p` is 0,1,1 and plain
+ * `.card__kicker` is 0,1,0, so the generic card-paragraph rule was winning and
+ * rendering every kicker in muted grey at body size instead of small accent
+ * caps. Same reasoning as the .figure__mobile qualification below.
+ */
+.card p.card__kicker {
+  font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--c-accent-bright); margin: 0 0 var(--s-2);
+}
 .card__kicker {
   font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--c-accent-bright); margin: 0 0 var(--s-2);
 }
 .card h3 { font-size: var(--fs-h3); line-height: var(--lh-snug); margin: 0 0 var(--s-3); }
 .card p { color: var(--c-text-muted); margin: 0; font-size: 0.9375rem; }
+.card p.card__meta,
 .card__meta { color: var(--c-text-subtle); font-size: 0.8125rem; margin-top: var(--s-4); }
 
 .card--link { text-decoration: none; display: block; }
@@ -286,8 +313,10 @@ img { max-width: 100%; height: auto; }
   max-width: var(--measure);
 }
 /*
- * Fallback pair. Used only if <picture>/<source> does not survive KSES on the
- * deployed WordPress version; with <picture> intact these classes are unused.
+ * The responsive pair. This is the mechanism, not a fallback: WordPress.com
+ * strips <picture> and <source> outright — confirmed on 2026-08-31 by a save
+ * that came back with elements_removed: ["<picture>", "<source>"] — so art
+ * direction has to be done with two <img> elements and a media query.
  *
  * Qualified with .figure__frame img on purpose. The unqualified `.figure__mobile`
  * loses to `.figure__frame img { display: block }` on specificity — 0,1,0 against
@@ -304,6 +333,9 @@ img { max-width: 100%; height: auto; }
 @media (max-width: 860px) {
   .page-head { padding: var(--s-16) 0 var(--s-8); }
   .grid--3 { grid-template-columns: repeat(2, 1fr); }
+  .hero-split { grid-template-columns: 1fr; gap: var(--s-8); }
+  /* Purely decorative, and 80% of the viewport tall once stacked. */
+  .hero-orbit { display: none; }
 }
 
 @media (max-width: 620px) {

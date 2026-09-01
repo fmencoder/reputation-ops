@@ -6,5 +6,26 @@
     "live page, and wp-export.mjs cannot tell a guess from a real one.",
     "Any /assets/ path referenced by a page and missing here fails the export."
   ],
-  "assets": {}
+  "assets": {
+    "/assets/novra-convergence-architecture.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-convergence-architecture.webp",
+    "/assets/reliability-budget-agentic-ai.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/reliability-budget-agentic-ai.webp",
+    "/assets/logo.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-logo.webp"
+  },
+  "_uploaded": {
+    "novra-logo.webp": {
+      "id": 15
+    },
+    "reliability-budget-agentic-ai.webp": {
+      "id": 16,
+      "width": 1400,
+      "height": 788,
+      "bytes": 6416
+    },
+    "novra-convergence-architecture.webp": {
+      "id": 23,
+      "width": 1000,
+      "height": 563,
+      "bytes": 9346
+    }
+  }
 }
