@@ -1,0 +1,25 @@
+{
+  "_comment": [
+    "Maps an article slug to the permalink WordPress actually returned.",
+    "Written ONLY from the 'link' field of a posts.create/update response.",
+    "Never predicted: this site serves posts at /YYYY/MM/DD/{slug}/, and the",
+    "date segment is assigned by WordPress at publish time.",
+    "build-article.mjs resolves internal cross-links through this file and",
+    "refuses to emit an unresolved one unless --allow-unresolved is passed,",
+    "which is only correct for the first publish of a not-yet-existing article."
+  ],
+  "permalinks": {
+    "agentic-ai-reliability-budget": "https://novraintelligence.com/2026/08/31/agentic-ai-reliability-budget/",
+    "context-engineering-production-ai": "https://novraintelligence.com/2026/08/31/context-engineering-production-ai/",
+    "deterministic-boundaries-ai-smart-contracts": "https://novraintelligence.com/2026/08/31/deterministic-boundaries-ai-smart-contracts/",
+    "human-oversight-architecture": "https://novraintelligence.com/2026/08/31/human-oversight-architecture/",
+    "recoverability-architecture": "https://novraintelligence.com/2026/08/31/recoverability-architecture/"
+  },
+  "postIds": {
+    "agentic-ai-reliability-budget": 18,
+    "context-engineering-production-ai": 53,
+    "deterministic-boundaries-ai-smart-contracts": 54,
+    "human-oversight-architecture": 55,
+    "recoverability-architecture": 56
+  }
+}

@@ -22,6 +22,7 @@ internal_links:
 sources:
   - https://eips.ethereum.org/EIPS/eip-4337
   - https://ethereum.org/roadmap/
+  - https://eth2book.info/latest/part2/consensus/casper_ffg/
   - https://chain.link/education-hub/maximal-extractable-value-mev
   - https://chain.link/article/oracle-extractable-value
   - https://arxiv.org/pdf/2601.04583
@@ -138,28 +139,50 @@ claim. The correct engineering response is also the same: bound the staleness
 explicitly, and make the system's behaviour under a stale or disputed reading a
 designed path rather than an accident.
 
-## Settlement latency is a design input, not a detail
+## Inclusion is not finality, and the gap is a design input
 
-Finality is not instantaneous, and agents are usually written as though it were.
-On Ethereum today, economic finality arrives on the order of fifteen minutes —
-long enough that an agent operating on sub-second reasoning loops will act many
-times on state that is confirmed but not yet final.
+Two different events get collapsed into the word "confirmed", and agents are
+usually written as though only one of them existed.
 
-*(Projection, not fact: the Ethereum Foundation's published roadmap direction
-targets substantially faster finality — work that began as single-slot finality,
-became three-slot finality, and now continues as the Minimmit protocol under the
-Lean Ethereum programme. As of mid-2026 that work remains research with no fork
-assignment, and public roadmap discussion points at the end of the decade. It
-should not be planned against.)*
+*Inclusion* is a transaction appearing in a block. On Ethereum that is a single
+slot — roughly twelve seconds — and it is what most tooling reports as a
+confirmation. *Economic finality* is the point at which reversing the transaction
+would require an attacker to control and forfeit at least a third of all staked
+ETH. Ethereum currently reaches economic finality in roughly 15 minutes: the
+protocol finalises at epoch granularity through a two-phase commit, where a
+checkpoint attested by a two-thirds supermajority becomes justified and is
+finalised once the following epoch's checkpoint is justified in turn — about 12.8
+minutes of protocol time, and in practice a little longer depending on where in
+the epoch the transaction landed.
 
-Until then, the interval between inclusion and finality is a real architectural
-parameter with three consequences. Agent decisions taken inside the window are
-provisional, and the system needs a defined behaviour for reorganisation.
-Cross-chain sequences are the dangerous case: an action finalised on one chain
-and pending on another is an inconsistency an autonomous system will otherwise
-resolve by improvising. And any human review has to fit inside the window or it
-is reviewing history — which is the same
-[oversight that can actually intervene](/human-oversight-architecture/) problem
+*(Projection, not fact — and explicitly not something to architect against: the
+Ethereum Foundation's published roadmap direction targets substantially faster
+finality. That work began as single-slot finality, became three-slot finality,
+and continues as the Minimmit protocol under the Lean Ethereum programme. As of
+mid-2026 it remains active research with no fork assignment, and public roadmap
+discussion points toward the end of the decade. No system being designed today
+should assume it.)*
+
+The practical consequence is not that applications must sit idle for fifteen
+minutes. Almost nothing does, and a design that waited on finality for every
+action would be unusable. The consequence is that **any action whose correctness
+depends on irreversible settlement needs an explicit confirmation policy** —
+stated once, at the architecture level, rather than decided implicitly by
+whichever library reports "confirmed" first.
+
+A workable policy names three things. Which operations may proceed on inclusion,
+accepting a small reorganisation risk in exchange for latency: reading, quoting,
+provisional reservations, anything internally reversible. Which operations must
+wait for finality: releasing goods, extending credit against on-chain collateral,
+or any second irreversible act taken in reliance on the first. And what the
+system does if a transaction it acted upon is reorganised out — which is a
+designed compensation path, not an exception handler written after the incident.
+
+Two cases deserve particular attention. Cross-chain sequences are the dangerous
+one: an action final on one chain and merely included on another is an
+inconsistency an autonomous system will otherwise resolve by improvising. And
+human review has to fit inside the window or it is reviewing history — the same
+[oversight that can actually intervene](/human-oversight-architecture/) problem,
 in a setting where the deadline is set by a consensus protocol rather than by
 organisational preference.
 
@@ -211,6 +234,7 @@ possible output is still a bounded event.
 
 - ERC-4337, *Account Abstraction Using Alt Mempool* — https://eips.ethereum.org/EIPS/eip-4337
 - Ethereum Foundation, *Roadmap* — https://ethereum.org/roadmap/
+- *Upgrading Ethereum*, Casper FFG (justification and finalisation) — https://eth2book.info/latest/part2/consensus/casper_ffg/
 - Chainlink, *Maximal Extractable Value (MEV)* — https://chain.link/education-hub/maximal-extractable-value-mev
 - Chainlink, *Oracle Extractable Value (OEV) Explained* — https://chain.link/article/oracle-extractable-value
 - *Autonomous Agents on Blockchains: Standards, Execution, and Authorization* — https://arxiv.org/pdf/2601.04583

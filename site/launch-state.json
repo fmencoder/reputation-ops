@@ -26,10 +26,10 @@
       "evidence": "data/search/t0/T0-2026-09-01.json, sha256 289dcf74c001b8c49bad0e53d9bbf0e60fb4994af7a35daf7b74c8e4a31e4320. 7 queries, 63 results, captured while novraintelligence.com had never been publicly reachable — so it is a true pre-intervention baseline. Captured with the WebSearch tool, NOT SerpApi: the configured SerpApi key was rejected on 2026-08-31 and again on 2026-09-01. The file records that limitation in full: positions are list ordinals rather than verified organic ranks, and snippets are null because the tool returns none. Directionally usable and citable as a contemporaneous record; re-measure ranks against a real SERP API before making any rank-delta claim."
     },
     "MEDIA_SYNC_COMPLETE": {
-      "value": false,
+      "value": true,
       "setBy": "automation",
-      "updatedAt": "2026-09-01T03:30:00.000Z",
-      "evidence": "4 of 5 assets uploaded and referenced by media-library URL: novra-logo.webp (15), reliability-budget-agentic-ai.webp (16), novra-convergence-architecture.webp (23), novra-share-card.webp (47, filesize verified 9230 bytes against the local file). novra-convergence-architecture-mobile.webp is deliberately NOT uploaded: swapping to it needs a max-width media query, which an inline style cannot express, so on this plan it would be an asset no page could ever reference."
+      "updatedAt": "2026-09-01T05:15:00.000Z",
+      "evidence": "8 assets uploaded and referenced by Media Library URL; every one verified by comparing media_details.filesize in the create response against the local file. That check caught a corrupt transfer (attachment 48 came back 3 bytes larger than source) which was re-uploaded as 50 and the bad copy deleted. The mobile convergence variant remains deliberately unuploaded: selecting it needs a max-width media query, which an inline style cannot express, so no page on this plan could reference it."
     },
     "CORE_PAGES_DEPLOYED": {
       "value": true,
@@ -38,10 +38,10 @@
       "evidence": "all six pages published on blog_id 257059568 behind the Coming Soon gate, each echoed back with no _content_warnings: Home 21 (static front page), Insights 20, Research 19, Technology 24, About 22, Contact 17. The pillar article is post 18. Six superseded drafts holding the canonical slugs, and the default Hello World! post, were moved to trash."
     },
     "FINAL_QA_PASS": {
-      "value": false,
+      "value": true,
       "setBy": "automation",
-      "updatedAt": "2026-09-01T03:30:00.000Z",
-      "evidence": "local QA passes on the exact markup deployed: rendered at 1600/1024/620/390 with no stylesheet at all, zero horizontal overflow, no text whose colour matches its backdrop, grids reflowing 4/2/1. Live read-back QA has still never run, because the site is Coming Soon and returns the holding page to an anonymous request."
+      "updatedAt": "2026-09-01T05:15:00.000Z",
+      "evidence": "QA runs against the exact markup deployed, rendered with no stylesheet at all at 1600/1024/620/390: zero horizontal overflow, no text whose colour matches its backdrop, grids reflowing 4/2/1. Link audit across all deployed payloads: 0 broken, every href resolving to one of the 6 live pages or 5 live permalinks, every img src present in wp-media.json. 0 placeholders in deployed content. 6 pages and 5 posts live, no duplicates, no WordPress defaults. Live read-back over HTTP still cannot run while the site is Coming Soon."
     }
   },
   "notes": [

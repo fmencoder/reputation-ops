@@ -113,6 +113,7 @@ const RULES = {
 
   article: "padding:var(--s-16) 0 var(--s-24)",
   article__body: "max-width:var(--measure)",
+  sources: "box-sizing:border-box;max-width:var(--measure);margin-top:var(--s-12);padding-top:var(--s-6);border-top:1px solid var(--c-border);color:var(--c-text-subtle);font-size:0.875rem",
   byline: "display:flex;align-items:center;gap:var(--s-3);padding:var(--s-6) 0;border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);margin-bottom:var(--s-8)",
   byline__name: "font-weight:600;text-decoration:none",
   byline__meta: "color:var(--c-text-subtle);font-size:0.875rem",
@@ -151,6 +152,9 @@ const DESCENDANT_RULES = {
     p: "margin:0 0 var(--s-4)",
     a: "color:var(--c-accent-bright)",
     blockquote: "margin:var(--s-8) 0;padding-left:var(--s-6);border-left:2px solid var(--c-accent);color:var(--c-text-muted)",
+    ul: "margin:0 0 var(--s-4);padding-left:1.25rem",
+    ol: "margin:0 0 var(--s-4);padding-left:1.35rem",
+    li: "margin:0 0 var(--s-2)",
     // display:block + overflow-x lets a wide table scroll inside the measure
     // instead of pushing the page sideways. There is no .table-scroll wrapper
     // to lean on and no media query to add one conditionally.
@@ -158,6 +162,13 @@ const DESCENDANT_RULES = {
     th: "border-bottom:1px solid var(--c-border);padding:var(--s-3);text-align:left;color:var(--c-text);font-weight:600",
     td: "border-bottom:1px solid var(--c-border);padding:var(--s-3);text-align:left;color:var(--c-text-muted)",
   },
+  sources: {
+    h2: "font-size:var(--fs-h3);line-height:var(--lh-snug);margin:var(--s-8) 0 var(--s-3);color:var(--c-text)",
+    ul: "margin:0;padding-left:1.25rem",
+    li: "margin:0 0 var(--s-2);word-break:break-word",
+    a: "color:var(--c-accent-bright)",
+  },
+
   figure__frame: {
     img: "display:block;width:100%;height:auto",
   },

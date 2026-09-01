@@ -22,13 +22,13 @@ const ARTICLES = [
 /** Per-article editorial notes that live here, not in the drafts. */
 const REVIEW = {
   2: {
-    thesis: "Model capability has converged; the decisive layer in production AI is the context system — how a system assembles, types, budgets, refreshes and defends what the model sees.",
+    thesis: "As frontier model capability becomes less differentiating for many production workloads, the context system increasingly determines reliability, control and operational performance — so context must be treated as a typed, permissioned, decaying resource rather than a string.",
     contribution: "Context is classified on two axes — origin trust and lifetime — and the pair predicts the failure mode: short-lived + low-trust yields poisoning, long-lived + high-volume yields rot, and long-lived + low-trust yields both. From that follows the load-bearing claim: policy expressed as tokens in the window is advisory, so authority has to be enforced outside the model. That reframes prompt injection from a model-behaviour problem into an ordinary authorization problem.",
     hero: "Five labelled context bands feed a single focal mass through one bright enforcement gate. Two bands are dashed to mark untrusted origin — the trust distinction is drawn, not captioned.",
   },
   3: {
     thesis: "AI reasons probabilistically and smart contracts execute deterministically; robust architectures use that difference deliberately, placing authorization, settlement and irreversible state transitions behind deterministic control.",
-    contribution: "Separates intent, authorization and execution into three distinct acts, so an adversary with full control of model output still controls only the first. Then the non-obvious part: the oracle is where non-determinism re-enters a system chosen for having none — supported by oracle extractable value as measurable evidence — and settlement latency makes an agent's decisions provisional for roughly fifteen minutes, which is a design input rather than a footnote.",
+    contribution: "Separates intent, authorization and execution into three distinct acts, so an adversary with full control of model output still controls only the first. Then the non-obvious part: the oracle is where non-determinism re-enters a system chosen for having none — supported by oracle extractable value as measurable evidence — and the inclusion/finality gap means any action depending on irreversible settlement needs an explicit confirmation policy rather than whatever the first library to say \"confirmed\" implies.",
     hero: "A diffuse probabilistic field resolves through a bright authorization gate into a rigid uniform lattice. A dashed oracle path bypasses the gate and re-enters the deterministic side from below.",
   },
   4: {

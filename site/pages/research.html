@@ -7,10 +7,47 @@
   </div>
 </section>
 
+<section class="wrap" style="padding-bottom:var(--s-12)">
+  <div style="max-width:var(--measure)">
+    <h2 style="font-size:var(--fs-h2);margin:0 0 var(--s-4)">The current line of work</h2>
+    <p style="color:var(--c-text-muted);margin:0 0 var(--s-4)">One question runs through everything below: what has to be true before an autonomous system can be put in front of real consequences? Not whether it performs well on a benchmark &mdash; whether its failures are bounded, whether anyone can tell what it did, and whether a person still has time to intervene when it matters.</p>
+    <p style="color:var(--c-text-muted);margin:0 0 var(--s-4)">These are analytical frameworks derived from published engineering practice and regulatory text, not empirical studies. Where a claim rests on external evidence, the source is cited in the article.</p>
+  </div>
+</section>
+
+<!--
+  Research is a curated view of the reliability and governance thread, not a
+  separate library. Articles in the reliability and governance clusters appear
+  here; the architecture pieces live on Insights, which indexes everything.
+  An article is never published at two URLs — these cards point at the same
+  permalinks Insights uses.
+-->
 <section class="wrap" style="padding-bottom:var(--s-24)">
-  <div class="card">
-    <h2 style="font-size:var(--fs-h3);margin:0 0 var(--s-3)">Nothing published here yet</h2>
-    <p>This section exists for work that runs longer than an article. It stays empty until there is something real to put in it.</p>
-    <p class="card__meta">Current focus areas: reliability budgeting for multi-step agents, offline benchmarks versus production traces, and mapping governance frameworks onto engineering backlogs.</p>
+  <h2 style="font-size:0.6875rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--c-text-subtle);margin:0 0 var(--s-6)">Reliability &amp; Governance</h2>
+  <div class="grid grid--2">
+    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/agentic-ai-reliability-budget/">
+      <p class="card__kicker">Reliability</p>
+      <h3>Why Agentic AI Systems Fail at Scale: A Reliability Budget</h3>
+      <p>Per-step accuracy compounds into task failure. Budgeting reliability across the whole path, rather than tuning one step, is the lever that moves.</p>
+      <p class="card__meta">1 September 2026 &middot; 5 min read</p>
+    </a>
+    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/recoverability-architecture/">
+      <p class="card__kicker">Reliability</p>
+      <h3>From AI Prototype to Production System: The Architecture of Recoverability</h3>
+      <p>Idempotency, durable event history, replay semantics and compensation &mdash; and why the recovery log and the audit trail are the same artifact.</p>
+      <p class="card__meta">1 September 2026 &middot; 8 min read</p>
+    </a>
+    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/human-oversight-architecture/">
+      <p class="card__kicker">Governance</p>
+      <h3>Human Oversight Fails When It Is Designed as a Button</h3>
+      <p>What the EU AI Act and the NIST AI RMF actually require, and the latency budget that decides whether an oversight process can function at all.</p>
+      <p class="card__meta">1 September 2026 &middot; 7 min read</p>
+    </a>
+  </div>
+
+  <div class="card" style="margin-top:var(--s-6);border-color:var(--c-border-strong)">
+    <p class="card__kicker">In progress</p>
+    <h3>Open questions</h3>
+    <p>Evaluation that survives contact with production traces rather than offline benchmarks; mapping governance frameworks onto engineering backlogs; and the containment properties that decide how much autonomy a system can safely be given.</p>
   </div>
 </section>

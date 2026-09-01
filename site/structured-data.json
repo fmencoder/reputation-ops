@@ -139,54 +139,66 @@
       "datePublished": "2026-09-01",
       "dateModified": "2026-09-01",
       "mainEntityOfPage": "https://novraintelligence.com/2026/08/31/agentic-ai-reliability-budget/",
-      "image": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/reliability-budget-agentic-ai.webp"
+      "image": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/reliability-budget-agentic-ai.webp",
+      "_postId": 18,
+      "url": "https://novraintelligence.com/2026/08/31/agentic-ai-reliability-budget/"
     },
     {
-      "_status": "draft-awaiting-editorial-approval",
+      "_status": "published",
       "slug": "context-engineering-production-ai",
       "headline": "Context Engineering Is Becoming the Operating System for Production AI",
       "description": "Model choice is no longer the main variable in production AI. The decisive layer is the context system — what the model is shown, from where, under whose authority, and for how long.",
-      "datePublished": "RESOLVE_AT_PUBLISH",
-      "dateModified": "RESOLVE_AT_PUBLISH",
-      "mainEntityOfPage": "RESOLVE_AT_PUBLISH",
-      "image": "/assets/context-engineering-hero.webp"
+      "datePublished": "2026-09-01",
+      "dateModified": "2026-09-01",
+      "mainEntityOfPage": "https://novraintelligence.com/2026/08/31/context-engineering-production-ai/",
+      "image": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/context-engineering-hero.webp",
+      "_postId": 53,
+      "url": "https://novraintelligence.com/2026/08/31/context-engineering-production-ai/"
     },
     {
-      "_status": "draft-awaiting-editorial-approval",
+      "_status": "published",
       "slug": "deterministic-boundaries-ai-smart-contracts",
       "headline": "When AI Meets Smart Contracts: Designing Deterministic Boundaries for Probabilistic Systems",
       "description": "AI systems reason probabilistically; smart contracts execute deterministically. The strongest architectures use that difference on purpose, putting authorization and settlement behind deterministic control.",
-      "datePublished": "RESOLVE_AT_PUBLISH",
-      "dateModified": "RESOLVE_AT_PUBLISH",
-      "mainEntityOfPage": "RESOLVE_AT_PUBLISH",
-      "image": "/assets/deterministic-boundaries-hero.webp"
+      "datePublished": "2026-09-01",
+      "dateModified": "2026-09-01",
+      "mainEntityOfPage": "https://novraintelligence.com/2026/08/31/deterministic-boundaries-ai-smart-contracts/",
+      "image": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/deterministic-boundaries-hero-v2.webp",
+      "_postId": 54,
+      "url": "https://novraintelligence.com/2026/08/31/deterministic-boundaries-ai-smart-contracts/"
     },
     {
-      "_status": "draft-awaiting-editorial-approval",
+      "_status": "published",
       "slug": "human-oversight-architecture",
       "headline": "Human Oversight Fails When It Is Designed as a Button",
       "description": "Human-in-the-loop appears in contracts and regulation as though it were a control. Most implementations cannot function. Oversight is an architecture with a latency budget, not an approval step.",
-      "datePublished": "RESOLVE_AT_PUBLISH",
-      "dateModified": "RESOLVE_AT_PUBLISH",
-      "mainEntityOfPage": "RESOLVE_AT_PUBLISH",
-      "image": "/assets/human-oversight-hero.webp"
+      "datePublished": "2026-09-01",
+      "dateModified": "2026-09-01",
+      "mainEntityOfPage": "https://novraintelligence.com/2026/08/31/human-oversight-architecture/",
+      "image": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/human-oversight-hero.webp",
+      "_postId": 55,
+      "url": "https://novraintelligence.com/2026/08/31/human-oversight-architecture/"
     },
     {
-      "_status": "draft-awaiting-editorial-approval",
+      "_status": "published",
       "slug": "recoverability-architecture",
       "headline": "From AI Prototype to Production System: The Architecture of Recoverability",
       "description": "A production AI system is not one that avoids failure. It is one whose failures are bounded, observable and recoverable. What that requires, concretely, at the architecture level.",
-      "datePublished": "RESOLVE_AT_PUBLISH",
-      "dateModified": "RESOLVE_AT_PUBLISH",
-      "mainEntityOfPage": "RESOLVE_AT_PUBLISH",
-      "image": "/assets/recoverability-hero.webp"
+      "datePublished": "2026-09-01",
+      "dateModified": "2026-09-01",
+      "mainEntityOfPage": "https://novraintelligence.com/2026/08/31/recoverability-architecture/",
+      "image": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/recoverability-hero.webp",
+      "_postId": 56,
+      "url": "https://novraintelligence.com/2026/08/31/recoverability-architecture/"
     }
   ],
   "_articles_note": [
-    "Each entry inherits author, publisher, isPartOf and @type from article_template.",
+    "Each entry inherits @type, author, publisher and isPartOf from article_template.",
     "author and publisher both resolve to the Person node. No Organization node is emitted:",
     "NOVRA AI is not a registered legal entity, and claiming one in schema is a factual claim",
     "about the world, not a formatting choice.",
-    "image is a repo path until the asset is uploaded, then the Media Library URL."
+    "mainEntityOfPage and url are the permalinks WordPress returned at publication, copied from",
+    "site/wp-permalinks.json. image is the Media Library URL from the media.create response.",
+    "No sameAs is emitted for the Person: no profile has been verified as belonging to the author."
   ]
 }

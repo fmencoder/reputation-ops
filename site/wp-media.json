@@ -10,7 +10,11 @@
     "/assets/novra-convergence-architecture.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-convergence-architecture.webp",
     "/assets/reliability-budget-agentic-ai.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/reliability-budget-agentic-ai.webp",
     "/assets/logo.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-logo.webp",
-    "/assets/share-card.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-share-card.webp"
+    "/assets/share-card.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-share-card.webp",
+    "/assets/context-engineering-hero.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/context-engineering-hero.webp",
+    "/assets/deterministic-boundaries-hero.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/deterministic-boundaries-hero-v2.webp",
+    "/assets/human-oversight-hero.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/human-oversight-hero.webp",
+    "/assets/recoverability-hero.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/recoverability-hero.webp"
   },
   "_uploaded": {
     "novra-logo.webp": {
@@ -34,9 +38,39 @@
       "height": 420,
       "bytes": 9230,
       "note": "filesize in the media.create response matched the local file exactly, which is what proves the base64 transfer was byte-correct"
+    },
+    "context-engineering-hero.webp": {
+      "id": 51,
+      "width": 1000,
+      "height": 563,
+      "bytes": 7018,
+      "verified": "filesize matched local exactly"
+    },
+    "deterministic-boundaries-hero-v2.webp": {
+      "id": 50,
+      "width": 1000,
+      "height": 563,
+      "bytes": 5474,
+      "verified": "filesize matched local exactly",
+      "note": "v2 because attachment 48 came back at 5477 bytes — 3 more than the source. The other uploads matched exactly, so the difference was a transcription fault in that one transfer, not server behaviour. 48 was deleted rather than used."
+    },
+    "human-oversight-hero.webp": {
+      "id": 52,
+      "width": 1000,
+      "height": 563,
+      "bytes": 7472,
+      "verified": "filesize matched local exactly"
+    },
+    "recoverability-hero.webp": {
+      "id": 49,
+      "width": 1000,
+      "height": 563,
+      "bytes": 6064,
+      "verified": "filesize matched local exactly"
     }
   },
   "_not_uploaded": {
     "/assets/novra-convergence-architecture-mobile.webp": "Selecting it requires a max-width media query. Inline styles cannot express one and this plan hosts no stylesheet, so no page could reference it."
-  }
+  },
+  "_verification": "Every upload is checked by comparing media_details.filesize in the create response against the local file. An exact match proves the base64 transfer was byte-correct; a mismatch means re-upload, not ship. This caught one corrupt transfer."
 }
