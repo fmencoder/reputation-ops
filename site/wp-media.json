@@ -9,7 +9,8 @@
   "assets": {
     "/assets/novra-convergence-architecture.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-convergence-architecture.webp",
     "/assets/reliability-budget-agentic-ai.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/reliability-budget-agentic-ai.webp",
-    "/assets/logo.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-logo.webp"
+    "/assets/logo.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-logo.webp",
+    "/assets/share-card.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-share-card.webp"
   },
   "_uploaded": {
     "novra-logo.webp": {
@@ -26,6 +27,16 @@
       "width": 1000,
       "height": 563,
       "bytes": 9346
+    },
+    "novra-share-card.webp": {
+      "id": 47,
+      "width": 800,
+      "height": 420,
+      "bytes": 9230,
+      "note": "filesize in the media.create response matched the local file exactly, which is what proves the base64 transfer was byte-correct"
     }
+  },
+  "_not_uploaded": {
+    "/assets/novra-convergence-architecture-mobile.webp": "Selecting it requires a max-width media query. Inline styles cannot express one and this plan hosts no stylesheet, so no page could reference it."
   }
 }

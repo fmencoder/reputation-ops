@@ -16,8 +16,8 @@
     "CSS_INSTALLED": {
       "value": false,
       "setBy": "automation",
-      "updatedAt": "2026-08-31T00:00:00.000Z",
-      "evidence": "never assumed. Closes only when a hash read back from the site matches site/novra.css."
+      "updatedAt": "2026-09-01T03:30:00.000Z",
+      "evidence": "no stylesheet can be installed on this site and the gate cannot close as written. novraintelligence.com is on the free plan, where Custom CSS is not available. Three routes were tried against the live site: global-styles styles.css keeps ordinary declarations but drops every custom-property declaration while keeping var() usages; global-styles settings.custom returns {}; a <style> element in a core/html block is stripped by KSES and its text left visible on the page. The design ships as inline styles instead (site/build-inline.mjs). This gate closes only if the plan gains Custom CSS and a hash read back from the site matches site/novra.css."
     },
     "T0_CAPTURED": {
       "value": false,
@@ -28,20 +28,20 @@
     "MEDIA_SYNC_COMPLETE": {
       "value": false,
       "setBy": "automation",
-      "updatedAt": "2026-08-31T00:00:00.000Z",
-      "evidence": "site/wp-media.json holds 0 of 5 referenced assets."
+      "updatedAt": "2026-09-01T03:30:00.000Z",
+      "evidence": "4 of 5 assets uploaded and referenced by media-library URL: novra-logo.webp (15), reliability-budget-agentic-ai.webp (16), novra-convergence-architecture.webp (23), novra-share-card.webp (47, filesize verified 9230 bytes against the local file). novra-convergence-architecture-mobile.webp is deliberately NOT uploaded: swapping to it needs a max-width media query, which an inline style cannot express, so on this plan it would be an asset no page could ever reference."
     },
     "CORE_PAGES_DEPLOYED": {
-      "value": false,
+      "value": true,
       "setBy": "automation",
-      "updatedAt": "2026-08-31T00:00:00.000Z",
-      "evidence": "no deployment has run against a live site."
+      "updatedAt": "2026-09-01T03:30:00.000Z",
+      "evidence": "all six pages published on blog_id 257059568 behind the Coming Soon gate, each echoed back with no _content_warnings: Home 21 (static front page), Insights 20, Research 19, Technology 24, About 22, Contact 17. The pillar article is post 18. Six superseded drafts holding the canonical slugs, and the default Hello World! post, were moved to trash."
     },
     "FINAL_QA_PASS": {
       "value": false,
       "setBy": "automation",
-      "updatedAt": "2026-08-31T00:00:00.000Z",
-      "evidence": "local responsive and accessibility QA passes; live read-back QA has never run."
+      "updatedAt": "2026-09-01T03:30:00.000Z",
+      "evidence": "local QA passes on the exact markup deployed: rendered at 1600/1024/620/390 with no stylesheet at all, zero horizontal overflow, no text whose colour matches its backdrop, grids reflowing 4/2/1. Live read-back QA has still never run, because the site is Coming Soon and returns the holding page to an anonymous request."
     }
   },
   "notes": [
