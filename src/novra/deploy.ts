@@ -381,8 +381,22 @@ export interface CapabilityProbe {
   readonly detail: string;
 }
 
+export type AuthStage = "pass" | "fail" | "skipped";
+
 export interface AuthCheckReport {
   readonly authenticated: boolean;
+  /** True only when WordPress itself rejected the credential. */
+  readonly tokenRejectedByWordPress: boolean;
+  readonly tokenLength: number;
+  readonly tokenFingerprint: string;
+  readonly tokenNormalizationApplied: boolean;
+  readonly stages: {
+    readonly getSite: AuthStage;
+    readonly pages: AuthStage;
+    readonly posts: AuthStage;
+    readonly media: AuthStage;
+    readonly customCss: AuthStage;
+  };
   readonly siteId: number | null;
   readonly siteName: string;
   readonly siteUrl: string;
@@ -392,6 +406,7 @@ export interface AuthCheckReport {
   readonly plannedPages: readonly string[];
   readonly blockers: readonly string[];
   readonly externalWrites: 0;
+  readonly failureDetail: string;
 }
 
 /**
@@ -404,9 +419,12 @@ export interface AuthCheckReport {
  * Blocking the second on the first means the first live deployment attempt is
  * also the first time anyone finds out the token is wrong.
  *
- * The client passed in must be a readOnly() wrapper. Blockers are reported, not
- * suppressed — the check answers the connectivity question and still says, in
- * the same breath, that the site is not deployable.
+ * AUTHENTICATION IS THE FIRST THING TESTED AND IS REPORTED ON ITS OWN.
+ * getSite runs alone, before any capability probe, and a failure there stops
+ * the sequence and is reported as exactly that — not as four probe failures
+ * that have to be read backwards to work out the credential was rejected.
+ *
+ * The client passed in must be a readOnly() wrapper.
  */
 export async function runAuthCheck(
   client: WpClient,
@@ -415,39 +433,89 @@ export async function runAuthCheck(
   pages: readonly PageSpec[],
   blockers: readonly string[],
 ): Promise<AuthCheckReport> {
+  const identity = client.tokenIdentity;
+  const base = {
+    tokenLength: identity.length,
+    tokenFingerprint: identity.fingerprint,
+    tokenNormalizationApplied: identity.normalizationApplied,
+    plannedUploads: [] as string[],
+    plannedReuse: [] as string[],
+    plannedPages: [] as string[],
+    blockers,
+    externalWrites: 0 as const,
+  };
+
+  // STAGE A — the credential, on its own.
+  let site: Awaited<ReturnType<WpClient["getSite"]>>;
+  try {
+    site = await client.getSite();
+  } catch (error) {
+    const message = (error as Error).message;
+    // A 400/401/403 from the site endpoint is WordPress refusing the
+    // credential. Anything else (a 5xx, a network fault) is not, and calling it
+    // a rejected token would send the investigation somewhere it does not
+    // belong.
+    const rejected = /\b(400|401|403)\b/.test(message) || /invalid_token|unauthorized/i.test(message);
+    return {
+      ...base,
+      authenticated: false,
+      tokenRejectedByWordPress: rejected,
+      stages: { getSite: "fail", pages: "skipped", posts: "skipped", media: "skipped", customCss: "skipped" },
+      siteId: null,
+      siteName: "",
+      siteUrl: "",
+      capabilities: [],
+      failureDetail: message,
+    };
+  }
+
+  // STAGE B — capabilities, only now that the credential is proven.
   const capabilities: CapabilityProbe[] = [];
+  const stages = {
+    getSite: "pass" as AuthStage,
+    pages: "fail" as AuthStage,
+    posts: "fail" as AuthStage,
+    media: "fail" as AuthStage,
+    customCss: "fail" as AuthStage,
+  };
 
-  const site = await client.getSite();
-
-  const probe = async (name: string, run: () => Promise<string>): Promise<void> => {
+  const probe = async (name: string, run: () => Promise<string>): Promise<boolean> => {
     try {
       capabilities.push({ name, ok: true, detail: await run() });
+      return true;
     } catch (error) {
       // A failed probe is information, not a crash. "Custom CSS is unavailable"
       // is exactly what this check exists to discover.
       capabilities.push({ name, ok: false, detail: (error as Error).message.slice(0, 160) });
+      return false;
     }
   };
 
   // Fetched once and reused for the page plan below — a probe that costs two
   // round trips to answer one question is a probe nobody leaves enabled.
   let existingPages: readonly WpPage[] = [];
-  await probe("pages.list", async () => {
+  stages.pages = (await probe("pages.list", async () => {
     existingPages = await client.listPages();
     return `${existingPages.length} pages readable`;
-  });
-  await probe("posts.list", async () => `${(await client.listPosts()).length} posts readable`);
-  await probe("media.list", async () => `${(await client.listMedia()).length} media items readable`);
-  await probe("customcss.get", async () => {
+  })) ? "pass" : "fail";
+
+  stages.posts = (await probe("posts.list", async () => `${(await client.listPosts()).length} posts readable`))
+    ? "pass" : "fail";
+  stages.media = (await probe("media.list", async () => `${(await client.listMedia()).length} media items readable`))
+    ? "pass" : "fail";
+  stages.customCss = (await probe("customcss.get", async () => {
     const css = await client.getCustomCss();
     return `Custom CSS API reachable (${(css?.css ?? "").length} characters installed)`;
-  });
+  })) ? "pass" : "fail";
 
   const plan = planSync(manifest, assets);
   const existingSlugs = new Set(existingPages.map((page) => page.slug));
 
   return {
+    ...base,
     authenticated: true,
+    tokenRejectedByWordPress: false,
+    stages,
     siteId: site.ID ?? null,
     siteName: site.name ?? "",
     siteUrl: site.URL ?? "",
@@ -457,7 +525,6 @@ export async function runAuthCheck(
     plannedPages: pages.map(
       (page) => `${page.slug} -> ${existingSlugs.has(page.slug) ? "update existing" : "create draft"}`,
     ),
-    blockers,
-    externalWrites: 0,
+    failureDetail: "",
   };
 }

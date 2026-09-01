@@ -13,6 +13,7 @@ import {
   clearStateCookie, deriveStateKey, mintState, readCookie, stateCookie,
   STATE_COOKIE, STATE_TTL_SECONDS, verifyState, type StateFailure,
 } from "./state";
+import { normalizeToken } from "./token";
 
 export interface HandlerDeps {
   readonly env?: NodeJS.ProcessEnv;
@@ -123,7 +124,14 @@ export async function handleCallback(
     securityHeaders(response);
     response.setHeader("Content-Type", "text/html; charset=utf-8");
     response.statusCode = 200;
-    response.end(successPage(accessToken, validation.siteId, validation.siteUrl, validation.siteName));
+    // Fingerprinted with the same implementation production uses, so the two
+    // numbers can be compared directly. The token itself is unchanged - what is
+    // displayed is exactly what WordPress issued.
+    const identity = normalizeToken(accessToken);
+    response.end(
+      successPage(accessToken, identity.length, identity.fingerprint,
+        validation.siteId, validation.siteUrl, validation.siteName),
+    );
   } catch (caught) {
     clear();
     const oauthError = caught as OAuthError;
@@ -156,7 +164,14 @@ const STATE_MESSAGES: Record<StateFailure, string> = {
  * server-side: reloading this URL will not show it again, because the
  * authorization code has been consumed and the state cookie cleared.
  */
-function successPage(token: string, siteId: number, siteUrl: string, siteName: string): string {
+function successPage(
+  token: string,
+  tokenLength: number,
+  tokenFingerprint: string,
+  siteId: number,
+  siteUrl: string,
+  siteName: string,
+): string {
   return page(
     "Token ready",
     `<h1 class="ok">Token issued and validated</h1>
@@ -164,9 +179,21 @@ function successPage(token: string, siteId: number, siteUrl: string, siteName: s
 <strong>${escapeHtml(siteName || siteUrl)}</strong> (site ID ${siteId}).
 Nothing was written — no page, no post, no media.</p>
 
+<h2>Verify the handoff</h2>
+<p>These two values identify the token without revealing it. Whatever you paste
+into GitHub must produce the same pair, and the auth check prints its own before
+it contacts WordPress. If they differ, the value changed in transit and the
+credential is not the problem.</p>
+<pre>TOKEN_LENGTH=${tokenLength}
+TOKEN_FINGERPRINT=${escapeHtml(tokenFingerprint)}</pre>
+
 <h2>Copy this once</h2>
+<p><strong>Copy ONLY the token inside the box below.</strong> Not the word
+&ldquo;Bearer&rdquo;, not quotes, not a label, not a trailing line break. The
+copy button below takes exactly the right characters and nothing else &mdash;
+prefer it to selecting by hand.</p>
 <pre id="t">${escapeHtml(token)}</pre>
-<button onclick="navigator.clipboard.writeText(document.getElementById('t').textContent).then(()=>{this.textContent='Copied'})">Copy token</button>
+<button onclick="navigator.clipboard.writeText(document.getElementById('t').textContent).then(()=>{this.textContent='Copied - exact bytes, no whitespace'})">Copy token</button>
 
 <div class="note">
 <p>This page is <code>no-store</code>, <code>noindex</code> and
@@ -178,9 +205,13 @@ Reloading will not show it again — the authorization code has been spent.</p>
 <pre>GitHub -> fmencoder/reputation-ops -> Settings
   -> Environments -> production -> Environment secrets
 
-  NOVRA_WP_ACCESS_TOKEN = (the value above)
+  NOVRA_WP_ACCESS_TOKEN = (the token box above, nothing else)
   NOVRA_WP_SITE         = ${escapeHtml(siteUrl.replace(/^https?:\/\//, ""))}
-  site ID for reference = ${siteId}</pre>
+  site ID for reference = ${siteId}
+
+Set it on the ENVIRONMENT named "production", not at repository level.
+An environment secret overrides a repository secret of the same name, so a
+stale environment value silently wins over a fresh repository one.</pre>
 
 <h2>Then delete this service</h2>
 <p>It has done its job. Removing the Vercel project revokes the only place the

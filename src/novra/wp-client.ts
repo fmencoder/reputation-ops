@@ -24,6 +24,8 @@
  * artifact. `redact()` below is applied to every error body.
  */
 
+import { normalizeToken } from "./token.js";
+
 export interface WpClientOptions {
   /** Site ID or domain, e.g. "novraintelligence.com". */
   readonly site: string;
@@ -32,6 +34,16 @@ export interface WpClientOptions {
   /** Injected for tests; defaults to global fetch. */
   readonly fetchImpl?: typeof fetch;
   readonly baseUrl?: string;
+}
+
+/**
+ * Diagnostics for the token this client holds. Length and a truncated digest —
+ * never a prefix, a suffix, or any token material.
+ */
+export interface TokenIdentity {
+  readonly length: number;
+  readonly fingerprint: string;
+  readonly normalizationApplied: boolean;
 }
 
 export class WpError extends Error {
@@ -91,11 +103,24 @@ export class WpClient {
   private readonly fetchImpl: typeof fetch;
   private readonly baseUrl: string;
 
+  readonly tokenIdentity: TokenIdentity;
+
   constructor(options: WpClientOptions) {
     if (!options.site) throw new Error("WpClient requires a site identifier");
     if (!options.token) throw new Error("WpClient requires an access token");
     this.site = options.site;
-    this.token = options.token;
+
+    // Normalised once, here, so every request in this client sends the same
+    // bytes and there is no path that reaches WordPress with a raw value.
+    // A token that arrived with a clipboard artifact is repaired; one that
+    // arrived malformed throws rather than being sent and blamed on WordPress.
+    const normalized = normalizeToken(options.token);
+    this.token = normalized.token;
+    this.tokenIdentity = {
+      length: normalized.length,
+      fingerprint: normalized.fingerprint,
+      normalizationApplied: normalized.normalizationApplied,
+    };
     this.fetchImpl = options.fetchImpl ?? globalThis.fetch;
     this.baseUrl = options.baseUrl ?? "https://public-api.wordpress.com";
   }

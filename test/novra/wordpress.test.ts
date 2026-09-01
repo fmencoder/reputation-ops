@@ -83,6 +83,10 @@ class FakeWp {
         return media;
       },
       async getCustomCss() { throw new WpError("404 not found", 404, "/customcss"); },
+      // Real clients expose this from the normalisation done at construction;
+      // the fake carries a fixed synthetic identity so tests can assert the
+      // report surfaces it.
+      tokenIdentity: { length: 33, fingerprint: "abcdef012345", normalizationApplied: false },
     };
     return client as unknown as WpClient;
   }
@@ -398,6 +402,54 @@ describe("auth check", () => {
     expect(wp.media).toHaveLength(0);
   });
 
+  it("surfaces the token fingerprint so both ends can be compared", async () => {
+    const { client } = probeWp();
+    const report = await runAuthCheck(readOnly(client), { assets: {} }, assets, [SPEC], []);
+    expect(report.tokenFingerprint).toBe("abcdef012345");
+    expect(report.tokenLength).toBe(33);
+  });
+
+  it("tests the credential first and skips the probes when it is rejected", async () => {
+    const { wp, client } = probeWp();
+    (client as unknown as Record<string, unknown>)["getSite"] = async () => {
+      throw new WpError('400 Bad Request: {"error":"invalid_token"}', 400, "/sites/x");
+    };
+    const report = await runAuthCheck(readOnly(client), { assets: {} }, assets, [SPEC], []);
+
+    expect(report.authenticated).toBe(false);
+    expect(report.tokenRejectedByWordPress).toBe(true);
+    expect(report.stages.getSite).toBe("fail");
+    // The probes must not run and must not be reported as failures of their
+    // own — one rejected credential is one finding, not five.
+    expect(report.stages.pages).toBe("skipped");
+    expect(report.stages.posts).toBe("skipped");
+    expect(report.stages.media).toBe("skipped");
+    expect(report.stages.customCss).toBe("skipped");
+    expect(report.capabilities).toHaveLength(0);
+    expect(wp.writes).toHaveLength(0);
+    // The fingerprint is still reported — it is the whole point of the failure
+    // path, because it is what tells you whether to re-copy or stop copying.
+    expect(report.tokenFingerprint).toBe("abcdef012345");
+  });
+
+  it("does not call a 500 a rejected credential", async () => {
+    const { client } = probeWp();
+    (client as unknown as Record<string, unknown>)["getSite"] = async () => {
+      throw new WpError("500 Internal Server Error", 500, "/sites/x");
+    };
+    const report = await runAuthCheck(readOnly(client), { assets: {} }, assets, [SPEC], []);
+    expect(report.authenticated).toBe(false);
+    expect(report.tokenRejectedByWordPress).toBe(false);
+  });
+
+  it("records the customcss probe failing without failing the check", async () => {
+    const { client } = probeWp();
+    const report = await runAuthCheck(readOnly(client), { assets: {} }, assets, [SPEC], []);
+    expect(report.stages.customCss).toBe("fail");
+    expect(report.stages.getSite).toBe("pass");
+    expect(report.authenticated).toBe(true);
+  });
+
   it("records a failed capability probe instead of aborting the check", async () => {
     const { client } = probeWp();
     // getCustomCss throws on the fake, standing in for a site where the API is
@@ -406,6 +458,19 @@ describe("auth check", () => {
     const css = report.capabilities.find((c) => c.name === "customcss.get");
     expect(css?.ok).toBe(false);
     expect(report.authenticated).toBe(true);
+  });
+
+  it("normalises a token carrying clipboard artifacts at client construction", () => {
+    const clean = new WpClient({ site: "x.com", token: TOKEN });
+    const dirty = new WpClient({ site: "x.com", token: `  Bearer "${TOKEN}"\n` });
+    expect(dirty.tokenIdentity.fingerprint).toBe(clean.tokenIdentity.fingerprint);
+    expect(dirty.tokenIdentity.normalizationApplied).toBe(true);
+    expect(clean.tokenIdentity.normalizationApplied).toBe(false);
+  });
+
+  it("refuses to construct a client around a malformed token", () => {
+    expect(() => new WpClient({ site: "x.com", token: "two words" })).toThrow(/internal space/);
+    expect(() => new WpClient({ site: "x.com", token: "Bearer " })).toThrow(/just the word/);
   });
 
   it("still reports a content blocker while confirming the credentials work", async () => {

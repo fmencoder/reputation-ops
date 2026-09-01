@@ -33,6 +33,7 @@ import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
 import { readOnly, WpClient } from "../novra/wp-client.js";
+import { tokenDiagnostic, type TokenFormatError } from "../novra/token.js";
 import { parseManifest, serializeManifest, sha256, type MediaManifest } from "../novra/media-manifest.js";
 import {
   syncAssets, deployPage, cssStrategy, runAuthCheck,
@@ -178,7 +179,33 @@ async function main(): Promise<void> {
   if (AUTH_CHECK) {
     // readOnly() removes the write methods entirely. Nothing below this line
     // can upload, update or create even if it tried.
-    const probeClient = readOnly(new WpClient({ site, token }));
+    //
+    // Constructing the client normalises the token and throws on a malformed
+    // one, so a clipboard artifact is reported as what it is rather than sent
+    // to WordPress and returned as an opaque invalid_token.
+    let probeClient;
+    try {
+      probeClient = readOnly(new WpClient({ site, token }));
+    } catch (error) {
+      console.error("TOKEN_PRESENT=YES");
+      console.error("TOKEN_MALFORMED=YES");
+      console.error(`TOKEN_FAILURE=${(error as TokenFormatError).kind ?? "unknown"}`);
+      console.error(`\n${(error as Error).message}`);
+      console.error("\nAUTHENTICATED=false\nEXTERNAL_WRITES=0\nSITE_VISIBILITY=UNCHANGED");
+      process.exit(2);
+    }
+    // Printed BEFORE WordPress is contacted, so the comparison against the
+    // bootstrap's fingerprint is available even when the call then fails.
+    for (const line of tokenDiagnostic({
+      token: "",
+      length: probeClient.tokenIdentity.length,
+      fingerprint: probeClient.tokenIdentity.fingerprint,
+      normalizationApplied: probeClient.tokenIdentity.normalizationApplied,
+    })) {
+      console.log(line);
+    }
+    console.log("");
+
     const assets = await loadAssets();
     const report = await runAuthCheck(
       probeClient,
@@ -190,8 +217,9 @@ async function main(): Promise<void> {
     printAuthCheck(report);
     // Exit 0 when authentication succeeded. The content blocker is reported,
     // not converted into an auth failure — conflating them is what made this
-    // question unanswerable in the first place.
-    process.exit(0);
+    // question unanswerable in the first place. A rejected credential IS a
+    // failure and exits non-zero.
+    process.exit(report.authenticated ? 0 : 1);
   }
 
   const client = new WpClient({ site, token });
@@ -251,7 +279,33 @@ function printPlan(specs: readonly PageSpec[], blocked: readonly string[], manif
 function printAuthCheck(report: AuthCheckReport): void {
   console.log("--- AUTH CHECK (read-only, zero external writes) ---");
   console.log(`AUTHENTICATED=${report.authenticated}`);
-  console.log(`SITE=${report.siteName} <${report.siteUrl}> id=${report.siteId}`);
+  console.log(`TOKEN_LENGTH=${report.tokenLength}`);
+  console.log(`TOKEN_FINGERPRINT=${report.tokenFingerprint}`);
+
+  console.log("\nAUTH STAGES");
+  console.log(`  AUTH_STAGE_GET_SITE=${report.stages.getSite}`);
+  console.log(`  AUTH_STAGE_PAGES=${report.stages.pages}`);
+  console.log(`  AUTH_STAGE_POSTS=${report.stages.posts}`);
+  console.log(`  AUTH_STAGE_MEDIA=${report.stages.media}`);
+  console.log(`  AUTH_STAGE_CUSTOMCSS=${report.stages.customCss}`);
+
+  if (!report.authenticated) {
+    console.log(`\nTOKEN_REJECTED_BY_WORDPRESS=${report.tokenRejectedByWordPress}`);
+    console.log(`DETAIL=${report.failureDetail}`);
+    console.log(
+      report.tokenRejectedByWordPress
+        ? "\nCompare TOKEN_FINGERPRINT above with the one the bootstrap displayed.\n" +
+          "  Different -> the value changed between the two systems; re-copy it.\n" +
+          "  Same      -> the bytes are identical and the credential itself is the\n" +
+          "               problem. Do not re-copy; investigate the token, not the transfer."
+        : "\nThis was not a credential rejection. Read DETAIL before regenerating anything.",
+    );
+    console.log("\nEXTERNAL_WRITES=0");
+    console.log("SITE_VISIBILITY=UNCHANGED");
+    return;
+  }
+
+  console.log(`\nSITE=${report.siteName} <${report.siteUrl}> id=${report.siteId}`);
 
   console.log("\nCAPABILITIES");
   for (const capability of report.capabilities) {
