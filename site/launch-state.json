@@ -79,5 +79,40 @@
       "subscribeChrome": "Every subscribe surface that IS controllable was already or is now off: post-end, modal, overlay, floating button and navigation were already false; subscribe_in_comments and subscribe_to_comments were set false in this pass. Any remaining subscribe affordance belongs to the same platform-injected free-plan footer bar as the credit above."
     },
     "verificationLimit": "Still not verified in a browser. The sandbox egress proxy answers 403 to CONNECT for novraintelligence.com on every path tried in this pass: curl, WebFetch, and by extension the bundled Chromium, which uses the same proxy. Every claim above is from a write followed by a read-back of stored state through the WordPress.com API, plus QA against the exact markup deployed. Rendered visual parity is NOT claimed."
+  },
+  "visualAssetDeployment": {
+    "performedAt": "2026-09-01T18:50:00.000Z",
+    "assets": {
+      "novra-convergence-map.webp": {
+        "attachment": 80,
+        "dimensions": "1000x625",
+        "bytes": 11962,
+        "source": "site/assets/novra-convergence-map.svg",
+        "deployedOn": [
+          "Home hero (page 21)",
+          "Article 3 supporting figure (post 54)"
+        ],
+        "note": "Production render of NOVRA/ArchitectureVisual from the Figma design system, at 2x its 640x400 artboard."
+      },
+      "novra-convergence-band.webp": {
+        "attachment": 81,
+        "dimensions": "1200x300",
+        "bytes": 8884,
+        "source": "site/assets/novra-convergence-band.svg",
+        "deployedOn": [
+          "Technology page head (page 24)"
+        ],
+        "note": "Distilled form of the same motif — inputs and gate, no COMMIT terminal, because the full architecture diagram is already further down that page."
+      }
+    },
+    "verification": "Both uploads confirmed byte-for-byte: media_details.filesize returned 11962 and 8884, matching the local files exactly. That check is what proves the base64 transfer was not truncated — a first attempt at the map was, and the API rejected it.",
+    "genericVisualsRemoved": [
+      "Home: the CSS-drawn orbit (rings, arcs, seven glowing dots).",
+      "Technology: the decorative gradient strip with four glowing dots and a grid overlay.",
+      "About: the decorative identity graphic (radial fields, arc pair, four glowing dots). Not replaced — the convergence map belongs where it argues something, and a page about a person is not one of those places."
+    ],
+    "homepageCopy": "The trailing author card was replaced with THE IDEA BEHIND NOVRA, reproduced exactly as approved. No religious terminology, no credential, no institutional claim was added. The byline still runs on every article and the full profile remains on /about/.",
+    "widthCorrection": "WordPress.com strips box-sizing, so every .wrap had been rendering content-box since launch: a 1200px max-width with 1.5rem padding gave a 1200px column where the design calls for 1152, and 760 instead of 712 on articles. compensateForContentBox() in site/build-inline.mjs now subtracts the padding from the max-width. All 6 pages and all 5 posts were republished to carry it, so the whole site is consistent rather than partly corrected.",
+    "verificationLimit": "Still not verified against the live domain. The sandbox egress proxy answers 403 to CONNECT for novraintelligence.com on curl, WebFetch and the bundled Chromium alike. What WAS verified in a real browser is the exact markup pushed: site/visual-qa.mjs now renders the wp-payload-inline files with no stylesheet and with the sanitiser's stripped declarations removed, which is how the box-sizing defect was found. 34 viewport renders at 1600/1280/1024/860/620/390, all passing. That is rendered evidence about the payload, not about the live page."
   }
 }

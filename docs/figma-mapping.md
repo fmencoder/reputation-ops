@@ -154,3 +154,35 @@ carry a media query.
 **Rendered visual parity is not claimed.** The sandbox egress proxy answers 403
 to CONNECT for novraintelligence.com, so no page of the live site has been
 loaded in a browser from here. Figma screenshots verify the Figma file only.
+
+---
+
+## 6. Deployment status of the motif
+
+`NOVRA/ArchitectureVisual` is deployed. It ships as two rasters, both authored
+as SVG in `site/assets/` and rendered by `site/render-assets.mjs`:
+
+| Asset | Size | Where it ships |
+| --- | --- | --- |
+| `novra-convergence-map.webp` | 1000 × 625 | Home hero; supporting figure in the deterministic-boundaries article |
+| `novra-convergence-band.webp` | 1200 × 300 | Technology page head |
+
+The band is the distilled form — inputs and gate, no `COMMIT` terminal —
+because the full architecture diagram already appears further down the
+Technology page, and two versions of one claim on one page is noise.
+
+Neither ships as SVG. WordPress.com rejects `image/svg+xml` uploads and strips
+inline SVG, so the pipeline is author-in-SVG, deploy-as-raster. The `.svg`
+beside each `.webp` is the editable original and is never uploaded.
+
+Type in the rasters is DejaVu Sans rather than Inter: librsvg resolves fonts
+from the host and Inter is not installed there. The Figma components remain the
+canonical Inter versions; the divergence is confined to rasterised diagram
+labels, and every label is repeated in the alt text.
+
+**A mobile variant of the map is deliberately not made.** Selecting one needs a
+`max-width` media query, which an inline style cannot express, so no page on
+this plan could reference it — the same restriction that keeps
+`novra-convergence-architecture-mobile.webp` out of the media library. On narrow
+viewports the diagram scales down with its labels, and the alt text and caption
+carry the claim.
