@@ -9,19 +9,23 @@
         <a class="btn btn--ghost" href="/research/">View Research</a>
       </div>
     </div>
-    <div class="hero-orbit" aria-hidden="true" style="position:relative;width:100%;padding-bottom:80%;border-radius:50%;background:radial-gradient(closest-side at 50% 45%, rgba(47,107,255,0.30), rgba(123,77,255,0.08) 62%, rgba(5,7,15,0) 100%)">
-      <div style="position:absolute;top:12%;left:12%;width:76%;height:76%;border:1px solid rgba(77,132,255,0.45);border-radius:50%"></div>
-      <div style="position:absolute;top:37%;left:12%;width:76%;height:26%;border:1px solid rgba(47,107,255,0.28);border-radius:50%"></div>
-      <div style="position:absolute;top:37%;left:12%;width:76%;height:26%;border:1px solid rgba(123,77,255,0.24);border-radius:50%;transform:rotate(58deg)"></div>
-      <div style="position:absolute;top:37%;left:12%;width:76%;height:26%;border:1px solid rgba(77,132,255,0.24);border-radius:50%;transform:rotate(-58deg)"></div>
-      <div style="position:absolute;left:27%;top:34%;width:7px;height:7px;border-radius:50%;background:#dce6ff;box-shadow:0 0 16px rgba(47,107,255,0.9)"></div>
-      <div style="position:absolute;left:44%;top:26%;width:9px;height:9px;border-radius:50%;background:#dce6ff;box-shadow:0 0 18px rgba(47,107,255,0.9)"></div>
-      <div style="position:absolute;left:63%;top:36%;width:7px;height:7px;border-radius:50%;background:#dce6ff;box-shadow:0 0 16px rgba(123,77,255,0.9)"></div>
-      <div style="position:absolute;left:75%;top:54%;width:8px;height:8px;border-radius:50%;background:#dce6ff;box-shadow:0 0 16px rgba(47,107,255,0.9)"></div>
-      <div style="position:absolute;left:57%;top:71%;width:7px;height:7px;border-radius:50%;background:#dce6ff;box-shadow:0 0 16px rgba(123,77,255,0.9)"></div>
-      <div style="position:absolute;left:36%;top:63%;width:8px;height:8px;border-radius:50%;background:#dce6ff;box-shadow:0 0 16px rgba(47,107,255,0.9)"></div>
-      <div style="position:absolute;left:51%;top:46%;width:11px;height:11px;border-radius:50%;background:#7b4dff;box-shadow:0 0 22px rgba(123,77,255,0.95)"></div>
-    </div>
+    <!--
+      The approved NOVRA convergence map, exported from the Figma design system
+      (NOVRA/ArchitectureVisual) and rasterised by site/render-assets.mjs.
+
+      What used to sit here was a CSS-drawn orbit: rings, dots, a glow. It was
+      decoration and it made no claim. This makes one, and the alt text carries
+      every label so the claim survives without the image.
+
+      One img, no picture element and no source: WordPress.com strips both tags.
+      No inline SVG either, for the same reason.
+    -->
+    <figure class="figure" style="margin:0">
+      <div class="figure__frame">
+        <img src="/assets/novra-convergence-map.webp" width="1000" height="625" alt="Multi-layer convergence map. Four labelled input classes on the left, model output, retrieved context, policy and limits, and external tool result, converge on a single vertical gate. Retrieved context and external tool result are drawn with dashed violet outlines marking untrusted origin; model output and policy are solid blue. One line leaves the gate to a box labelled commit. A legend reads: solid, attested origin; dashed, untrusted origin.">
+      </div>
+      <figcaption>Four classes of input converge on one deterministic gate. Nothing commits without passing it.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -35,14 +39,21 @@
   </div>
 </section>
 
+<!--
+  The idea behind NOVRA. This block replaced the author card that used to close
+  the homepage; the byline still runs on every article and the full profile is
+  on /about/.
+
+  The copy is reproduced exactly as approved and is not to be rewritten,
+  trimmed, or padded out. It makes no institutional claim and names no
+  credential, which is the point.
+-->
 <section class="wrap" style="padding-bottom:var(--s-24)">
   <div class="card" style="border-color:var(--c-border-strong)">
-    <p class="card__kicker">Written by</p>
-    <h3 style="font-size:var(--fs-h2);margin:0 0 var(--s-2)">
-      <a href="/about/#fredrick-mendez" style="text-decoration:none">Fredrick Mendez</a>
-    </h3>
-    <p style="margin:0 0 var(--s-3)">Technology Executive, AI Strategist, and Emerging Technology Innovator.</p>
-    <p style="color:var(--c-text-muted);margin:0">Work spanning AI systems and autonomous agents, blockchain infrastructure and smart contracts, software architecture, and digital platforms.</p>
-    <p class="card__meta"><a href="/about/#fredrick-mendez" style="color:var(--c-accent-bright);text-decoration:none">Read the full profile &rarr;</a></p>
+    <p class="card__kicker">The idea behind NOVRA</p>
+    <h2 style="font-size:var(--fs-h2);margin:0 0 var(--s-6)">Intelligence begins with awe.</h2>
+    <p style="margin:0 0 var(--s-4)">NOVRA reflects the idea that the deepest understanding begins by recognizing that reality may contain forms of order, intelligence, and structure greater than what is immediately visible.</p>
+    <p style="margin:0 0 var(--s-4)">Our work explores the architecture beneath intelligent systems &mdash; the relationships between reasoning and execution, autonomy and constraint, complexity and order.</p>
+    <p style="color:var(--c-text-muted);margin:0">NOVRA is a publication built around that pursuit: seeing beyond the obvious, discerning patterns that are easy to miss, and translating complexity into systems that can be understood, governed, and built with purpose.</p>
   </div>
 </section>

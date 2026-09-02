@@ -7,14 +7,25 @@
   </div>
 </section>
 
-<section class="wrap" style="padding-bottom:var(--s-16)" aria-hidden="true">
-  <div aria-hidden="true" style="position:relative;height:240px;border-radius:var(--radius-lg);overflow:hidden;background:radial-gradient(60% 90% at 18% 55%, rgba(47,107,255,0.30), transparent 70%), radial-gradient(50% 80% at 45% 30%, rgba(123,77,255,0.26), transparent 70%), radial-gradient(55% 85% at 72% 60%, rgba(77,132,255,0.24), transparent 70%), radial-gradient(45% 75% at 92% 35%, rgba(123,77,255,0.20), transparent 70%), linear-gradient(180deg, #070b18 0%, #05070f 100%)">
-    <div style="position:absolute;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(77,132,255,0.10) 1px, transparent 1px), linear-gradient(90deg, rgba(77,132,255,0.10) 1px, transparent 1px);background-size:56px 56px"></div>
-    <div style="position:absolute;left:14%;top:44%;width:10px;height:10px;border-radius:50%;background:#dce6ff;box-shadow:0 0 18px rgba(47,107,255,0.9)"></div>
-    <div style="position:absolute;left:41%;top:26%;width:8px;height:8px;border-radius:50%;background:#dce6ff;box-shadow:0 0 16px rgba(123,77,255,0.9)"></div>
-    <div style="position:absolute;left:69%;top:56%;width:9px;height:9px;border-radius:50%;background:#dce6ff;box-shadow:0 0 16px rgba(47,107,255,0.9)"></div>
-    <div style="position:absolute;left:89%;top:33%;width:7px;height:7px;border-radius:50%;background:#a07cff;box-shadow:0 0 14px rgba(123,77,255,0.9)"></div>
-  </div>
+<!--
+  Was a decorative strip: a gradient wash with four glowing dots and a grid
+  overlay. Same family as the orbit that used to sit on the homepage, and it
+  said nothing.
+
+  Replaced with the distilled convergence band from the Figma design system.
+  Deliberately the short form: inputs and gate, no commit terminal, because the
+  full architecture diagram appears further down this same page and two versions
+  of one claim on one page is noise.
+
+  It carries labels, so it is no longer decoration and is no longer hidden from
+  assistive technology.
+-->
+<section class="wrap" style="padding-bottom:var(--s-16)">
+  <figure class="figure" style="margin:0">
+    <div class="figure__frame">
+      <img src="/assets/novra-convergence-band.webp" width="1200" height="300" alt="Wide convergence band. Four labelled input rails, model output, retrieved context, policy and limits, and external tool result, converge on a single vertical gate. Retrieved context and external tool result are dashed and violet, marking untrusted origin; the other two are solid blue. A legend beside the gate reads: solid, attested origin; dashed, untrusted origin.">
+    </div>
+  </figure>
 </section>
 
 <section class="wrap" style="padding-bottom:var(--s-24)">

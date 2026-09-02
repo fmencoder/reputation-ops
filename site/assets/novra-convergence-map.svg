@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <!--
+    NOVRA multi-layer convergence map — home hero.
+
+    This is the production render of NOVRA/ArchitectureVisual in the Figma design
+    system (file IqMDZx0x3UcM0ckW8aiKAg), at 2x its 640x400 artboard. It replaces
+    the CSS-drawn orbit that used to sit here, which was decoration and made no
+    claim.
+
+    The claim it does make: four classes of input converge on one deterministic
+    gate before anything commits. Inputs whose origin cannot be attested are
+    drawn dashed and in violet. Nothing reaches COMMIT without passing the gate,
+    and no layer may be added here that the architecture does not have.
+
+    Authored in SVG, shipped as WebP: WordPress.com rejects image/svg+xml uploads
+    and strips inline SVG. Rasterised by site/render-assets.mjs.
+
+    Type is DejaVu Sans, not Inter — librsvg resolves fonts from the host, and
+    Inter is not installed. Every label is repeated in the alt text and in the
+    surrounding prose, so the diagram is never the only carrier of a fact.
+  -->
+  <defs>
+    <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse">
+      <path d="M52 0H0V52" fill="none" stroke="#4d84ff" stroke-opacity="0.055" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="focal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.32"/>
+      <stop offset="55%" stop-color="#7b4dff" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#05070f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="attested" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4d84ff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#7fb0ff" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="untrusted" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7b4dff" stop-opacity="0.40"/>
+      <stop offset="100%" stop-color="#a07cff" stop-opacity="0.90"/>
+    </linearGradient>
+    <filter id="soft" x="-140%" y="-140%" width="380%" height="380%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="tight" x="-160%" y="-160%" width="420%" height="420%">
+      <feGaussianBlur stdDeviation="3.4"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="800" fill="#05070f"/>
+  <rect width="1280" height="800" fill="url(#grid)"/>
+
+  <!-- Focal mass sits on the gate, not on the inputs. ~15% of the canvas carries luminance. -->
+  <ellipse cx="886" cy="372" rx="360" ry="290" fill="url(#focal)"/>
+
+  <!-- Converging paths. Drawn under the plates so they emerge from the edge. -->
+  <g stroke-width="2.1" stroke-linecap="round" fill="none">
+    <path d="M560 180 L860 372" stroke="url(#attested)"/>
+    <path d="M560 308 L860 372" stroke="url(#untrusted)" stroke-dasharray="9 10"/>
+    <path d="M560 436 L860 372" stroke="url(#attested)"/>
+    <path d="M560 564 L860 372" stroke="url(#untrusted)" stroke-dasharray="9 10"/>
+  </g>
+
+  <g font-family="DejaVu Sans, sans-serif">
+    <!-- Input class 1 — attested -->
+    <rect x="64" y="136" width="496" height="88" rx="20" fill="#0a0e1c" stroke="#2a3560" stroke-width="1.4"/>
+    <circle cx="112" cy="180" r="7" fill="#4d84ff" filter="url(#tight)"/><circle cx="112" cy="180" r="6" fill="#4d84ff"/>
+    <text x="146" y="188" font-size="19" fill="#ffffff" letter-spacing="3.1">MODEL OUTPUT</text>
+
+    <!-- Input class 2 — untrusted origin -->
+    <rect x="64" y="264" width="496" height="88" rx="20" fill="#0a0e1c" stroke="#7b4dff" stroke-opacity="0.75" stroke-width="1.4" stroke-dasharray="9 10"/>
+    <circle cx="112" cy="308" r="7" fill="#a07cff" filter="url(#tight)"/><circle cx="112" cy="308" r="6" fill="#a07cff"/>
+    <text x="146" y="316" font-size="19" fill="#ffffff" letter-spacing="3.1">RETRIEVED CONTEXT</text>
+
+    <!-- Input class 3 — attested -->
+    <rect x="64" y="392" width="496" height="88" rx="20" fill="#0a0e1c" stroke="#2a3560" stroke-width="1.4"/>
+    <circle cx="112" cy="436" r="7" fill="#4d84ff" filter="url(#tight)"/><circle cx="112" cy="436" r="6" fill="#4d84ff"/>
+    <text x="146" y="444" font-size="19" fill="#ffffff" letter-spacing="3.1">POLICY + LIMITS</text>
+
+    <!-- Input class 4 — untrusted origin -->
+    <rect x="64" y="520" width="496" height="88" rx="20" fill="#0a0e1c" stroke="#7b4dff" stroke-opacity="0.75" stroke-width="1.4" stroke-dasharray="9 10"/>
+    <circle cx="112" cy="564" r="7" fill="#a07cff" filter="url(#tight)"/><circle cx="112" cy="564" r="6" fill="#a07cff"/>
+    <text x="146" y="572" font-size="19" fill="#ffffff" letter-spacing="3.1">EXTERNAL TOOL RESULT</text>
+
+    <!-- The gate: the one deterministic point every input must pass through. -->
+    <rect x="860" y="222" width="52" height="300" rx="26" fill="#2f6bff" filter="url(#soft)"/>
+    <rect x="860" y="222" width="52" height="300" rx="26" fill="#2f6bff"/>
+    <rect x="868" y="230" width="36" height="284" rx="18" fill="none" stroke="#dce6ff" stroke-opacity="0.35" stroke-width="1"/>
+    <text x="886" y="566" font-size="17" fill="#4d84ff" letter-spacing="4.2" text-anchor="middle">GATE</text>
+
+    <!-- One committed action leaves the gate. -->
+    <path d="M912 372 L1048 372" stroke="#7fb0ff" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+    <rect x="1048" y="328" width="176" height="88" rx="20" fill="#0a0e1c" stroke="#4d84ff" stroke-opacity="0.9" stroke-width="1.6"/>
+    <text x="1136" y="380" font-size="19" fill="#ffffff" letter-spacing="3.6" text-anchor="middle">COMMIT</text>
+
+    <!-- The diagram is making an argument, so it states its own notation. -->
+    <g font-size="15" fill="#6b779c" letter-spacing="3.0">
+      <text x="64" y="716">SOLID: ATTESTED ORIGIN</text>
+      <text x="400" y="716" fill="#2a3560">/</text>
+      <text x="430" y="716">DASHED: UNTRUSTED ORIGIN</text>
+    </g>
+  </g>
+</svg>

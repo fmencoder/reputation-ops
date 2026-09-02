@@ -349,8 +349,6 @@ img { max-width: 100%; height: auto; }
   .page-head { padding: var(--s-16) 0 var(--s-8); }
   .grid--3 { grid-template-columns: repeat(2, 1fr); }
   .hero-split { grid-template-columns: 1fr; gap: var(--s-8); }
-  /* Purely decorative, and 80% of the viewport tall once stacked. */
-  .hero-orbit { display: none; }
 }
 
 @media (max-width: 620px) {

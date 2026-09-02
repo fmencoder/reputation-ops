@@ -89,6 +89,8 @@ three are separate, an adversary who fully controls the model's output still
 controls only step one, and the blast radius is bounded by policy rather than by
 the model's judgment about whether an instruction looked legitimate.
 
+FIGURE /assets/novra-convergence-map.webp | 1000x625 | Multi-layer convergence map. Four labelled input classes on the left, model output, retrieved context, policy and limits, and external tool result, converge on a single vertical gate. Retrieved context and external tool result are drawn with dashed violet outlines marking untrusted origin; model output and policy are solid blue. One line leaves the gate to a box labelled commit. A legend reads: solid, attested origin; dashed, untrusted origin. | The separation drawn as a system. Two of the four inputs cannot have their origin attested, which is precisely why authorization is a gate every input passes rather than a check applied to some of them.
+
 ## Authority belongs in the account, not in the prompt
 
 The mechanism for expressing that policy already exists and is under-used by

@@ -14,7 +14,9 @@
     "/assets/context-engineering-hero.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/context-engineering-hero.webp",
     "/assets/deterministic-boundaries-hero.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/deterministic-boundaries-hero-v2.webp",
     "/assets/human-oversight-hero.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/human-oversight-hero.webp",
-    "/assets/recoverability-hero.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/recoverability-hero.webp"
+    "/assets/recoverability-hero.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/recoverability-hero.webp",
+    "/assets/novra-convergence-map.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/novra-convergence-map.webp",
+    "/assets/novra-convergence-band.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/novra-convergence-band.webp"
   },
   "_uploaded": {
     "novra-logo.webp": {
@@ -67,6 +69,20 @@
       "height": 563,
       "bytes": 6064,
       "verified": "filesize matched local exactly"
+    },
+    "novra-convergence-map.webp": {
+      "attachment": 80,
+      "localBytes": 11962,
+      "returnedFilesize": 11962,
+      "dimensions": "1000x625",
+      "verification": "media_details.filesize matched the local file byte for byte, which is what proves the base64 transfer was not corrupted."
+    },
+    "novra-convergence-band.webp": {
+      "attachment": 81,
+      "localBytes": 8884,
+      "returnedFilesize": 8884,
+      "dimensions": "1200x300",
+      "verification": "media_details.filesize matched the local file byte for byte."
     }
   },
   "_not_uploaded": {

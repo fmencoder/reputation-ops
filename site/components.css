@@ -201,6 +201,24 @@ img { max-width: 100%; height: auto; }
  * fault, whereas the same image inside an intentional dark plate reads as a
  * figure. This is the one place the light variant does not follow the tokens.
  */
+/*
+ * Home hero: heading column beside the convergence map.
+ *
+ * This rule was missing here while novra.css has always carried it, so the
+ * static build rendered the hero as one stacked column and the visual QA was
+ * measuring a layout no visitor sees. Kept in step with novra.css.
+ */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-16);
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .hero-split { grid-template-columns: 1fr; gap: var(--s-8); }
+}
+
 .figure { margin: var(--s-12) 0; }
 .figure__frame {
   background: #05070f;

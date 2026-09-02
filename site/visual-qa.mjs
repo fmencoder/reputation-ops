@@ -41,10 +41,40 @@ const TYPES = {
 /** Content column at a given viewport: min(viewport, 1200) - 48 of horizontal padding. */
 const contentWidth = (viewport) => Math.min(viewport, 1200) - 48;
 
+/**
+ * Width of one column of `.hero-split`, which is
+ * `repeat(auto-fit, minmax(320px, 1fr))` with a 64px gap. Above the point where
+ * two 320px columns stop fitting, the hero figure is half the content column;
+ * below it, the grid collapses and the figure is the full column.
+ */
+const heroColumnWidth = (viewport) => {
+  const content = contentWidth(viewport);
+  const half = (content - 64) / 2;
+  return half >= 320 ? half : content;
+};
+
+/*
+ * `figureIndex` matters. Both the home and technology pages now carry more than
+ * one figure, and a check that always measured the first one would quietly stop
+ * checking the diagram it was written for — the exact failure this file exists
+ * to prevent.
+ */
 const TARGETS = [
-  { name: "technology", path: "/technology/", widths: [1600, 1280, 1024, 860, 620, 390] },
-  { name: "home", path: "/", widths: [1600, 1024, 620, 390] },
-  { name: "about", path: "/about/", widths: [1600, 1024, 620, 390] },
+  { name: "technology-band", path: "/technology/", figureIndex: 0, widths: [1600, 1024, 620, 390] },
+  { name: "technology", path: "/technology/", figureIndex: 1, widths: [1600, 1280, 1024, 860, 620, 390] },
+  { name: "home", path: "/", figureIndex: 0, expectWidth: heroColumnWidth, widths: [1600, 1024, 620, 390] },
+  { name: "about", path: "/about/", figureIndex: 0, widths: [1600, 1024, 620, 390] },
+
+  /*
+   * The payload targets are the ones that matter. They render the exact bytes
+   * pushed to WordPress, with no stylesheet and with the sanitiser's edits
+   * already applied — as close to the public page as this environment can get,
+   * since the egress proxy blocks the live domain.
+   */
+  { name: "wp-home", path: "/payload/02-home", figureIndex: 0, expectWidth: heroColumnWidth, widths: [1600, 1024, 620, 390] },
+  { name: "wp-technology-band", path: "/payload/03-technology", figureIndex: 0, widths: [1600, 1024, 620, 390] },
+  { name: "wp-technology", path: "/payload/03-technology", figureIndex: 1, widths: [1600, 1024, 620, 390] },
+  { name: "wp-article", path: "/payload/23-article-deterministic-boundaries-ai-smart-contracts", figureIndex: 1, expectWidth: null, widths: [1600, 1024, 620, 390] },
 ];
 
 /**
@@ -86,9 +116,71 @@ async function loadChromium() {
   }
 }
 
+/*
+ * Declarations WordPress.com removes from a style attribute. Measured against
+ * the live site, not assumed. `box-sizing` is the one that bites: without it
+ * every padded container is wider than its max-width, and a 1200px wrap renders
+ * at 1248.
+ */
+const STRIPPED_BY_WPCOM = [
+  "box-sizing", "-webkit-font-smoothing", "-webkit-background-clip", "background-clip", "clip",
+];
+
+/**
+ * Render an inline payload the way the public site gets it: the flattened
+ * markup, no stylesheet of any kind, and the sanitiser's edits already applied.
+ *
+ * `dist/` is a different artefact. It loads components.css and is deployed
+ * nowhere. Checking only `dist` means checking a layout no visitor sees — which
+ * is how `.hero-split` came to be absent from components.css without anyone
+ * noticing, while the WordPress payload has carried it all along.
+ */
+async function payloadPage(name) {
+  const raw = await readFile(join(ROOT, "wp-payload-inline", `${name}.json`), "utf8");
+  /*
+   * Point every Media Library URL at the local file it was uploaded from. The
+   * egress proxy blocks the CDN, so without this every image renders as a
+   * broken box and the layout measurements are meaningless. The bytes are the
+   * same either way — each upload was verified by comparing the returned
+   * media_details.filesize against the local file.
+   */
+  const media = JSON.parse(await readFile(join(ROOT, "wp-media.json"), "utf8")).assets;
+  const localFor = new Map(Object.entries(media).map(([local, remote]) => [remote, local]));
+  const content = JSON.parse(raw).params.content
+    .replace(/https:\/\/[^"']*?\/wp-content\/uploads\/[^"']+/g, (url) => localFor.get(url) ?? url)
+    .replace(/^<!-- wp:html -->\n?/, "")
+    .replace(/\n?<!-- \/wp:html -->$/, "")
+    .replace(/ style="([^"]*)"/g, (whole, attr) => {
+      const kept = attr
+        .split(";")
+        .filter((declaration) => {
+          const property = declaration.split(":")[0].trim().toLowerCase();
+          return property && !STRIPPED_BY_WPCOM.includes(property);
+        })
+        .join(";");
+      return kept ? ` style="${kept}"` : "";
+    });
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+    `<title>${name}</title></head><body style="margin:0">${content}</body></html>`;
+}
+
 function serve() {
   const server = createServer(async (request, response) => {
     let path = (request.url ?? "/").split("?")[0];
+    const payloadMatch = /^\/payload\/([\w-]+)$/.exec(path);
+    if (payloadMatch) {
+      try {
+        // Build the body BEFORE writing headers: a throw after writeHead makes
+        // the failure unreportable and crashes the server instead.
+        const html = await payloadPage(payloadMatch[1]);
+        response.writeHead(200, { "Content-Type": "text/html" });
+        response.end(html);
+      } catch (error) {
+        response.writeHead(500, { "Content-Type": "text/plain" }).end(String(error));
+      }
+      return;
+    }
     if (path.endsWith("/")) path += "index.html";
     try {
       const body = await readFile(join(DIST, path));
@@ -129,7 +221,8 @@ async function main() {
       const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
       await page.goto(`http://127.0.0.1:${PORT}${target.path}`, { waitUntil: "load" });
 
-      const figure = page.locator("figure.figure").first();
+      const index = target.figureIndex ?? 0;
+      const figure = page.locator("figure.figure").nth(index);
       const hasFigure = (await figure.count()) > 0;
 
       if (hasFigure) {
@@ -137,18 +230,19 @@ async function main() {
         // Wait for the image itself, not for the network: a lazy image below
         // the fold settles after networkidle and would measure as 0x0.
         await page
-          .waitForFunction(() => {
-            const image = document.querySelector("figure.figure img:not([style*='display: none'])");
+          .waitForFunction((i) => {
+            const fig = document.querySelectorAll("figure.figure")[i];
+            const image = fig?.querySelector("img:not([style*='display: none'])");
             return image && image.complete && image.naturalWidth > 0;
-          }, null, { timeout: 10_000 })
+          }, index, { timeout: 10_000 })
           .catch(() => {});
       }
 
-      const state = await page.evaluate(() => {
-        const images = [...document.querySelectorAll("figure.figure img")]
+      const state = await page.evaluate((i) => {
+        const figureEl = document.querySelectorAll("figure.figure")[i];
+        const images = [...(figureEl?.querySelectorAll("img") ?? [])]
           .filter((image) => getComputedStyle(image).display !== "none");
         const first = images[0];
-        const figureEl = document.querySelector("figure.figure");
         const box = figureEl?.getBoundingClientRect();
         return {
           visibleImages: images.length,
@@ -167,10 +261,11 @@ async function main() {
             return false;
           })(),
         };
-      });
+      }, index);
 
+      const expected = Math.round((target.expectWidth || contentWidth)(width));
       const label = `${target.name}@${width}`;
-      rows.push({ label, expectedColumn: contentWidth(width), ...state });
+      rows.push({ label, expectedColumn: expected, ...state });
 
       if (state.overflow) failures.push(`${label}: page scrolls horizontally`);
       if (state.headingSkip) failures.push(`${label}: heading order skips a level`);
@@ -180,8 +275,12 @@ async function main() {
           failures.push(`${label}: ${state.visibleImages} visible figure images — exactly one responsive source must win`);
         }
         if (!state.figureWidth || !state.figureHeight) failures.push(`${label}: figure has zero size`);
-        if (state.figureWidth && Math.abs(state.figureWidth - contentWidth(width)) > 2) {
-          failures.push(`${label}: figure is ${state.figureWidth}px, expected ~${contentWidth(width)}px`);
+        if (target.expectWidth === null) {
+          if (state.figureWidth && state.figureWidth > contentWidth(width) + 2) {
+            failures.push(`${label}: figure is ${state.figureWidth}px, wider than its ${contentWidth(width)}px column`);
+          }
+        } else if (state.figureWidth && Math.abs(state.figureWidth - expected) > 2) {
+          failures.push(`${label}: figure is ${state.figureWidth}px, expected ~${expected}px`);
         }
         await figure.screenshot({ path: join(SHOTS, `${target.name}-${width}.png`) });
       }

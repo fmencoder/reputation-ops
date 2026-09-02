@@ -69,6 +69,35 @@ function renderBlocks(body, indent = "      ") {
   const out = [];
   for (const block of body.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean)) {
     if (block.startsWith("# ")) continue;                       // title lives in the post title
+
+    /*
+     * Supporting figure, authored as:
+     *
+     *   FIGURE /assets/name.webp | WIDTHxHEIGHT | alt text | caption
+     *
+     * A directive rather than markdown image syntax because every one of these
+     * needs four things markdown cannot carry: a Media Library URL resolved at
+     * build time (heroUrl throws on a guess), explicit width and height so the
+     * layout does not jump, alt text that repeats the diagram's labels, and a
+     * caption that states the claim. A figure with no caption is decoration,
+     * and this site does not ship decoration.
+     */
+    if (block.startsWith("FIGURE ")) {
+      const parts = block.slice(7).split("|").map((s) => s.trim());
+      if (parts.length !== 4) {
+        throw new Error(`FIGURE needs 4 fields separated by |, got ${parts.length}:\n${block}`);
+      }
+      const [asset, dims, alt, caption] = parts;
+      const m = /^(\d+)x(\d+)$/.exec(dims);
+      if (!m) throw new Error(`FIGURE dimensions must be WIDTHxHEIGHT, got "${dims}"`);
+      out.push(`${indent}<figure class="figure">`);
+      out.push(`${indent}  <div class="figure__frame">`);
+      out.push(`${indent}    <img loading="lazy" src="${heroUrl(asset)}" width="${m[1]}" height="${m[2]}" alt="${escape(alt)}">`);
+      out.push(`${indent}  </div>`);
+      out.push(`${indent}  <figcaption>${text(caption)}</figcaption>`);
+      out.push(`${indent}</figure>`);
+      continue;
+    }
     if (block.startsWith("## ")) {
       out.push(`${indent}<h2>${text(block.slice(3).trim())}</h2>`);
       continue;

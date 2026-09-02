@@ -60,14 +60,52 @@ const v = (name) => {
  * site, not guessed.
  *
  * Only background-clip is dangerous — paired with color:transparent it renders
- * text invisible. The rest degrade harmlessly (box-sizing widens a column,
- * clip is redundant next to overflow:hidden). Emitting any of them means the
- * deployed page differs from what was tested, so the build fails instead.
+ * text invisible. Emitting it fails the build.
+ *
+ * box-sizing is not harmless, which took a browser render of the real payload
+ * to establish. Without it every `.wrap` falls back to content-box, so a
+ * `max-width: 1200px` with `padding: 0 1.5rem` occupies 1248px and gives a
+ * 1200px column where the design calls for 1152. Every page on the site had
+ * been rendering that way since launch. compensateForContentBox() below removes
+ * the padding from the max-width so the column lands where it was designed to.
  */
 const STRIPPED_BY_WPCOM = [
   "background-clip", "-webkit-background-clip", "box-sizing",
   "-webkit-font-smoothing", "clip",
 ];
+
+/**
+ * Undo the effect of the stripped `box-sizing: border-box`.
+ *
+ * WordPress.com removes the declaration, so a padded element with a max-width
+ * measures content-box on the live site: the column is max-width, and the box
+ * around it is max-width plus the padding. Subtracting the horizontal padding
+ * from the max-width reproduces border-box arithmetic exactly, using only
+ * declarations the sanitiser keeps.
+ *
+ * Applied only where both a px max-width and symmetric horizontal padding are
+ * present, which is the container idiom in this stylesheet. Anything else is
+ * left alone.
+ */
+function compensateForContentBox(declarations) {
+  const maxWidth = /(^|;)\s*max-width:\s*(\d+(?:\.\d+)?)px/.exec(declarations);
+  if (!maxWidth) return declarations;
+
+  const shorthand = /(^|;)\s*padding:\s*[^;]*?\s(\d+(?:\.\d+)?)(rem|px)(?:\s|;|$)/.exec(declarations);
+  const left = /(^|;)\s*padding-left:\s*(\d+(?:\.\d+)?)(rem|px)/.exec(declarations);
+  const right = /(^|;)\s*padding-right:\s*(\d+(?:\.\d+)?)(rem|px)/.exec(declarations);
+
+  let inset = null;
+  if (shorthand) inset = Number(shorthand[2]) * (shorthand[3] === "rem" ? 16 : 1);
+  else if (left && right && left[2] === right[2] && left[3] === right[3]) {
+    inset = Number(left[2]) * (left[3] === "rem" ? 16 : 1);
+  }
+  if (!inset) return declarations;
+
+  const corrected = Number(maxWidth[2]) - inset * 2;
+  if (corrected <= 0) return declarations;
+  return declarations.replace(/(^|;)(\s*max-width:\s*)\d+(?:\.\d+)?px/, `$1$2${corrected}px`);
+}
 
 function dedupe(declarations) {
   const seen = new Map();
@@ -108,7 +146,6 @@ const RULES = {
   "wrap--narrow": "max-width:760px",
 
   "hero-split": "display:grid;gap:var(--s-16);align-items:center;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))",
-  "hero-orbit": "",
 
   grid: "display:grid;gap:var(--s-6)",
   "grid--2": "grid-template-columns:repeat(auto-fit,minmax(300px,1fr))",
@@ -336,7 +373,10 @@ function flatten(html) {
   // Resolve tokens only inside style attributes. Running the resolver over the
   // whole document would also rewrite the double quotes that delimit those very
   // attributes, which is a much worse bug than the one it fixes.
-  out = wrapRoot(out).replace(/style="([^"]*)"/g, (_, decls) => `style="${dedupe(resolve(decls))}"`);
+  out = wrapRoot(out).replace(
+    /style="([^"]*)"/g,
+    (_, decls) => `style="${compensateForContentBox(dedupe(resolve(decls)))}"`,
+  );
   return out;
 }
 

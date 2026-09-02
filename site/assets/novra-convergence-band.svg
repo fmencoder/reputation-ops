@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="400" viewBox="0 0 1600 400">
+  <!--
+    NOVRA convergence band — Technology page head.
+
+    The same argument as novra-convergence-map.svg, composed for a wide, short
+    strip. It replaces a decorative glow-and-dots band, which was the last
+    generic visual on the site.
+
+    It is deliberately the distilled form: four input rails and the gate, no
+    COMMIT terminal, because the full architecture diagram already appears
+    further down the same page and two versions of one claim on one page is
+    noise. Nothing here contradicts that diagram.
+
+    Authored in SVG, shipped as WebP. Type is DejaVu Sans — librsvg resolves
+    fonts from the host and Inter is not installed.
+  -->
+  <defs>
+    <pattern id="bgrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#4d84ff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="bfocal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.30"/>
+      <stop offset="55%" stop-color="#7b4dff" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#05070f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bplate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#070b18"/>
+      <stop offset="100%" stop-color="#05070f"/>
+    </linearGradient>
+    <filter id="bsoft" x="-140%" y="-140%" width="380%" height="380%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="btight" x="-160%" y="-160%" width="420%" height="420%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="400" fill="url(#bplate)"/>
+  <rect width="1600" height="400" fill="url(#bgrid)"/>
+  <ellipse cx="1010" cy="200" rx="470" ry="200" fill="url(#bfocal)"/>
+
+  <g stroke-width="1.9" stroke-linecap="round" fill="none">
+    <path d="M598 92  L980 200" stroke="#4d84ff" stroke-opacity="0.85"/>
+    <path d="M598 164 L980 200" stroke="#a07cff" stroke-opacity="0.8" stroke-dasharray="8 9"/>
+    <path d="M598 236 L980 200" stroke="#4d84ff" stroke-opacity="0.85"/>
+    <path d="M598 308 L980 200" stroke="#a07cff" stroke-opacity="0.8" stroke-dasharray="8 9"/>
+  </g>
+
+  <g font-family="DejaVu Sans, sans-serif">
+    <rect x="150" y="64" width="448" height="56" rx="14" fill="#0a0e1c" stroke="#2a3560" stroke-width="1.2"/>
+    <circle cx="186" cy="92" r="5" fill="#4d84ff" filter="url(#btight)"/><circle cx="186" cy="92" r="4.4" fill="#4d84ff"/>
+    <text x="214" y="98" font-size="15" fill="#ffffff" letter-spacing="2.8">MODEL OUTPUT</text>
+
+    <rect x="150" y="136" width="448" height="56" rx="14" fill="#0a0e1c" stroke="#7b4dff" stroke-opacity="0.7" stroke-width="1.2" stroke-dasharray="8 9"/>
+    <circle cx="186" cy="164" r="5" fill="#a07cff" filter="url(#btight)"/><circle cx="186" cy="164" r="4.4" fill="#a07cff"/>
+    <text x="214" y="170" font-size="15" fill="#ffffff" letter-spacing="2.8">RETRIEVED CONTEXT</text>
+
+    <rect x="150" y="208" width="448" height="56" rx="14" fill="#0a0e1c" stroke="#2a3560" stroke-width="1.2"/>
+    <circle cx="186" cy="236" r="5" fill="#4d84ff" filter="url(#btight)"/><circle cx="186" cy="236" r="4.4" fill="#4d84ff"/>
+    <text x="214" y="242" font-size="15" fill="#ffffff" letter-spacing="2.8">POLICY + LIMITS</text>
+
+    <rect x="150" y="280" width="448" height="56" rx="14" fill="#0a0e1c" stroke="#7b4dff" stroke-opacity="0.7" stroke-width="1.2" stroke-dasharray="8 9"/>
+    <circle cx="186" cy="308" r="5" fill="#a07cff" filter="url(#btight)"/><circle cx="186" cy="308" r="4.4" fill="#a07cff"/>
+    <text x="214" y="314" font-size="15" fill="#ffffff" letter-spacing="2.8">EXTERNAL TOOL RESULT</text>
+
+    <rect x="980" y="112" width="40" height="176" rx="20" fill="#2f6bff" filter="url(#bsoft)"/>
+    <rect x="980" y="112" width="40" height="176" rx="20" fill="#2f6bff"/>
+    <rect x="986" y="118" width="28" height="164" rx="14" fill="none" stroke="#dce6ff" stroke-opacity="0.35" stroke-width="1"/>
+    <text x="1000" y="322" font-size="14" fill="#4d84ff" letter-spacing="3.8" text-anchor="middle">GATE</text>
+
+    <g font-size="13" fill="#6b779c" letter-spacing="2.6">
+      <text x="1110" y="180">SOLID: ATTESTED ORIGIN</text>
+      <text x="1110" y="212">DASHED: UNTRUSTED ORIGIN</text>
+    </g>
+  </g>
+</svg>
