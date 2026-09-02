@@ -23,7 +23,7 @@
       "value": true,
       "setBy": "automation",
       "updatedAt": "2026-09-01T04:05:00.000Z",
-      "evidence": "data/search/t0/T0-2026-09-01.json, sha256 289dcf74c001b8c49bad0e53d9bbf0e60fb4994af7a35daf7b74c8e4a31e4320. 7 queries, 63 results, captured while novraintelligence.com had never been publicly reachable — so it is a true pre-intervention baseline. Captured with the WebSearch tool, NOT SerpApi: the configured SerpApi key was rejected on 2026-08-31 and again on 2026-09-01. The file records that limitation in full: positions are list ordinals rather than verified organic ranks, and snippets are null because the tool returns none. Directionally usable and citable as a contemporaneous record; re-measure ranks against a real SERP API before making any rank-delta claim."
+      "evidence": "data/search/t0/T0-2026-09-01.json, sha256 289dcf74c001b8c49bad0e53d9bbf0e60fb4994af7a35daf7b74c8e4a31e4320. 7 queries, 63 results, captured while novraintelligence.com had never been publicly reachable \u2014 so it is a true pre-intervention baseline. Captured with the WebSearch tool, NOT SerpApi: the configured SerpApi key was rejected on 2026-08-31 and again on 2026-09-01. The file records that limitation in full: positions are list ordinals rather than verified organic ranks, and snippets are null because the tool returns none. Directionally usable and citable as a contemporaneous record; re-measure ranks against a real SERP API before making any rank-delta claim."
     },
     "MEDIA_SYNC_COMPLETE": {
       "value": true,
@@ -56,7 +56,7 @@
     "newState": "launched / public",
     "prelaunchCheck": "Read-only and matched before the write: blog_id 257059568, primary_domain novraintelligence.com, 6 published pages, 5 published posts each with a featured image, Home (21) serving at the site root as the static front page, contact@novraintelligence.com live on the Contact page, visibility coming_soon.",
     "readBack": "launch_status=launched, visibility=public, has_active_subscribers=false.",
-    "verificationLimit": "Public HTTP verification could NOT be performed from this environment. The sandbox egress proxy answers 403 to CONNECT for novraintelligence.com — and for unrelated hosts such as www.google.com — so both curl and WebFetch are blocked. This is a restriction on the agent sandbox, not evidence about the site. Every check that can be made server-side through the WordPress API was made and passed; browser confirmation is outstanding and belongs to the owner."
+    "verificationLimit": "Public HTTP verification could NOT be performed from this environment. The sandbox egress proxy answers 403 to CONNECT for novraintelligence.com \u2014 and for unrelated hosts such as www.google.com \u2014 so both curl and WebFetch are blocked. This is a restriction on the agent sandbox, not evidence about the site. Every check that can be made server-side through the WordPress API was made and passed; browser confirmation is outstanding and belongs to the owner."
   },
   "visualCorrectionPass": {
     "performedAt": "2026-09-01T23:00:00.000Z",
@@ -102,17 +102,40 @@
         "deployedOn": [
           "Technology page head (page 24)"
         ],
-        "note": "Distilled form of the same motif — inputs and gate, no COMMIT terminal, because the full architecture diagram is already further down that page."
+        "note": "Distilled form of the same motif \u2014 inputs and gate, no COMMIT terminal, because the full architecture diagram is already further down that page."
       }
     },
-    "verification": "Both uploads confirmed byte-for-byte: media_details.filesize returned 11962 and 8884, matching the local files exactly. That check is what proves the base64 transfer was not truncated — a first attempt at the map was, and the API rejected it.",
+    "verification": "Both uploads confirmed byte-for-byte: media_details.filesize returned 11962 and 8884, matching the local files exactly. That check is what proves the base64 transfer was not truncated \u2014 a first attempt at the map was, and the API rejected it.",
     "genericVisualsRemoved": [
       "Home: the CSS-drawn orbit (rings, arcs, seven glowing dots).",
       "Technology: the decorative gradient strip with four glowing dots and a grid overlay.",
-      "About: the decorative identity graphic (radial fields, arc pair, four glowing dots). Not replaced — the convergence map belongs where it argues something, and a page about a person is not one of those places."
+      "About: the decorative identity graphic (radial fields, arc pair, four glowing dots). Not replaced \u2014 the convergence map belongs where it argues something, and a page about a person is not one of those places."
     ],
     "homepageCopy": "The trailing author card was replaced with THE IDEA BEHIND NOVRA, reproduced exactly as approved. No religious terminology, no credential, no institutional claim was added. The byline still runs on every article and the full profile remains on /about/.",
     "widthCorrection": "WordPress.com strips box-sizing, so every .wrap had been rendering content-box since launch: a 1200px max-width with 1.5rem padding gave a 1200px column where the design calls for 1152, and 760 instead of 712 on articles. compensateForContentBox() in site/build-inline.mjs now subtracts the padding from the max-width. All 6 pages and all 5 posts were republished to carry it, so the whole site is consistent rather than partly corrected.",
     "verificationLimit": "Still not verified against the live domain. The sandbox egress proxy answers 403 to CONNECT for novraintelligence.com on curl, WebFetch and the bundled Chromium alike. What WAS verified in a real browser is the exact markup pushed: site/visual-qa.mjs now renders the wp-payload-inline files with no stylesheet and with the sanitiser's stripped declarations removed, which is how the box-sizing defect was found. 34 viewport renders at 1600/1280/1024/860/620/390, all passing. That is rendered evidence about the payload, not about the live page."
+  },
+  "mockupParityPass": {
+    "performedAt": "2026-09-02",
+    "brief": "Approved visual mockup implementation. The supplied screenshots were treated as specifications and never uploaded; every surface was rebuilt through the existing page/payload/asset pipeline.",
+    "masthead": "NOVRA over INTELLIGENCE, angular N mark at 34px, set as real HTML in the header and footer template parts so it is identical on every page including articles and archives. The retired 'NOVRA AI' wordmark is gone from the markup and from the two assets that still carried it \u2014 logo.svg and share-card.svg, the Open Graph image shown whenever a link to the site is shared. Both were rebuilt and re-uploaded (attachments 107 and 108) and site/wp-media.json now points at the new files.",
+    "typography": "Inter, Arial, sans-serif throughout. Display headlines at weight 600, tracking -0.025em, line-height 1.06, uppercase. h2 and h3 carry -0.02em and -0.015em. No decorative display face was introduced.",
+    "assetsCreated": [
+      "novra-nmark.webp (attachment 93)",
+      "icon-ai-systems.webp (96), icon-blockchain.webp (95), icon-fintech.webp (94), icon-infrastructure.webp (97)",
+      "novra-n-lattice.webp (98) \u2014 generated by site/make-n-lattice.mjs from a fixed seed so the render stays byte-stable",
+      "novra-logo-lockup.webp (107), novra-share-card-lockup.webp (108)"
+    ],
+    "fabricatedMetricsRefused": "The Insights reference carried invented analytics \u2014 counters and a research split. None of it shipped, and the numbers are not restated anywhere in the source, including in the comment that explains their absence. The panel renders the four real research areas instead.",
+    "portrait": "BLOCKED. The approved author portrait was supplied only as pixels inside a mockup image; no file exists on disk. Regenerating or substituting a face was ruled out, so About ships single-column. The markup and a four-step activation procedure are parked in site/partials/about-portrait.html, and site/content-qa.mjs reports PORTRAIT=PENDING until the real asset lands.",
+    "signature": "Removed entirely, per instruction. site/content-qa.mjs fails the build if 'signature', a cursive family, or a handwriting face reappears in any page surface.",
+    "identityBlock": "Three visually distinct lines on About: Fredrick Mendez, MBA (strongest); Founder & Research Architect (accent role line); Technology Executive, AI Strategist & Emerging Technology Innovator (smaller descriptor). No other credential, affiliation, award, or numeric claim was added.",
+    "defectsFound": [
+      "Static build masthead wrong. site/components.css, which drives site/dist, never received the new .brand lockup rules, so the N mark rendered at its full 128px and INTELLIGENCE sat inline and lowercase \u2014 the same two-stylesheet drift that had previously hidden .hero-split. Fixed, and site/content-qa.mjs now compares all 52 shared single-class rules between novra.css and components.css and fails on any divergence.",
+      "Hero headline wider than its own column. The uppercase display made INFRASTRUCTURE. 584px at a 544px grid track, so on the live payload the word ran 40px past its column while the static build silently widened the track instead \u2014 the two builds disagreed and neither looked wrong alone. --fs-h1 is now clamp(2.25rem, calc(5.35vw - 6px), 3.7rem), sized so the longest word fits its column across the whole two-column range, and .hero-split uses minmax(0, 1fr) so a long word can never widen its own track again. site/visual-qa.mjs now measures every h1, h2 and h3 against its column at all four viewports."
+    ],
+    "republished": "All six pages, each returning its unchanged permalink: Home 21 (/), Insights 20, Research 19, Technology 24, About 22, Contact 17. calc() inside clamp() was verified to survive the WordPress.com sanitiser by reading the saved content back. The five articles were not republished \u2014 they carry no hero clamp, so the type change does not reach them.",
+    "qa": "CONTENT_QA=PASS (47 sources), VISUAL_QA=PASS (42 viewport renders at 1600/1280/1024/860/620/390), render-assets --check byte-exact on all 13 assets.",
+    "verificationLimit": "Public HTTP verification remains impossible from this environment: the egress proxy answers 403 to CONNECT for novraintelligence.com on curl, WebFetch and the bundled Chromium alike. PUBLIC_BROWSER_VERIFICATION=BLOCKED. Public visual parity is not claimed. Every check that can be made server-side through the WordPress API was made: is_private false, is_coming_soon false, is_site_launched true, primary_domain novraintelligence.com."
   }
 }

@@ -23,8 +23,13 @@
   --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset,
                  0 12px 32px rgba(0, 0, 0, 0.5);
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-               Roboto, Helvetica, Arial, sans-serif;
+  /*
+   * Canonical family. Inter first, Arial as the universally installed fallback.
+   * Single quotes deliberately: the flattener inlines this value into a
+   * style="..." attribute, and a double quote would terminate the attribute —
+   * which is exactly how the body copy once shipped rendering in Times.
+   */
+  --font-sans: 'Inter', Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
   --fs-eyebrow: 0.75rem;
@@ -32,14 +37,16 @@
   --fs-lead:    1.125rem;
   --fs-h3:      1.375rem;
   --fs-h2:      2rem;
-  --fs-h1:      clamp(2.25rem, 5.5vw, 4rem);
+  --fs-h1:      clamp(2.25rem, calc(5.35vw - 6px), 3.7rem);
 
   --lh-tight: 1.08;
+  --lh-display: 1.06;
   --lh-snug:  1.3;
   --lh-body:  1.65;
 
   --tracking-eyebrow: 0.18em;
   --tracking-hero:   -0.02em;
+  --tracking-display: -0.025em;
 
   --s-1: 0.25rem;  --s-2: 0.5rem;   --s-3: 0.75rem;  --s-4: 1rem;
   --s-6: 1.5rem;   --s-8: 2rem;     --s-12: 3rem;    --s-16: 4rem;
@@ -132,11 +139,28 @@ img { max-width: 100%; height: auto; }
   gap: var(--s-6); padding: var(--s-4) var(--s-6);
   max-width: var(--container); margin: 0 auto;
 }
+/*
+ * The masthead lockup: N mark, then NOVRA over INTELLIGENCE.
+ *
+ * INTELLIGENCE is a solid electric blue, never a gradient with
+ * background-clip. WordPress.com strips background-clip and keeps
+ * color:transparent, which would leave the second line invisible — the exact
+ * defect that once shipped on four public headlines.
+ *
+ * The wordmark is real text rather than part of the mark image, so it stays
+ * selectable and the two can never drift out of sync.
+ */
 .brand { display: flex; align-items: center; gap: var(--s-3); text-decoration: none; }
-.brand__name { font-size: 1.25rem; font-weight: 700; letter-spacing: 0.02em; }
+.brand__mark { display: block; width: 34px; height: 34px; flex: 0 0 auto; }
+.brand__lockup { display: block; }
+.brand__name {
+  display: block; font-size: 1.3125rem; font-weight: 700;
+  letter-spacing: 0.04em; line-height: 1; color: var(--c-text);
+}
 .brand__suffix {
-  background: var(--grad-brand);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  display: block; font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.26em; line-height: 1; margin-top: 4px;
+  text-transform: uppercase; color: var(--c-accent-bright);
 }
 
 .nav { display: flex; gap: var(--s-6); }
@@ -177,9 +201,16 @@ img { max-width: 100%; height: auto; }
   letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
   color: var(--c-accent-bright); margin: 0 0 var(--s-6);
 }
+/*
+ * Institutional headline treatment. Weight 600 rather than 800, tracking
+ * pulled to -0.025em and set uppercase: at display size the extra weight was
+ * reading as shout rather than authority, and the tighter set is what makes
+ * an all-caps line hold together instead of falling apart into letters.
+ */
 .display {
-  font-size: var(--fs-h1); line-height: var(--lh-tight);
-  letter-spacing: var(--tracking-hero); font-weight: 800; margin: 0 0 var(--s-6);
+  font-size: var(--fs-h1); line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display); font-weight: 600;
+  text-transform: uppercase; margin: 0 0 var(--s-6);
 }
 /*
  * Gradient-filled display text.
@@ -213,7 +244,7 @@ img { max-width: 100%; height: auto; }
  */
 .hero-split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--s-16);
   align-items: center;
 }
@@ -371,4 +402,46 @@ img { max-width: 100%; height: auto; }
   .figure { margin: var(--s-8) 0; }
   .figure__frame img.figure__desktop { display: none; }
   .figure__frame img.figure__mobile { display: block; }
+}
+
+/*
+ * Reference-set components: the four-domain strip, the bordered panel used to
+ * group it on Technology, and the About identity block.
+ */
+.domain-strip {
+  display: grid; gap: var(--s-6);
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+.domain { display: flex; align-items: center; gap: var(--s-4); }
+.domain__icon { display: block; width: 40px; height: 40px; flex: 0 0 auto; }
+.domain__label {
+  font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; line-height: 1.35; color: var(--c-text); margin: 0;
+}
+.panel {
+  box-sizing: border-box; background: var(--c-bg-raised);
+  border: 1px solid var(--c-border); border-radius: var(--radius-lg);
+  padding: var(--s-8);
+}
+
+/*
+ * The About identity block. Three lines, deliberately distinct in weight and
+ * scale: name strongest, role second, descriptor smallest. Nothing else goes
+ * in here — no further credentials, affiliations or counts.
+ */
+.identity { margin: 0; }
+.identity__name {
+  font-size: 1.375rem; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--c-text); margin: 0 0 var(--s-2);
+}
+.identity__role {
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--c-accent-bright); margin: 0 0 var(--s-2);
+}
+.identity__desc { font-size: 0.9375rem; color: var(--c-text-subtle); margin: 0; }
+
+.portrait {
+  box-sizing: border-box; border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg); overflow: hidden; line-height: 0;
+  background: var(--c-bg-inset);
 }

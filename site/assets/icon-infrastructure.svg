@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <!-- Digital infrastructure: concentric reach from a single origin. The gap
+       in the outer ring is deliberate — coverage is never total. -->
+  <circle cx="48" cy="48" r="6" fill="#4d84ff"/>
+  <g fill="none" stroke="#4d84ff" stroke-width="3" stroke-linecap="round">
+    <path d="M48 28a20 20 0 0 1 0 40"/>
+    <path d="M48 68a20 20 0 0 1 0-40" stroke-opacity="0.45"/>
+  </g>
+  <g fill="none" stroke="#a07cff" stroke-width="3" stroke-linecap="round">
+    <path d="M48 14a34 34 0 0 1 0 68"/>
+    <path d="M48 82a34 34 0 0 1-24-10" stroke-opacity="0.5"/>
+  </g>
+</svg>

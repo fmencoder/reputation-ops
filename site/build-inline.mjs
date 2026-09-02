@@ -154,7 +154,7 @@ const RULES = {
 
   "page-head": "padding:var(--s-24) 0 var(--s-12)",
   eyebrow: "font-size:var(--fs-eyebrow);font-weight:600;letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--c-accent-bright);margin:0 0 var(--s-6)",
-  display: "font-size:var(--fs-h1);line-height:var(--lh-tight);letter-spacing:var(--tracking-hero);font-weight:800;margin:0 0 var(--s-6);color:var(--c-text)",
+  display: "font-size:var(--fs-h1);line-height:var(--lh-display);letter-spacing:var(--tracking-display);font-weight:600;text-transform:uppercase;margin:0 0 var(--s-6);color:var(--c-text)",
   lead: "color:var(--c-text-muted);font-size:var(--fs-lead);max-width:52ch",
   rule: "height:2px;width:64px;background:var(--grad-rule);border:0;margin:0 0 var(--s-6)",
 
@@ -177,6 +177,32 @@ const RULES = {
   btn: "box-sizing:border-box;display:inline-flex;align-items:center;gap:var(--s-2);padding:var(--s-3) var(--s-6);border-radius:var(--radius);font-size:0.8125rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;border:1px solid transparent",
   "btn--primary": "background:var(--grad-brand);color:#fff;box-shadow:var(--glow-accent)",
   "btn--ghost": "border-color:var(--c-border-strong);color:var(--c-text);background:none",
+
+  /*
+   * Masthead lockup. brand__suffix is a SOLID electric blue, never the gradient
+   * the authored stylesheet once used here: WordPress.com strips
+   * background-clip and keeps color:transparent, which renders the second line
+   * of the wordmark invisible.
+   */
+  brand: "display:flex;align-items:center;gap:var(--s-3);text-decoration:none",
+  brand__mark: "display:block;width:34px;height:34px;flex:0 0 auto",
+  brand__lockup: "display:block",
+  brand__name: "display:block;font-size:1.3125rem;font-weight:700;letter-spacing:0.04em;line-height:1;color:var(--c-text)",
+  brand__suffix: "display:block;font-size:0.6875rem;font-weight:600;letter-spacing:0.26em;line-height:1;margin-top:4px;text-transform:uppercase;color:var(--c-accent-bright)",
+
+  "domain-strip": "display:grid;gap:var(--s-6);grid-template-columns:repeat(auto-fit,minmax(210px,1fr))",
+  domain: "display:flex;align-items:center;gap:var(--s-4)",
+  domain__icon: "display:block;width:40px;height:40px;flex:0 0 auto",
+  domain__label: "font-size:0.8125rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;line-height:1.35;color:var(--c-text);margin:0",
+
+  panel: "box-sizing:border-box;background:var(--c-bg-raised);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:var(--s-8)",
+
+  identity: "margin:0",
+  identity__name: "font-size:1.375rem;font-weight:600;letter-spacing:-0.01em;color:var(--c-text);margin:0 0 var(--s-2)",
+  identity__role: "font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--c-accent-bright);margin:0 0 var(--s-2)",
+  identity__desc: "font-size:0.9375rem;color:var(--c-text-subtle);margin:0",
+
+  portrait: "box-sizing:border-box;border:1px solid var(--c-border);border-radius:var(--radius-lg);overflow:hidden;line-height:0;background:var(--c-bg-inset)",
 
   "sr-only": "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap",
 
@@ -326,18 +352,27 @@ function wrapRoot(html) {
 const ELEMENT_DEFAULTS = {
   a: "color:inherit",
   h1: "line-height:var(--lh-tight)",
-  h2: "line-height:var(--lh-snug)",
-  h3: "line-height:var(--lh-snug)",
+  h2: "line-height:var(--lh-snug);letter-spacing:-0.02em",
+  h3: "line-height:var(--lh-snug);letter-spacing:-0.015em",
 };
 
 function applyElementDefaults(html) {
   return html.replace(/<(a|h1|h2|h3)(\s[^>]*)?>/gi, (match, tag, attrs = "") => {
     const defaults = ELEMENT_DEFAULTS[tag.toLowerCase()];
     const existing = attrs.match(/\sstyle="([^"]*)"/);
-    // Only supply what the element does not already state for itself.
-    const property = defaults.split(":")[0];
-    if (existing && new RegExp(`(^|;)\\s*${property}\\s*:`).test(existing[1])) return match;
-    const combined = existing ? `${defaults};${existing[1]}` : defaults;
+    /*
+     * Supply only the declarations the element does not already state. Checking
+     * just the first property was enough while every default was a single
+     * declaration; now that headings carry line-height AND letter-spacing, an
+     * element that set its own line-height would have silently lost the
+     * tracking too.
+     */
+    const supply = defaults.split(";").filter((declaration) => {
+      const property = declaration.split(":")[0].trim();
+      return !(existing && new RegExp(`(^|;)\\s*${property}\\s*:`).test(existing[1]));
+    });
+    if (supply.length === 0) return match;
+    const combined = existing ? `${supply.join(";")};${existing[1]}` : supply.join(";");
     const cleaned = attrs.replace(/\sstyle="[^"]*"/, "");
     return `<${tag}${cleaned} style="${combined}">`;
   });

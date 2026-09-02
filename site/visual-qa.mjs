@@ -75,6 +75,8 @@ const TARGETS = [
   { name: "wp-technology-band", path: "/payload/03-technology", figureIndex: 0, widths: [1600, 1024, 620, 390] },
   { name: "wp-technology", path: "/payload/03-technology", figureIndex: 1, widths: [1600, 1024, 620, 390] },
   { name: "wp-article", path: "/payload/23-article-deterministic-boundaries-ai-smart-contracts", figureIndex: 1, expectWidth: null, widths: [1600, 1024, 620, 390] },
+  { name: "wp-about", path: "/payload/01-about", figureIndex: 0, expectWidth: null, widths: [1600, 1024, 620, 390] },
+  { name: "wp-insights", path: "/payload/04-insights", figureIndex: 0, expectWidth: null, widths: [1600, 1024, 620, 390] },
 ];
 
 /**
@@ -251,6 +253,20 @@ async function main() {
           figureWidth: box ? Math.round(box.width) : null,
           figureHeight: box ? Math.round(box.height) : null,
           overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+          /*
+           * A heading whose longest word is wider than its own column. The page
+           * still "renders" — overflow is visible, nothing throws — so only a
+           * measurement catches it. The uppercase hero display found this the
+           * hard way: INFRASTRUCTURE. ran 40px past its grid track on the live
+           * payload while the static build silently widened the track instead,
+           * so the two builds disagreed and neither looked wrong on its own.
+           */
+          overflowingHeadings: [...document.querySelectorAll("h1,h2,h3")]
+            // Screen-reader-only headings are clipped to a 1px box on purpose;
+            // measuring those would report every page as broken.
+            .filter((heading) => heading.clientWidth > 2 && heading.clientHeight > 2)
+            .filter((heading) => heading.scrollWidth > Math.ceil(heading.clientWidth) + 1)
+            .map((heading) => `${heading.tagName.toLowerCase()} needs ${heading.scrollWidth}px in ${Math.round(heading.clientWidth)}px`),
           headingSkip: (() => {
             let previous = 0;
             for (const heading of document.querySelectorAll("h1,h2,h3,h4,h5,h6")) {
@@ -269,6 +285,9 @@ async function main() {
 
       if (state.overflow) failures.push(`${label}: page scrolls horizontally`);
       if (state.headingSkip) failures.push(`${label}: heading order skips a level`);
+      for (const overflowing of state.overflowingHeadings) {
+        failures.push(`${label}: ${overflowing} — the headline does not fit its column`);
+      }
       if (hasFigure) {
         if (!state.loaded) failures.push(`${label}: figure image did not load`);
         if (state.visibleImages !== 1) {

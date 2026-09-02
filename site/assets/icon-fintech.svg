@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <!-- Financial technology: measured throughput, not a rocket. Bars with a
+       trend line that resolves to a point rather than an open-ended arrow. -->
+  <g fill="none" stroke="#4d84ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 80h64"/>
+    <path d="M26 80V58M42 80V46M58 80V64M74 80V34"/>
+  </g>
+  <g fill="none" stroke="#a07cff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 44l16-14 14 12 22-24"/>
+  </g>
+  <circle cx="74" cy="18" r="5" fill="#a07cff"/>
+</svg>

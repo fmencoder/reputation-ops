@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!--
+    NOVRA N mark. Replaces the earlier logo, whose embedded text still carried
+    the retired two-letter suffix. This mark carries no text at all, so the
+    wordmark stays real selectable HTML beside it and the two can never drift
+    apart again.
+
+    Two strokes rather than one path: the upright reads in flat electric blue,
+    the diagonal and trailing upright carry the brand gradient. That is the
+    same blue-leads/violet-supports relationship as the rest of the system.
+  -->
+  <defs>
+    <linearGradient id="nm" x1="0" y1="128" x2="128" y2="0">
+      <stop offset="0%" stop-color="#2f6bff"/>
+      <stop offset="52%" stop-color="#4058e8"/>
+      <stop offset="100%" stop-color="#7b4dff"/>
+    </linearGradient>
+  </defs>
+  <path d="M8 120V8h26v112H8z" fill="#4d84ff"/>
+  <path d="M34 8h26l34 52V8h26v112H94L60 68v52H34V8z" fill="url(#nm)"/>
+</svg>

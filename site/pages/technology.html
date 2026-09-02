@@ -3,22 +3,20 @@
     <p class="eyebrow">Research. Analyze. Build.</p>
     <h1 class="display">Technology That<br><span class="accent">Builds the Future.</span></h1>
     <hr class="rule">
-    <p class="lead">Exploring the intersection of AI, blockchain, and financial technology to solve complex problems and create real-world impact.</p>
+    <p class="lead" style="margin-bottom:var(--s-8)">Exploring the intersection of AI, blockchain, and financial technology to solve complex problems and create real-world impact.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--s-4)">
+      <a class="btn btn--primary" href="/insights/">Explore Insights &rarr;</a>
+      <a class="btn btn--ghost" href="/research/">View Research</a>
+    </div>
   </div>
 </section>
 
 <!--
   Was a decorative strip: a gradient wash with four glowing dots and a grid
-  overlay. Same family as the orbit that used to sit on the homepage, and it
-  said nothing.
-
-  Replaced with the distilled convergence band from the Figma design system.
-  Deliberately the short form: inputs and gate, no commit terminal, because the
-  full architecture diagram appears further down this same page and two versions
-  of one claim on one page is noise.
-
-  It carries labels, so it is no longer decoration and is no longer hidden from
-  assistive technology.
+  overlay. Replaced with the distilled convergence band from the Figma design
+  system. Deliberately the short form - inputs and gate, no commit terminal -
+  because the full architecture diagram appears further down this same page and
+  two versions of one claim on one page is noise.
 -->
 <section class="wrap" style="padding-bottom:var(--s-16)">
   <figure class="figure" style="margin:0">
@@ -32,10 +30,26 @@
   <!-- Named so the four h3 cards sit under an h2 rather than skipping a level from the h1. -->
   <h2 class="sr-only">Areas of focus</h2>
   <div class="grid grid--4">
-    <article class="card"><h3>AI Systems &amp; Agents</h3><p>Designing autonomous intelligent systems that learn, reason, and adapt &mdash; and that degrade predictably when they are wrong.</p></article>
-    <article class="card"><h3>Blockchain Infrastructure</h3><p>Building secure, scalable, and decentralised infrastructure, with attention to what the trust model actually guarantees.</p></article>
-    <article class="card"><h3>Financial Technology</h3><p>Engineering technology that drives efficiency in modern finance, where correctness is not negotiable.</p></article>
-    <article class="card"><h3>Digital Infrastructure</h3><p>Researching the systems and networks powering the digital world, and the failure modes they inherit.</p></article>
+    <article class="card">
+      <img class="domain__icon" src="/assets/icon-ai-systems.webp" width="96" height="96" alt="" style="margin-bottom:var(--s-4)">
+      <h3>AI Systems &amp; Agents</h3>
+      <p>Designing autonomous intelligent systems that learn, reason, and adapt &mdash; and that degrade predictably when they are wrong.</p>
+    </article>
+    <article class="card">
+      <img class="domain__icon" src="/assets/icon-blockchain.webp" width="96" height="96" alt="" style="margin-bottom:var(--s-4)">
+      <h3>Blockchain Infrastructure</h3>
+      <p>Building secure, scalable, and decentralised infrastructure, with attention to what the trust model actually guarantees.</p>
+    </article>
+    <article class="card">
+      <img class="domain__icon" src="/assets/icon-fintech.webp" width="96" height="96" alt="" style="margin-bottom:var(--s-4)">
+      <h3>Financial Technology</h3>
+      <p>Engineering technology that drives efficiency in modern finance, where correctness is not negotiable.</p>
+    </article>
+    <article class="card">
+      <img class="domain__icon" src="/assets/icon-infrastructure.webp" width="96" height="96" alt="" style="margin-bottom:var(--s-4)">
+      <h3>Digital Infrastructure</h3>
+      <p>Researching the systems and networks powering the digital world, and the failure modes they inherit.</p>
+    </article>
   </div>
 </section>
 
@@ -51,17 +65,12 @@
   out of its own delimiters on the first save and printed the remains on the
   page. So there is no tag syntax anywhere in this comment either.
 
-  The portrait composition for narrow viewports is authored and rasterised but
-  not yet in the media library. When it is, it goes in as a second img carrying
-  class figure__mobile, which is the mechanism novra.css already holds for
-  exactly this restriction - not as a source element, which cannot survive.
-
   The surrounding prose carries every label in the diagram. The figure is an
   aid to reading, never the only place the information appears.
 -->
 <section class="wrap" style="padding-bottom:var(--s-24)">
   <div style="max-width:var(--measure)">
-    <h2 style="font-size:var(--fs-h2);margin:0 0 var(--s-4)">How the layers converge</h2>
+    <h2>How the layers converge</h2>
     <p style="color:var(--c-text-muted);margin:0 0 var(--s-4)">The four areas above are usually discussed separately. In a working system they are one path. Data and events arrive, an intelligence layer interprets them, autonomous agents decide what to do, and a policy and authorization layer decides whether the agent is permitted to do it. Only past that gate do actions reach smart contracts, distributed state, and the financial and digital infrastructure underneath &mdash; and what comes out the far end has to be a verified outcome, not merely a completed call.</p>
     <p style="color:var(--c-text-muted);margin:0 0 var(--s-4)">The gate is the part that gets left out. An agent that can reason about a transaction and an agent that is authorised to execute one are different systems, and collapsing them is how autonomy becomes an incident. Everything between the intelligence layer and the infrastructure layer sits inside a containment boundary: security and governance on one edge, observability and human oversight on the other. Those are not adjacent concerns bolted on afterwards; they are the walls that make the middle of the diagram safe to run.</p>
   </div>
@@ -73,4 +82,3 @@
     <figcaption>The convergence path, with the authorization gate as the load-bearing element. Input and verified output sit outside the containment boundary; everything that acts sits inside it.</figcaption>
   </figure>
 </section>
-

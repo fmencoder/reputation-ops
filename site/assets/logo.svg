@@ -1,10 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 32" role="img" aria-label="NOVRA AI">
-  <defs><linearGradient id="g" x1="0" y1="32" x2="32" y2="0">
-    <stop offset="0%" stop-color="#2f6bff"/><stop offset="55%" stop-color="#4058e8"/>
-    <stop offset="100%" stop-color="#7b4dff"/></linearGradient>
-    <linearGradient id="t" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0%" stop-color="#4d84ff"/><stop offset="100%" stop-color="#a07cff"/></linearGradient></defs>
-  <path d="M4 28V4h5.4l13.2 16.4V4H28v24h-5.4L9.4 11.6V28H4z" fill="url(#g)"/>
-  <text x="40" y="24" font-family="Inter, system-ui, sans-serif" font-size="21" font-weight="700" fill="#ffffff" letter-spacing="0.5">NOVRA</text>
-  <text x="146" y="24" font-family="Inter, system-ui, sans-serif" font-size="21" font-weight="700" fill="url(#t)" letter-spacing="0.5">AI</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="48" viewBox="0 0 220 48" role="img" aria-label="NOVRA Intelligence">
+  <!--
+    Horizontal lockup. Replaces the previous version, whose wordmark still read
+    with the retired two-letter suffix; that suffix is gone from the identity
+    and must not survive in an asset either.
+
+    Type is DejaVu Sans because librsvg resolves fonts from the host and Inter
+    is not installed there. The live masthead sets the same lockup in real HTML
+    with Inter, so this file is only for places that need a single image.
+  -->
+  <defs>
+    <linearGradient id="nm" x1="0" y1="48" x2="48" y2="0">
+      <stop offset="0%" stop-color="#2f6bff"/>
+      <stop offset="52%" stop-color="#4058e8"/>
+      <stop offset="100%" stop-color="#7b4dff"/>
+    </linearGradient>
+  </defs>
+  <path d="M3 45V3h9.8v42H3z" fill="#4d84ff"/>
+  <path d="M12.8 3h9.8l12.8 19.5V3H45v42h-9.8L22.6 25.5V45h-9.8V3z" fill="url(#nm)"/>
+  <text x="58" y="24" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="bold" fill="#ffffff" letter-spacing="0.9">NOVRA</text>
+  <text x="59" y="40" font-family="DejaVu Sans, sans-serif" font-size="9.5" font-weight="bold" fill="#4d84ff" letter-spacing="2.6">INTELLIGENCE</text>
 </svg>

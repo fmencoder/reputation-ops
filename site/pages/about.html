@@ -1,54 +1,89 @@
+<!--
+  The approved About design places a portrait in the right column of this hero.
+  It is not here: the portrait arrived only as pixels inside a mockup image and
+  no file was supplied, and regenerating or substituting a face was explicitly
+  ruled out. So the hero runs single-column until the real asset lands.
+
+  The markup is written and waiting in site/partials/about-portrait.html, with
+  the four steps needed to switch it on. Nothing else on this page depends on it.
+-->
 <section class="page-head">
   <div class="wrap">
-    <p class="eyebrow">About</p>
-    <h1 class="display">Fredrick Mendez</h1>
-    <p class="lead" style="color:var(--c-text);font-weight:600;max-width:60ch;margin-bottom:var(--s-4)">Technology Executive &bull; AI Strategy &bull; Autonomous Systems &bull; Blockchain Technology</p>
+    <p class="eyebrow">About NOVRA</p>
+    <h1 class="display">Building the future through research and <span class="accent">technology.</span></h1>
     <hr class="rule">
-    <p class="lead">Advancing the convergence of artificial intelligence, autonomous systems, blockchain infrastructure, smart contracts, and next-generation digital platforms.</p>
+    <p class="lead" style="margin-bottom:var(--s-12)">NOVRA Intelligence explores the intersection of artificial intelligence, blockchain, financial technology, and digital infrastructure to build systems that create measurable impact and lasting value.</p>
+
+    <div class="identity">
+      <p class="identity__name">Fredrick Mendez, MBA</p>
+      <p class="identity__role">Founder &amp; Research Architect</p>
+      <p class="identity__desc">Technology Executive, AI Strategist &amp; Emerging Technology Innovator</p>
+    </div>
   </div>
 </section>
 
-<!--
-  The decorative identity graphic that sat here is gone. It was layered radial
-  fields, an arc pair and four glowing dots — the same generic vocabulary as the
-  orbit that used to open the homepage, and it made no claim about anything.
+<section class="wrap" style="border-top:1px solid var(--c-border);padding-top:var(--s-12);padding-bottom:var(--s-16)">
+  <h2 style="font-size:0.6875rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--c-text-subtle);margin:0 0 var(--s-6)">Our research focus</h2>
+  <div class="grid grid--4">
+    <article class="card">
+      <img class="domain__icon" src="/assets/icon-ai-systems.webp" width="96" height="96" alt="" style="margin-bottom:var(--s-4)">
+      <h3>AI Systems &amp; Agents</h3>
+      <p>Designing autonomous intelligent systems that learn, reason, and adapt.</p>
+    </article>
+    <article class="card">
+      <img class="domain__icon" src="/assets/icon-blockchain.webp" width="96" height="96" alt="" style="margin-bottom:var(--s-4)">
+      <h3>Blockchain Infrastructure</h3>
+      <p>Building secure, scalable, and decentralised infrastructure.</p>
+    </article>
+    <article class="card">
+      <img class="domain__icon" src="/assets/icon-fintech.webp" width="96" height="96" alt="" style="margin-bottom:var(--s-4)">
+      <h3>Financial Technology</h3>
+      <p>Engineering technology that drives efficiency in modern finance.</p>
+    </article>
+    <article class="card">
+      <img class="domain__icon" src="/assets/icon-infrastructure.webp" width="96" height="96" alt="" style="margin-bottom:var(--s-4)">
+      <h3>Digital Infrastructure</h3>
+      <p>Researching the systems and networks powering our digital world.</p>
+    </article>
+  </div>
+</section>
 
-  It is not replaced. The convergence map belongs where it argues something, on
-  the homepage, on Technology and inside the article whose thesis it draws. A
-  page about a person is not one of those places, and repeating the diagram to
-  fill a gap would weaken it everywhere it appears.
--->
-
-<section class="wrap" id="fredrick-mendez" style="padding-bottom:var(--s-16)">
+<section id="fredrick-mendez" class="wrap" style="padding-bottom:var(--s-16)">
   <div style="max-width:var(--measure)">
-    <h2 style="font-size:var(--fs-h2);margin:0 0 var(--s-4)">Executive Focus</h2>
+    <h2>Executive Focus</h2>
     <p style="color:var(--c-text-muted);margin:0 0 var(--s-8)">Fredrick Mendez is a technology executive, strategist, and technology innovator focused on artificial intelligence, autonomous systems, blockchain technology, smart contracts, software architecture, and advanced digital infrastructure. His work explores the convergence of AI, decentralized technologies, intelligent automation, and programmable financial systems to create more capable, resilient, and scalable technology platforms.</p>
 
-    <h2 style="font-size:var(--fs-h2);margin:0 0 var(--s-4)">Technology Leadership</h2>
+    <h2>Technology Leadership</h2>
     <p style="color:var(--c-text-muted);margin:0 0 var(--s-8)">His areas of focus include AI agents and autonomous systems, blockchain architecture, smart-contract systems, decentralized finance and financial technology, distributed infrastructure, intelligent automation, and enterprise software architecture. A central theme of his work is moving emerging technologies beyond experimentation and into dependable production environments where reliability, security, governance, observability, recoverability, and human oversight are fundamental design requirements.</p>
 
-    <h2 style="font-size:var(--fs-h2);margin:0 0 var(--s-4)">AI, Blockchain &amp; Smart Contracts</h2>
+    <h2>AI, Blockchain &amp; Smart Contracts</h2>
     <p style="color:var(--c-text-muted);margin:0 0 var(--s-8)">He is particularly interested in the increasing convergence of artificial intelligence and blockchain infrastructure &mdash; including autonomous agents capable of interacting with smart contracts, programmable digital assets, decentralized protocols, and machine-readable financial infrastructure. His work examines how these technologies can support new models of automation, coordination, capital efficiency, and digital commerce.</p>
 
-    <h2 style="font-size:var(--fs-h2);margin:0 0 var(--s-4)">Research &amp; Innovation</h2>
+    <h2>Research &amp; Innovation</h2>
     <p style="color:var(--c-text-muted);margin:0 0 var(--s-8)">Through NOVRA Intelligence, Fredrick develops technology research, architectural analysis, and strategic perspectives spanning artificial intelligence, autonomous agents, blockchain and smart-contract infrastructure, financial technology, construction technology, digital transformation, and emerging computational systems.</p>
   </div>
 </section>
 
 <!--
-  Four focus cards. These replace the concept board's metric tiles
-  (10+ Years, 50+ Research Papers, Global, Impact). All four are removed:
-  the two numeric ones are unsupported, and the two qualitative ones read as
-  metrics by virtue of sitting in a counter frame. What remains states subject
-  matter, which is checkable, rather than attainment, which is not.
+  The idea behind NOVRA. This copy is reproduced exactly as approved and is not
+  to be rewritten, trimmed, or padded out. It makes no institutional claim and
+  names no credential, which is the point.
+
+  The lattice beside it is decorative and marked aria-hidden: the text carries
+  the meaning on its own.
 -->
-<section class="wrap" style="padding-bottom:var(--s-24)">
-  <h2 class="sr-only">Areas of focus</h2>
-  <div class="grid grid--4">
-    <article class="card"><p class="card__kicker">01</p><h3 style="font-size:1.0625rem">AI &amp; Autonomous Systems</h3></article>
-    <article class="card"><p class="card__kicker">02</p><h3 style="font-size:1.0625rem">Blockchain &amp; Smart Contracts</h3></article>
-    <article class="card"><p class="card__kicker">03</p><h3 style="font-size:1.0625rem">Digital Infrastructure</h3></article>
-    <article class="card"><p class="card__kicker">04</p><h3 style="font-size:1.0625rem">Technology Innovation</h3></article>
+<section class="wrap" style="border-top:1px solid var(--c-border);padding-top:var(--s-16);padding-bottom:var(--s-24)">
+  <div class="hero-split">
+    <div class="portrait" aria-hidden="true" style="max-width:340px;margin:0 auto">
+      <img src="/assets/novra-n-lattice.webp" width="480" height="760" loading="lazy" alt="" style="display:block;width:100%;height:auto">
+    </div>
+    <div>
+      <p class="eyebrow">The idea behind NOVRA</p>
+      <h2 style="font-size:var(--fs-h2);line-height:var(--lh-display);letter-spacing:var(--tracking-display);font-weight:600;text-transform:uppercase;margin:0 0 var(--s-6)">Intelligence begins <span class="accent" style="display:block">with awe.</span></h2>
+      <p style="color:var(--c-text-muted);margin:0 0 var(--s-4)">NOVRA reflects the idea that the deepest understanding begins by recognizing that reality may contain forms of order, intelligence, and structure greater than what is immediately visible.</p>
+      <p style="color:var(--c-text-muted);margin:0 0 var(--s-4)">Our work explores the architecture beneath intelligent systems &mdash; the relationships between reasoning and execution, autonomy and constraint, complexity and order.</p>
+      <p style="color:var(--c-text-muted);margin:0">NOVRA is a publication built around that pursuit: seeing beyond the obvious, discerning patterns that are easy to miss, and translating complexity into systems that can be understood, governed, and built with purpose.</p>
+    </div>
   </div>
 </section>
 

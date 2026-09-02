@@ -1,22 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!--
+    Open Graph card: what a link to this site looks like when it is shared.
+
+    Rebuilt because the previous version set the retired wordmark, which meant
+    every share carried a masthead the site no longer uses. The headline now
+    matches the live home page treatment: uppercase, tight tracking, accent on
+    the third line only.
+
+    Type is DejaVu Sans - librsvg resolves fonts from the host and Inter is not
+    installed there.
+  -->
   <defs>
     <radialGradient id="halo" cx="72%" cy="40%" r="55%">
-      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.35"/>
+      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.32"/>
       <stop offset="70%" stop-color="#7b4dff" stop-opacity="0.10"/>
       <stop offset="100%" stop-color="#05070f" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
       <stop offset="0%" stop-color="#2f6bff"/><stop offset="55%" stop-color="#4058e8"/>
-      <stop offset="100%" stop-color="#7b4dff"/></linearGradient>
+      <stop offset="100%" stop-color="#7b4dff"/>
+    </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="#05070f"/>
   <rect width="1200" height="630" fill="url(#halo)"/>
-  <g transform="translate(80 70) scale(1.6)">
-    <path d="M4 28V4h5.4l13.2 16.4V4H28v24h-5.4L9.4 11.6V28H4z" fill="url(#g)"/>
+
+  <g transform="translate(80 62)">
+    <path d="M0 56V0h13v56H0z" fill="#4d84ff"/>
+    <path d="M13 0h13l17 26V0h13v56H43L26 30v26H13V0z" fill="url(#g)"/>
+    <text x="62" y="26" font-family="DejaVu Sans, sans-serif" font-size="27" font-weight="bold" fill="#ffffff" letter-spacing="1.1">NOVRA</text>
+    <text x="63" y="47" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="bold" fill="#4d84ff" letter-spacing="3.4">INTELLIGENCE</text>
   </g>
-  <text x="146" y="118" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="700" fill="#ffffff" letter-spacing="1">NOVRA AI</text>
-  <text x="80" y="330" font-family="Inter, system-ui, sans-serif" font-size="66" font-weight="800" fill="#ffffff">Intelligent systems.</text>
-  <text x="80" y="404" font-family="Inter, system-ui, sans-serif" font-size="66" font-weight="800" fill="#ffffff">Digital infrastructure.</text>
-  <text x="80" y="478" font-family="Inter, system-ui, sans-serif" font-size="66" font-weight="800" fill="#7b4dff">Real impact.</text>
-  <rect x="80" y="530" width="72" height="4" fill="url(#g)"/>
+
+  <g font-family="DejaVu Sans, sans-serif" font-size="62" font-weight="bold" letter-spacing="-1.4">
+    <text x="80" y="330" fill="#ffffff">INTELLIGENT SYSTEMS.</text>
+    <text x="80" y="404" fill="#ffffff">DIGITAL INFRASTRUCTURE.</text>
+    <text x="80" y="478" fill="#4d84ff">REAL IMPACT.</text>
+  </g>
+  <rect x="80" y="524" width="72" height="4" fill="url(#g)"/>
 </svg>

@@ -1,63 +1,107 @@
 <section class="page-head">
-  <div class="wrap">
-    <p class="eyebrow">Insights That Matter</p>
-    <h1 class="display">Research.<br>Insights.<br><span class="accent">Real Impact.</span></h1>
-    <hr class="rule">
-    <p class="lead">In-depth analysis and original research on the technologies and systems that are transforming our world.</p>
+  <div class="wrap hero-split">
+    <div>
+      <p class="eyebrow">Insights That Matter</p>
+      <h1 class="display">Research. Insights. <span class="accent" style="display:block">Real Impact.</span></h1>
+      <hr class="rule">
+      <p class="lead" style="margin-bottom:var(--s-8)">In-depth analysis and original research on the technologies and systems that are transforming our world.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--s-4)">
+        <a class="btn btn--primary" href="#latest">Browse Insights &rarr;</a>
+        <a class="btn btn--ghost" href="/research/">Explore Research</a>
+      </div>
+    </div>
+
+    <!--
+      The reference composition puts an analytics panel here: a distribution
+      chart and four counter tiles. Every figure in it was invented, so none of
+      it is rendered, and the numbers are not restated here either - naming them
+      to explain their absence would still ship them in the page source.
+
+      What replaces them is the thing the panel was gesturing at and which is
+      actually true: the four areas this publication covers. No counts, no
+      percentages, no scores - not because they would be hard to compute, but
+      because a number on a page is a claim, and these had nothing behind them.
+    -->
+    <div class="panel">
+      <h2 style="font-size:0.6875rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--c-text-subtle);margin:0 0 var(--s-6)">Research areas</h2>
+      <div style="display:grid;gap:var(--s-6)">
+        <div class="domain">
+          <img class="domain__icon" src="/assets/icon-ai-systems.webp" width="96" height="96" alt="">
+          <p class="domain__label">AI Systems &amp; Agents</p>
+        </div>
+        <div class="domain">
+          <img class="domain__icon" src="/assets/icon-blockchain.webp" width="96" height="96" alt="">
+          <p class="domain__label">Blockchain Infrastructure</p>
+        </div>
+        <div class="domain">
+          <img class="domain__icon" src="/assets/icon-fintech.webp" width="96" height="96" alt="">
+          <p class="domain__label">Financial Technology</p>
+        </div>
+        <div class="domain">
+          <img class="domain__icon" src="/assets/icon-infrastructure.webp" width="96" height="96" alt="">
+          <p class="domain__label">Digital Infrastructure</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!--
-  The reference shows a metrics panel (1,248 Projects / 87 Research Papers /
-  342 Systems / 98.7% Impact Score). Those are design placeholders and are NOT
-  rendered here. They return only if each becomes a real, countable number.
-  Rendering them as zeroes would be equally misleading, so the panel is omitted
-  entirely and the layout closes over the gap.
+  Insights is the complete index: every published article appears here, newest
+  first. Research is a narrower view of the same articles, not a second home
+  for different ones - see research.html for the rule it applies.
+
+  Every href below is the permalink WordPress returned at publication, recorded
+  in site/wp-permalinks.json. None is constructed by hand. The card artwork is
+  each article's own hero, already in the media library.
 -->
-
-<section class="wrap" style="padding-bottom:var(--s-24)">
-  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:var(--s-6)">
-    <h2 style="font-size:0.6875rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--c-text-subtle);margin:0">Latest Insights</h2>
-  </div>
-
-  <!--
-    Insights is the complete index: every published article appears here, newest
-    first. Research is a narrower view of the same articles, not a second home
-    for different ones — see research.html for the rule it applies.
-
-    Every href below is the permalink WordPress returned at publication, recorded
-    in site/wp-permalinks.json. None is constructed by hand.
-  -->
+<section id="latest" class="wrap" style="padding-bottom:var(--s-24)">
+  <h2 style="font-size:0.6875rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--c-text-subtle);margin:0 0 var(--s-6)">Latest publications</h2>
   <div class="grid grid--2">
-    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/context-engineering-production-ai/">
-      <p class="card__kicker">Architecture</p>
-      <h3>Context Engineering Is Becoming the Operating System for Production AI</h3>
-      <p>Model choice has a short half-life. What increasingly separates production systems is how they assemble, type, budget and defend the context around the model.</p>
-      <p class="card__meta">1 September 2026 &middot; 8 min read</p>
+    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/context-engineering-production-ai/" style="padding:0;overflow:hidden">
+      <img src="/assets/context-engineering-hero.webp" width="1000" height="563" alt="" style="display:block;width:100%;height:auto">
+      <div style="padding:var(--s-6)">
+        <p class="card__kicker">Architecture</p>
+        <h3>Context Engineering Is Becoming the Operating System for Production AI</h3>
+        <p>Model choice has a short half-life. What increasingly separates production systems is how they assemble, type, budget and defend the context around the model.</p>
+        <p class="card__meta">1 September 2026 &middot; 8 min read</p>
+      </div>
     </a>
-    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/deterministic-boundaries-ai-smart-contracts/">
-      <p class="card__kicker">Architecture</p>
-      <h3>When AI Meets Smart Contracts: Designing Deterministic Boundaries</h3>
-      <p>AI reasons probabilistically; contracts execute deterministically. The strongest designs use that difference on purpose &mdash; and treat the oracle as where determinism leaks.</p>
-      <p class="card__meta">1 September 2026 &middot; 8 min read</p>
+    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/deterministic-boundaries-ai-smart-contracts/" style="padding:0;overflow:hidden">
+      <img src="/assets/deterministic-boundaries-hero.webp" width="1000" height="563" alt="" style="display:block;width:100%;height:auto">
+      <div style="padding:var(--s-6)">
+        <p class="card__kicker">Architecture</p>
+        <h3>When AI Meets Smart Contracts: Designing Deterministic Boundaries</h3>
+        <p>AI reasons probabilistically; contracts execute deterministically. The strongest designs use that difference on purpose &mdash; and treat the oracle as where determinism leaks.</p>
+        <p class="card__meta">1 September 2026 &middot; 8 min read</p>
+      </div>
     </a>
-    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/human-oversight-architecture/">
-      <p class="card__kicker">Governance</p>
-      <h3>Human Oversight Fails When It Is Designed as a Button</h3>
-      <p>Oversight is only real while detection, decision and action still fit before the point of irreversibility. A latency budget makes that measurable.</p>
-      <p class="card__meta">1 September 2026 &middot; 7 min read</p>
+    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/human-oversight-architecture/" style="padding:0;overflow:hidden">
+      <img src="/assets/human-oversight-hero.webp" width="1000" height="563" alt="" style="display:block;width:100%;height:auto">
+      <div style="padding:var(--s-6)">
+        <p class="card__kicker">Governance</p>
+        <h3>Human Oversight Fails When It Is Designed as a Button</h3>
+        <p>Oversight is only real while detection, decision and action still fit before the point of irreversibility. A latency budget makes that measurable.</p>
+        <p class="card__meta">1 September 2026 &middot; 7 min read</p>
+      </div>
     </a>
-    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/recoverability-architecture/">
-      <p class="card__kicker">Reliability</p>
-      <h3>From AI Prototype to Production System: The Architecture of Recoverability</h3>
-      <p>A production system is not one that avoids failure. It is one whose failures are bounded, observable and recoverable &mdash; which cannot be retrofitted cheaply.</p>
-      <p class="card__meta">1 September 2026 &middot; 8 min read</p>
+    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/recoverability-architecture/" style="padding:0;overflow:hidden">
+      <img src="/assets/recoverability-hero.webp" width="1000" height="563" alt="" style="display:block;width:100%;height:auto">
+      <div style="padding:var(--s-6)">
+        <p class="card__kicker">Reliability</p>
+        <h3>From AI Prototype to Production System: The Architecture of Recoverability</h3>
+        <p>A production system is not one that avoids failure. It is one whose failures are bounded, observable and recoverable &mdash; which cannot be retrofitted cheaply.</p>
+        <p class="card__meta">1 September 2026 &middot; 8 min read</p>
+      </div>
     </a>
-    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/agentic-ai-reliability-budget/">
-      <p class="card__kicker">Reliability</p>
-      <h3>Why Agentic AI Systems Fail at Scale: A Reliability Budget</h3>
-      <p>A 99%-reliable step sounds excellent until you chain fifty of them. How to budget reliability across a system instead of tuning prompts.</p>
-      <p class="card__meta">1 September 2026 &middot; 5 min read</p>
+    <a class="card card--link" href="https://novraintelligence.com/2026/08/31/agentic-ai-reliability-budget/" style="padding:0;overflow:hidden">
+      <img src="/assets/reliability-budget-agentic-ai.webp" width="1600" height="900" alt="" style="display:block;width:100%;height:auto">
+      <div style="padding:var(--s-6)">
+        <p class="card__kicker">Reliability</p>
+        <h3>Why Agentic AI Systems Fail at Scale: A Reliability Budget</h3>
+        <p>A 99%-reliable step sounds excellent until you chain fifty of them. How to budget reliability across a system instead of tuning prompts.</p>
+        <p class="card__meta">1 September 2026 &middot; 5 min read</p>
+      </div>
     </a>
   </div>
 </section>
