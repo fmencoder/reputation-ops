@@ -60,6 +60,10 @@ const TARGETS = [
     webp: "novra-convergence-band.webp",
     width: 1200, height: 300,
     note: "Technology page head. Distilled form of the same motif — inputs and gate, no COMMIT terminal, because the full architecture diagram is already further down that page." },
+  { source: "author-portrait-source.png",
+    webp: "author-portrait.webp",
+    width: 506, height: 509, quality: 82,
+    note: "Author portrait, at the size and framing supplied. Not cropped, not retouched, not upscaled — the display width is chosen to suit the file rather than the file resampled to suit a layout." },
   { svg: "reliability-budget-agentic-ai.svg",
     webp: "reliability-budget-agentic-ai.webp",
     width: 1600, height: 900,
@@ -67,6 +71,20 @@ const TARGETS = [
 ];
 
 async function render(target) {
+  /*
+   * A photograph, not a diagram: no density (there is nothing to rasterise at a
+   * DPI), no resize away from its native pixels, and a higher quality, because
+   * 72 is tuned for flat plates and gradients and shows on skin. The source
+   * file beside it is the image exactly as supplied and is never regenerated.
+   */
+  if (target.source) {
+    const raster = await readFile(join(ASSETS, target.source));
+    return sharp(raster)
+      .resize(target.width, target.height)
+      .webp({ quality: target.quality ?? QUALITY, effort: EFFORT })
+      .toBuffer();
+  }
+
   const svg = await readFile(join(ASSETS, target.svg));
   return sharp(svg, { density: DENSITY })
     .resize(target.width, target.height)

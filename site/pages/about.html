@@ -1,24 +1,36 @@
 <!--
-  The approved About design places a portrait in the right column of this hero.
-  It is not here: the portrait arrived only as pixels inside a mockup image and
-  no file was supplied, and regenerating or substituting a face was explicitly
-  ruled out. So the hero runs single-column until the real asset lands.
+  Two-column hero: editorial left, portrait right, collapsing to one column
+  below the point where two 320px tracks stop fitting.
 
-  The markup is written and waiting in site/partials/about-portrait.html, with
-  the four steps needed to switch it on. Nothing else on this page depends on it.
+  The portrait is the supplied file, unretouched and uncropped, rendered to WebP
+  by site/render-assets.mjs from the original beside it in site/assets. It is
+  capped at 320px rather than filling its half of the grid: at its native 506px
+  that keeps it sharp on a 2x display, and it keeps the picture subordinate to
+  the words, which is the point of the page. Nothing is set beneath it.
+
+  The original is a build input and is never referenced by a page; the checks in
+  site/content-qa.mjs fail if it is, and this comment avoids naming it, because
+  a page comment is shipped bytes and a check that reads the page cannot tell an
+  explanation from an instance.
 -->
 <section class="page-head">
-  <div class="wrap">
-    <p class="eyebrow">About NOVRA</p>
-    <h1 class="display">Building the future through research and <span class="accent">technology.</span></h1>
-    <hr class="rule">
-    <p class="lead" style="margin-bottom:var(--s-12)">NOVRA Intelligence explores the intersection of artificial intelligence, blockchain, financial technology, and digital infrastructure to build systems that create measurable impact and lasting value.</p>
+  <div class="wrap hero-split">
+    <div>
+      <p class="eyebrow">About NOVRA</p>
+      <h1 class="display">Building the future through research and <span class="accent">technology.</span></h1>
+      <hr class="rule">
+      <p class="lead" style="margin-bottom:var(--s-12)">NOVRA Intelligence explores the intersection of artificial intelligence, blockchain, financial technology, and digital infrastructure to build systems that create measurable impact and lasting value.</p>
 
-    <div class="identity">
-      <p class="identity__name">Fredrick Mendez, MBA</p>
-      <p class="identity__role">Founder &amp; Research Architect</p>
-      <p class="identity__desc">Technology Executive, AI Strategist &amp; Emerging Technology Innovator</p>
+      <div class="identity">
+        <p class="identity__name">Fredrick Mendez, MBA</p>
+        <p class="identity__role">Founder &amp; Research Architect</p>
+        <p class="identity__desc">Technology Executive, AI Strategist &amp; Emerging Technology Innovator</p>
+      </div>
     </div>
+
+    <figure class="portrait" style="margin:0 auto;max-width:320px">
+      <img src="/assets/author-portrait.webp" width="506" height="509" alt="Fredrick Mendez" style="display:block;width:100%;height:auto">
+    </figure>
   </div>
 </section>
 

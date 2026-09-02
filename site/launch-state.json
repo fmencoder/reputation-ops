@@ -137,5 +137,18 @@
     "republished": "All six pages, each returning its unchanged permalink: Home 21 (/), Insights 20, Research 19, Technology 24, About 22, Contact 17. calc() inside clamp() was verified to survive the WordPress.com sanitiser by reading the saved content back. The five articles were not republished \u2014 they carry no hero clamp, so the type change does not reach them.",
     "qa": "CONTENT_QA=PASS (47 sources), VISUAL_QA=PASS (42 viewport renders at 1600/1280/1024/860/620/390), render-assets --check byte-exact on all 13 assets.",
     "verificationLimit": "Public HTTP verification remains impossible from this environment: the egress proxy answers 403 to CONNECT for novraintelligence.com on curl, WebFetch and the bundled Chromium alike. PUBLIC_BROWSER_VERIFICATION=BLOCKED. Public visual parity is not claimed. Every check that can be made server-side through the WordPress API was made: is_private false, is_coming_soon false, is_site_launched true, primary_domain novraintelligence.com."
+  },
+  "portraitActivation": {
+    "performedAt": "2026-09-02",
+    "asset": "The supplied portrait, unmodified. Recovered from the session transcript, where the attachment is stored as base64 \u2014 it is not written to the sandbox filesystem, which is why the previous pass could not reach it. The original is committed as site/assets/author-portrait-source.png and the deployed WebP is rendered from it by site/render-assets.mjs at native 506x509, quality 82. The face was not regenerated, restyled, cropped, retouched or upscaled.",
+    "mediaId": 115,
+    "mediaUrl": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/author-portrait.webp",
+    "uploadVerification": "Byte-exact: media_details.filesize 11008 matches the local file's 11008 bytes.",
+    "layout": "Two-column About hero \u2014 editorial left, portrait right \u2014 collapsing to one centred column below the point where two 320px tracks stop fitting. The portrait is capped at 320px rather than filling its half of the grid: at its native 506px that keeps it sharp on a 2x display, and it keeps the picture subordinate to the words. No signature.",
+    "qaAdded": "site/visual-qa.mjs now measures the portrait at every About viewport: that it loaded, that it stays within its 320px cap, that its left edge is past the row midpoint at desktop, and that it is centred once the grid collapses. site/content-qa.mjs requires the WebP to exist, About to reference it, the original to remain in the repo, and no page to serve the original.",
+    "defectCaught": "The first draft of the hero comment used the word 'signature' and named the source file. Both checks flagged it, correctly: a page comment is shipped bytes, and a check that reads the page cannot tell an explanation from an instance. The comment was reworded rather than the checks loosened.",
+    "republished": "About (page 22), permalink https://novraintelligence.com/about/ unchanged. No other page, URL, schema entry or citation was touched.",
+    "qa": "CONTENT_QA=PASS (46 sources), VISUAL_QA=PASS (42 viewport renders), render-assets --check byte-exact on all 14 assets.",
+    "verificationLimit": "Public HTTP verification still blocked by the sandbox egress proxy. The 1600px and 390px renders that were inspected are of the exact payload bytes WordPress serves, not of the live URL."
   }
 }

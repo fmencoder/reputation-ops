@@ -121,17 +121,32 @@ for (const page of sources.filter((s) => s.label.startsWith("pages/"))) {
 }
 
 // ------------------------------------------------------------ about portrait -
-const portrait = readdirSync(join(HERE, "assets")).find((f) => /^author-portrait\./.test(f));
+/*
+ * The deployed portrait is the .webp; author-portrait-source.png beside it is
+ * the file exactly as supplied and is never referenced by a page. Matching on
+ * the prefix alone would sometimes find the source and demand About link to a
+ * PNG it should not be serving.
+ */
+const portrait = readdirSync(join(HERE, "assets")).find((f) => f === "author-portrait.webp");
+const portraitSource = existsSync(join(HERE, "assets", "author-portrait-source.png"));
 const about = sources.find((s) => s.label === "pages/about.html");
 if (portrait) {
   if (!about.text.includes(`/assets/${portrait}`)) {
-    fail(`PORTRAIT: ${portrait} exists but About does not reference it — see site/partials/about-portrait.html`);
+    fail(`PORTRAIT: ${portrait} exists but the About hero does not reference it`);
+  }
+  if (!portraitSource) {
+    fail("PORTRAIT: author-portrait-source.png is missing — the supplied original is what the WebP is rendered from and must stay in the repo");
+  }
+  for (const surface of sources.filter(PAGE_SURFACES)) {
+    if (surface.text.includes("author-portrait-source")) {
+      fail(`PORTRAIT: ${surface.label} serves the source PNG; pages must reference the WebP`);
+    }
   }
 } else {
-  notes.push(
-    "PORTRAIT=PENDING — no site/assets/author-portrait.* supplied, so About ships " +
-    "without one. Markup and instructions are in site/partials/about-portrait.html. " +
-    "This is a missing input, not a passing check.",
+  fail(
+    "PORTRAIT: site/assets/author-portrait.webp is missing. It is a deployed asset now, " +
+    "not a pending one — regenerate it from author-portrait-source.png with " +
+    "site/render-assets.mjs rather than dropping in a substitute.",
   );
 }
 

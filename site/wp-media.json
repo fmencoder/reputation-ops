@@ -22,7 +22,8 @@
     "/assets/icon-ai-systems.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/icon-ai-systems.webp",
     "/assets/icon-blockchain.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/icon-blockchain.webp",
     "/assets/icon-fintech.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/icon-fintech.webp",
-    "/assets/icon-infrastructure.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/icon-infrastructure.webp"
+    "/assets/icon-infrastructure.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/icon-infrastructure.webp",
+    "/assets/author-portrait.webp": "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/author-portrait.webp"
   },
   "_uploaded": {
     "novra-logo.webp": {
@@ -137,6 +138,12 @@
       "width": 1200,
       "height": 630,
       "bytes": 15264
+    },
+    "author-portrait.webp": {
+      "id": 115,
+      "width": 506,
+      "height": 509,
+      "bytes": 11008
     }
   },
   "_not_uploaded": {

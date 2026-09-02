@@ -63,7 +63,7 @@ const TARGETS = [
   { name: "technology-band", path: "/technology/", figureIndex: 0, widths: [1600, 1024, 620, 390] },
   { name: "technology", path: "/technology/", figureIndex: 1, widths: [1600, 1280, 1024, 860, 620, 390] },
   { name: "home", path: "/", figureIndex: 0, expectWidth: heroColumnWidth, widths: [1600, 1024, 620, 390] },
-  { name: "about", path: "/about/", figureIndex: 0, widths: [1600, 1024, 620, 390] },
+  { name: "about", path: "/about/", figureIndex: 0, portrait: true, widths: [1600, 1024, 620, 390] },
 
   /*
    * The payload targets are the ones that matter. They render the exact bytes
@@ -75,7 +75,7 @@ const TARGETS = [
   { name: "wp-technology-band", path: "/payload/03-technology", figureIndex: 0, widths: [1600, 1024, 620, 390] },
   { name: "wp-technology", path: "/payload/03-technology", figureIndex: 1, widths: [1600, 1024, 620, 390] },
   { name: "wp-article", path: "/payload/23-article-deterministic-boundaries-ai-smart-contracts", figureIndex: 1, expectWidth: null, widths: [1600, 1024, 620, 390] },
-  { name: "wp-about", path: "/payload/01-about", figureIndex: 0, expectWidth: null, widths: [1600, 1024, 620, 390] },
+  { name: "wp-about", path: "/payload/01-about", figureIndex: 0, expectWidth: null, portrait: true, widths: [1600, 1024, 620, 390] },
   { name: "wp-insights", path: "/payload/04-insights", figureIndex: 0, expectWidth: null, widths: [1600, 1024, 620, 390] },
 ];
 
@@ -254,6 +254,34 @@ async function main() {
           figureHeight: box ? Math.round(box.height) : null,
           overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
           /*
+           * The About portrait. Three things are asserted rather than eyeballed:
+           * that it loaded, that it stays subordinate to the words at its 320px
+           * cap, and that it sits in the right-hand column at desktop and moves
+           * under the text when the grid collapses. "On the right at desktop"
+           * is a layout claim, so it is measured against the content box rather
+           * than assumed from the source order.
+           */
+          portrait: (() => {
+            // Matched by asset name, not by class: the manifesto artwork lower
+            // down the same page also sits in a .portrait frame.
+            const image = document.querySelector('img[src*="author-portrait"]');
+            if (!image) return null;
+            const box = image.getBoundingClientRect();
+            const column = image.closest("figure, .portrait")?.parentElement?.getBoundingClientRect();
+            return {
+              loaded: Boolean(image.complete && image.naturalWidth > 0),
+              width: Math.round(box.width),
+              src: image.currentSrc.split("/").pop(),
+              // Two fractions of the way across the row: where the image
+              // starts, and where its middle falls. The first says which
+              // column it is in, the second says whether it is centred once
+              // the grid collapses.
+              offset: column ? (box.left - column.left) / column.width : null,
+              centre: column ? (box.left + box.width / 2 - column.left) / column.width : null,
+            };
+          })(),
+
+          /*
            * A heading whose longest word is wider than its own column. The page
            * still "renders" — overflow is visible, nothing throws — so only a
            * measurement catches it. The uppercase hero display found this the
@@ -285,6 +313,23 @@ async function main() {
 
       if (state.overflow) failures.push(`${label}: page scrolls horizontally`);
       if (state.headingSkip) failures.push(`${label}: heading order skips a level`);
+      if (target.portrait) {
+        const portrait = state.portrait;
+        if (!portrait) failures.push(`${label}: no portrait found — the About hero should carry one`);
+        else {
+          if (!portrait.loaded) failures.push(`${label}: portrait did not load`);
+          if (portrait.width > 320) {
+            failures.push(`${label}: portrait is ${portrait.width}px, wider than its 320px cap — it should stay subordinate to the text`);
+          }
+          const stacked = width < 860;
+          if (stacked && Math.abs(portrait.centre - 0.5) > 0.08) {
+            failures.push(`${label}: portrait is centred at ${portrait.centre.toFixed(2)} of the row — stacked, it should sit centred under the text`);
+          }
+          if (!stacked && portrait.offset < 0.5) {
+            failures.push(`${label}: portrait sits at ${portrait.offset.toFixed(2)} across the row — it belongs in the right-hand column`);
+          }
+        }
+      }
       for (const overflowing of state.overflowingHeadings) {
         failures.push(`${label}: ${overflowing} — the headline does not fit its column`);
       }
