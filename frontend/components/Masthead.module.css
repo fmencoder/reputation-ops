@@ -1,0 +1,136 @@
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgb(5 7 15 / 0.86);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-6);
+  min-height: var(--header-height);
+}
+
+.nav {
+  display: none;
+  gap: var(--s-6);
+}
+
+.link {
+  position: relative;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-nav);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-muted);
+  padding-block: var(--s-2);
+  transition: color 160ms ease;
+}
+
+.link:hover {
+  color: var(--text);
+}
+
+.link[aria-current="page"] {
+  color: var(--text);
+}
+
+.link[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--grad-rule);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: calc(var(--s-2) * -1);
+  background: none;
+  border: 0;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.bars {
+  display: block;
+  width: 22px;
+}
+
+.bars i {
+  display: block;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 200ms ease, opacity 160ms ease;
+}
+
+.bars i + i {
+  margin-top: 5px;
+}
+
+.barsOpen i:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.barsOpen i:nth-child(2) {
+  opacity: 0;
+}
+
+.barsOpen i:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+.drawer {
+  border-top: 1px solid var(--line);
+  background: var(--ink);
+  padding: var(--s-4) var(--s-5) var(--s-8);
+}
+
+.drawer nav {
+  display: grid;
+}
+
+.drawerLink {
+  display: block;
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.drawerLink[aria-current="page"] {
+  color: var(--accent-bright);
+}
+
+.drawerEmail {
+  display: inline-block;
+  margin-top: var(--s-6);
+  font-size: var(--fs-small);
+  color: var(--accent-bright);
+  text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  .nav {
+    display: flex;
+  }
+
+  .toggle,
+  .drawer {
+    display: none;
+  }
+}

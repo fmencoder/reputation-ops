@@ -1,0 +1,68 @@
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  text-decoration: none;
+}
+
+.mark {
+  display: block;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+}
+
+.lockup {
+  display: block;
+}
+
+.name {
+  display: block;
+  font-size: 1.1875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--text);
+}
+
+.suffix {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+}
+
+@media (min-width: 1024px) {
+  .mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .name {
+    font-size: 1.3125rem;
+  }
+
+  .suffix {
+    font-size: 0.6875rem;
+    letter-spacing: 0.26em;
+    margin-top: 4px;
+  }
+}
+
+.compact .mark {
+  width: 26px;
+  height: 26px;
+}
+
+.compact .name {
+  font-size: 1rem;
+}
+
+.compact .suffix {
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+}

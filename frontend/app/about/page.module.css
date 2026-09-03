@@ -1,0 +1,243 @@
+.portraitFrame {
+  position: relative;
+  max-width: 320px;
+  margin-inline: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--ink-inset);
+  line-height: 0;
+}
+
+/* A hairline of brand light along the top edge of the plate, and a soft
+   vignette so the portrait sits in the page rather than on it. */
+.portraitFrame::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  z-index: 1;
+  background: linear-gradient(90deg, transparent, rgb(77 132 255 / 0.6), transparent);
+}
+
+.portraitFrame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgb(5 7 15 / 0.35));
+}
+
+.portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.identity {
+  margin-top: var(--s-8);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--line);
+}
+
+.identityName {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.identityRole {
+  margin-top: var(--s-2);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-bright);
+}
+
+.identityDescriptor {
+  margin-top: var(--s-2);
+  font-size: 0.9375rem;
+  color: var(--text-subtle);
+}
+
+.focus {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.focusCard {
+  padding: var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(165deg, rgb(10 14 28 / 0.95), rgb(5 7 15 / 0.7));
+}
+
+.focusIcon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: var(--s-4);
+}
+
+.focusTitle {
+  font-size: var(--fs-h3);
+  margin-bottom: var(--s-3);
+}
+
+.focusBody {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.profileLayout {
+  display: grid;
+  gap: var(--s-10);
+}
+
+.profile {
+  display: grid;
+  gap: var(--s-8);
+  max-width: var(--measure);
+}
+
+/* The rail only appears where there is room for it — on a phone the prose
+   already fills the column and a decorative graphic would just be scroll. */
+.profileRail {
+  display: none;
+}
+
+.profileHeading {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--s-4);
+}
+
+.profileBody {
+  color: var(--text-muted);
+}
+
+/* Manifesto -------------------------------------------------------------- */
+
+.manifesto {
+  display: grid;
+  gap: var(--s-10);
+  align-items: center;
+}
+
+.lattice {
+  position: relative;
+  max-width: 300px;
+  margin-inline: auto;
+  padding: var(--s-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(170deg, var(--ink-inset), rgb(5 7 15 / 0.9));
+  overflow: hidden;
+}
+
+.latticeGlow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 40%, rgb(47 107 255 / 0.28), transparent 65%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.latticeImage {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.manifestoHeadline {
+  margin-top: var(--s-5);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.manifestoAccent {
+  display: block;
+  color: var(--accent-bright);
+}
+
+.manifestoBody {
+  margin-top: var(--s-6);
+  color: var(--text-muted);
+  max-width: 58ch;
+}
+
+.manifestoBody + .manifestoBody {
+  margin-top: var(--s-4);
+}
+
+.publication {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, rgb(13 18 38 / 0.9), rgb(5 7 15 / 0.7));
+  padding: var(--s-6);
+}
+
+.publicationKicker {
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: var(--s-3);
+}
+
+.publicationTitle {
+  font-size: var(--fs-h3);
+  margin-bottom: var(--s-3);
+}
+
+.publicationBody {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  max-width: 72ch;
+}
+
+@media (min-width: 620px) {
+  .focus {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .focus {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s-6);
+  }
+
+  .identity {
+    margin-top: var(--s-10);
+  }
+
+  .profileLayout {
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: var(--s-16);
+    align-items: start;
+  }
+
+  .profileRail {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-height) + var(--s-8));
+  }
+
+  .manifesto {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--s-16);
+  }
+
+  .lattice {
+    max-width: 340px;
+  }
+
+  .publication {
+    padding: var(--s-8);
+  }
+}

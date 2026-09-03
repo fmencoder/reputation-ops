@@ -1,0 +1,43 @@
+.stack {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 560px;
+}
+
+.label,
+.gateLabel,
+.edge {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.label {
+  font-size: 11px;
+  fill: #c8d2ea;
+}
+
+.gateLabel {
+  font-size: 11px;
+  fill: #ffffff;
+}
+
+.edge {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  fill: #6b779c;
+}
+
+/* The edge labels are the first thing to become unreadable on a phone; the
+   containment boundary still reads without them. */
+@media (max-width: 619px) {
+  .edge {
+    font-size: 12px;
+  }
+
+  .label,
+  .gateLabel {
+    font-size: 13px;
+  }
+}

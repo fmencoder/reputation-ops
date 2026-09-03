@@ -1,0 +1,89 @@
+.field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  color: rgb(122 150 220 / 0.14);
+  /* The grid reads as a field, not wallpaper: it fades out before it reaches
+     the text so it never competes with the words. */
+  mask-image: radial-gradient(120% 90% at 70% 20%, #000 0%, #000 45%, transparent 78%);
+}
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+}
+
+.horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(47 107 255 / 0.35) 30%, rgb(123 77 255 / 0.25) 70%, transparent);
+}
+
+/* Hero: the light sits behind the graphic on the right and pulls the eye across
+   the headline into it. */
+.hero .glow {
+  width: 60vw;
+  height: 60vw;
+  max-width: 780px;
+  max-height: 780px;
+  top: -18%;
+  right: -18%;
+  background: radial-gradient(circle, rgb(47 107 255 / 0.5) 0%, rgb(123 77 255 / 0.22) 45%, transparent 70%);
+}
+
+.section .glow {
+  width: 70vw;
+  height: 40vw;
+  max-width: 900px;
+  top: -30%;
+  left: -10%;
+  background: radial-gradient(circle, rgb(47 107 255 / 0.28) 0%, transparent 68%);
+  opacity: 0.4;
+}
+
+.quiet .grid {
+  opacity: 0.5;
+}
+
+.quiet .glow {
+  width: 50vw;
+  height: 30vw;
+  bottom: -20%;
+  right: -5%;
+  background: radial-gradient(circle, rgb(123 77 255 / 0.22) 0%, transparent 70%);
+  opacity: 0.5;
+}
+
+/* On a phone the field is quieter and the light is centred: a 60vw glow pinned
+   to the right corner of a 390px screen is just a bright edge. */
+@media (max-width: 619px) {
+  .grid {
+    mask-image: radial-gradient(140% 70% at 50% 10%, #000 0%, #000 40%, transparent 80%);
+  }
+
+  .hero .glow,
+  .section .glow,
+  .quiet .glow {
+    width: 120vw;
+    height: 120vw;
+    max-width: none;
+    max-height: none;
+    top: -30%;
+    right: -40%;
+    left: auto;
+    opacity: 0.42;
+    filter: blur(70px);
+  }
+}

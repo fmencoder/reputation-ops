@@ -1,0 +1,96 @@
+.intro {
+  max-width: var(--measure);
+}
+
+.introHeading {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--s-4);
+}
+
+.introBody {
+  color: var(--text-muted);
+}
+
+.introBody + .introBody {
+  margin-top: var(--s-4);
+}
+
+.threads {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.thread {
+  position: relative;
+  padding-left: var(--s-6);
+  border-left: 1px solid var(--line);
+}
+
+/* The rail marks each thread and lights up on hover — a piece of state the
+   old inline styles could not carry at all. */
+.thread::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 2px;
+  height: 40px;
+  background: var(--grad-rule);
+}
+
+.threadLabel {
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: var(--s-4);
+}
+
+.threadCards {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.open {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, rgb(13 18 38 / 0.9), rgb(5 7 15 / 0.7));
+  padding: var(--s-6);
+}
+
+.openKicker {
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: var(--s-3);
+}
+
+.openTitle {
+  font-size: var(--fs-h3);
+  margin-bottom: var(--s-3);
+}
+
+.openBody {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  max-width: 68ch;
+}
+
+@media (min-width: 620px) {
+  .threadCards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .threads {
+    gap: var(--s-12);
+  }
+
+  .open {
+    padding: var(--s-8);
+  }
+}

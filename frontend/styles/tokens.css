@@ -1,0 +1,90 @@
+/*
+ * The NOVRA design tokens.
+ *
+ * These were previously flattened into inline style attributes because
+ * WordPress.com Free gates Custom CSS. Nothing is flattened here: custom
+ * properties, media queries, cascade and state all work, which is the reason
+ * the presentation layer moved.
+ */
+:root {
+  /* Ground. Near-black with a navy bias — the site is dark by design, not by
+     theme, so there is no light variant to keep in step. */
+  --ink: #05070f;
+  --ink-raised: #0a0e1c;
+  --ink-inset: #0d1226;
+  --line: #1b2340;
+  --line-strong: #2a3560;
+
+  --text: #ffffff;
+  --text-muted: #9aa6c8;
+  --text-subtle: #6b779c;
+
+  --accent: #2f6bff;
+  --accent-bright: #4d84ff;
+  --accent-dim: #1e3a80;
+  --violet: #7b4dff;
+  --violet-dim: #3a2a80;
+
+  --grad-brand: linear-gradient(100deg, #2f6bff 0%, #4058e8 48%, #7b4dff 100%);
+  --grad-rule: linear-gradient(90deg, #2f6bff 0%, #7b4dff 100%);
+  --glow-accent: 0 0 24px rgb(47 107 255 / 0.28);
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 12px 32px rgb(0 0 0 / 0.5);
+
+  --font-sans: "Inter", "Inter var", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
+
+  /* Type. Fluid between the breakpoints, capped at both ends so the longest
+     word in a headline always fits the column it is set in. */
+  --fs-display: clamp(2.25rem, 4.8vw, 4rem);
+  --fs-h1: clamp(2rem, 4.4vw, 3.25rem);
+  --fs-h2: clamp(1.5rem, 2.4vw, 2rem);
+  --fs-h3: clamp(1.125rem, 1.5vw, 1.375rem);
+  --fs-lead: clamp(1.0625rem, 1.15vw, 1.1875rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.75rem;
+  --fs-kicker: 0.6875rem;
+
+  --lh-display: 1.06;
+  --lh-heading: 1.15;
+  --lh-body: 1.65;
+  --tracking-display: -0.025em;
+  --tracking-heading: -0.02em;
+  --tracking-label: 0.14em;
+  --tracking-nav: 0.06em;
+
+  /* Space. A 4px base, named by step so composition stays on one rhythm. */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.25rem;
+  --s-6: 1.5rem;
+  --s-8: 2rem;
+  --s-10: 2.5rem;
+  --s-12: 3rem;
+  --s-16: 4rem;
+  --s-20: 5rem;
+  --s-24: 6rem;
+  --s-32: 8rem;
+
+  --container: 1320px;
+  --measure: 68ch;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 22px;
+
+  --header-height: 72px;
+}
+
+/* Breakpoint scale, for reference in every module:
+     620px   phone -> large phone / small tablet
+     1024px  tablet -> laptop
+     1440px  laptop -> wide desktop
+   Everything is authored mobile-first; each query adds, never undoes. */
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 84px;
+  }
+}

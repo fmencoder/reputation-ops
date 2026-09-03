@@ -1,0 +1,15 @@
+.eyebrow {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+}
+
+.rule {
+  height: 2px;
+  width: 64px;
+  border: 0;
+  margin: var(--s-6) 0;
+  background: var(--grad-rule);
+}

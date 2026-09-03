@@ -1,0 +1,20 @@
+{
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/novra-convergence-architecture.webp": "/assets/novra-convergence-architecture.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/reliability-budget-agentic-ai.webp": "/assets/reliability-budget-agentic-ai.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/novra-logo-lockup.webp": "/assets/logo.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/novra-share-card-lockup.webp": "/assets/share-card.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/context-engineering-hero.webp": "/assets/context-engineering-hero.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/deterministic-boundaries-hero-v2.webp": "/assets/deterministic-boundaries-hero.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/human-oversight-hero.webp": "/assets/human-oversight-hero.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/08/recoverability-hero.webp": "/assets/recoverability-hero.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/novra-convergence-map.webp": "/assets/novra-convergence-map.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/novra-convergence-band.webp": "/assets/novra-convergence-band.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/novra-nmark.webp": "/assets/novra-nmark.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/novra-n-lattice.webp": "/assets/novra-n-lattice.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/icon-ai-systems.webp": "/assets/icon-ai-systems.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/icon-blockchain.webp": "/assets/icon-blockchain.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/icon-fintech.webp": "/assets/icon-fintech.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/icon-infrastructure.webp": "/assets/icon-infrastructure.webp",
+  "https://novraintelligence.wordpress.com/wp-content/uploads/2026/09/author-portrait.webp": "/assets/author-portrait.webp",
+  "_comment": "Media Library URL -> this frontend's asset path. Inverted from site/wp-media.json, which records the URL WordPress returned for each upload."
+}

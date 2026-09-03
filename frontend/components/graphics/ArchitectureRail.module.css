@@ -1,0 +1,7 @@
+.rail {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  mask-image: linear-gradient(180deg, transparent, #000 12%, #000 85%, transparent);
+}

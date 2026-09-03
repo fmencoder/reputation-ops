@@ -1,0 +1,143 @@
+/* Home ------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--s-12) var(--s-16);
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--s-10);
+}
+
+.headline {
+  margin-top: var(--s-5);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.headlineAccent {
+  display: block;
+  color: var(--accent-bright);
+}
+
+.lead {
+  margin-top: var(--s-6);
+  max-width: 50ch;
+  color: var(--text-muted);
+  font-size: var(--fs-lead);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-top: var(--s-8);
+}
+
+.scene {
+  position: relative;
+}
+
+/* The scene sits in a framed plate on a wide screen: a bordered surface with
+   its own inner light, so the graphic reads as part of the composition rather
+   than an image dropped into a column. */
+.plate {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: radial-gradient(120% 100% at 70% 30%, rgb(20 30 66 / 0.75), rgb(5 7 15 / 0.9));
+  padding: var(--s-6);
+  overflow: hidden;
+}
+
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg, rgb(77 132 255 / 0.08), transparent 45%);
+  pointer-events: none;
+}
+
+.caption {
+  margin-top: var(--s-4);
+  color: var(--text-subtle);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  max-width: 52ch;
+}
+
+.domains {
+  position: relative;
+}
+
+.latest {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.latestGrid {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.more {
+  margin-top: var(--s-8);
+}
+
+.moreLink {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  text-decoration: none;
+}
+
+.moreLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (min-width: 620px) {
+  .latestGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding-block: var(--s-20) var(--s-24);
+  }
+
+  .heroInner {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
+    gap: var(--s-16);
+    align-items: center;
+  }
+
+  .plate {
+    padding: var(--s-10) var(--s-10) var(--s-8);
+  }
+
+  .plate {
+    padding: var(--s-10);
+  }
+}
+
+@media (min-width: 1440px) {
+  .heroInner {
+    gap: var(--s-20);
+  }
+
+  .headline {
+    font-size: clamp(3.25rem, 3.6vw, 4.25rem);
+  }
+}

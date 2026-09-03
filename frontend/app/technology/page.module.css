@@ -1,0 +1,117 @@
+.stage {
+  position: relative;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-top: var(--s-8);
+}
+
+.cards {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.card {
+  position: relative;
+  padding: var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(165deg, rgb(10 14 28 / 0.95), rgb(5 7 15 / 0.7));
+  overflow: hidden;
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+/* A hairline that lights the top edge of each card — the sort of detail the
+   flattener dropped, and the sort that makes a surface read as engineered. */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(77 132 255 / 0.5), transparent);
+}
+
+.cardIcon {
+  width: 34px;
+  height: 34px;
+  margin-bottom: var(--s-5);
+}
+
+.cardTitle {
+  font-size: var(--fs-h3);
+  margin-bottom: var(--s-3);
+}
+
+.cardBody {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.converge {
+  display: grid;
+  gap: var(--s-10);
+  align-items: start;
+}
+
+.prose {
+  max-width: var(--measure);
+}
+
+.proseHeading {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--s-5);
+}
+
+.proseBody {
+  color: var(--text-muted);
+}
+
+.proseBody + .proseBody {
+  margin-top: var(--s-4);
+}
+
+.diagram {
+  display: flex;
+  justify-content: center;
+  padding: var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: radial-gradient(110% 90% at 50% 0%, rgb(20 30 66 / 0.7), rgb(5 7 15 / 0.9));
+}
+
+.caption {
+  margin-top: var(--s-4);
+  color: var(--text-subtle);
+  font-size: 0.8125rem;
+  max-width: 62ch;
+}
+
+@media (min-width: 620px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s-6);
+  }
+
+  .converge {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+    gap: var(--s-16);
+  }
+
+  .diagram {
+    padding: var(--s-10);
+  }
+}

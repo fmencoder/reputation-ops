@@ -1,0 +1,115 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--ink-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-3px);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 20px 44px rgb(0 0 0 / 0.55);
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--ink);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 400ms ease;
+}
+
+.card:hover .image {
+  transform: scale(1.02);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--s-5);
+}
+
+.kicker {
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: var(--s-3);
+}
+
+.title {
+  font-size: var(--fs-h3);
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin-bottom: var(--s-3);
+}
+
+.excerpt {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  flex: 1;
+}
+
+.meta {
+  margin-top: var(--s-5);
+  color: var(--text-subtle);
+  font-size: 0.8125rem;
+}
+
+.textOnly .body {
+  padding: var(--s-6);
+}
+
+@media (min-width: 620px) {
+  .body {
+    padding: var(--s-6);
+  }
+}
+
+/* The lead article gets the image beside the words rather than above them, and
+   a larger title — an editorial hierarchy the block grid could not express. */
+@media (min-width: 1024px) {
+  .feature {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: stretch;
+  }
+
+  .feature .frame {
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+    height: 100%;
+  }
+
+  .feature .image {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .feature .body {
+    padding: var(--s-10);
+    justify-content: center;
+  }
+
+  .feature .title {
+    font-size: clamp(1.5rem, 2vw, 1.875rem);
+  }
+
+  .feature .excerpt {
+    font-size: 1.0625rem;
+    flex: 0;
+  }
+}

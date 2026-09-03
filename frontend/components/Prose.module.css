@@ -1,0 +1,107 @@
+.prose {
+  max-width: var(--measure);
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.prose > * + * {
+  margin-top: var(--s-5);
+}
+
+.prose :global(h2) {
+  margin-top: var(--s-12);
+  color: var(--text);
+  font-size: var(--fs-h2);
+  letter-spacing: var(--tracking-heading);
+}
+
+.prose :global(h3) {
+  margin-top: var(--s-10);
+  color: var(--text);
+  font-size: var(--fs-h3);
+}
+
+.prose :global(a) {
+  color: var(--accent-bright);
+  text-decoration-color: rgb(77 132 255 / 0.4);
+  text-underline-offset: 3px;
+}
+
+.prose :global(a:hover) {
+  text-decoration-color: currentColor;
+}
+
+.prose :global(strong) {
+  color: var(--text);
+}
+
+.prose :global(blockquote) {
+  margin-inline: 0;
+  padding-left: var(--s-6);
+  border-left: 2px solid var(--accent);
+  color: var(--text);
+  font-size: 1.125rem;
+}
+
+.prose :global(ul),
+.prose :global(ol) {
+  padding-left: var(--s-6);
+}
+
+.prose :global(li + li) {
+  margin-top: var(--s-2);
+}
+
+.prose :global(figure) {
+  margin: var(--s-12) 0;
+}
+
+/* Figures break out of the measure on a wide screen — the reason to have a
+   reading column is that the pictures can escape it. */
+.prose :global(figure img) {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--ink);
+}
+
+.prose :global(figcaption) {
+  margin-top: var(--s-3);
+  color: var(--text-subtle);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.prose :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.prose :global(th),
+.prose :global(td) {
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose :global(th) {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.prose :global(.table-scroll),
+.prose :global(div:has(> table)) {
+  overflow-x: auto;
+}
+
+@media (min-width: 1200px) {
+  .prose :global(figure) {
+    width: min(860px, 118%);
+    margin-inline: -9%;
+  }
+}
