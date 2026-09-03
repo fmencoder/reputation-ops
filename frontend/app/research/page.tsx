@@ -2,6 +2,7 @@ import { getArticles, getPages } from "@/lib/cms";
 import { PageHeader } from "@/components/PageHeader";
 import { Section } from "@/components/Section";
 import { ArticleCard } from "@/components/ArticleCard";
+import { NodeWeb } from "@/components/graphics/NodeWeb";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -30,7 +31,31 @@ export default async function ResearchPage() {
         eyebrow={research.eyebrow}
         headline={research.headline}
         lead={research.lead}
-        wide
+        aside={
+          /*
+           * The threads, with the number of published articles in each. These
+           * are counted from the index at build time — the only numbers on the
+           * site, and the only ones that can be checked by clicking them.
+           */
+          <div className={styles.panel}>
+            <NodeWeb className={styles.web} seed={4471} />
+            <p className={styles.panelLabel}>Threads</p>
+            <ul className={styles.panelList}>
+              {THREADS.map((thread) => {
+                const count = articles.filter((article) => article.topic === thread).length;
+                if (count === 0) return null;
+                return (
+                  <li key={thread} className={styles.panelItem}>
+                    <span className={styles.panelName}>{thread}</span>
+                    <span className={styles.panelCount}>
+                      {count} {count === 1 ? "article" : "articles"}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        }
       />
 
       <Section bordered size="tight">

@@ -4,9 +4,13 @@
  * The repository holds every asset in public/assets and that is the default.
  * A deployment can instead be pointed at the WordPress Media Library — the
  * same files, already public, already the origin the CMS records — by setting
- * NEXT_PUBLIC_MEDIA_ORIGIN. The preview build uses that so the deployment can
- * be created without pushing binaries through the deploy API; production
- * serves them from the frontend's own origin.
+ * NEXT_PUBLIC_MEDIA_ORIGIN. The review preview sets it, because that deployment
+ * is created through Vercel's file API where shipping binaries is avoidable.
+ *
+ * It is not set in the repository, deliberately. Serving assets from the
+ * frontend's own origin is the correct end state, and a committed override
+ * would also point the local production build at a host the build environment
+ * cannot reach, which would make the image checks unverifiable.
  */
 import mediaMap from "../content/media-map.json";
 
