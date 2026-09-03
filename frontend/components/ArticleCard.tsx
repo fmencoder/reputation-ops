@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/lib/cms/types";
+import { asset } from "@/lib/media";
 import styles from "./ArticleCard.module.css";
 
 export function ArticleCard({
@@ -20,7 +21,7 @@ export function ArticleCard({
       {showImage && article.hero.src ? (
         <div className={styles.frame}>
           <Image
-            src={article.hero.src}
+            src={asset(article.hero.src)}
             alt=""
             width={article.hero.width}
             height={article.hero.height}

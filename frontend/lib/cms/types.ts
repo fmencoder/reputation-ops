@@ -68,7 +68,6 @@ export interface InsightsCopy extends PageCopy {
 
 export interface ResearchCopy extends PageCopy {
   intro: ProseSection;
-  introExtra: string;
   openQuestions: string;
 }
 

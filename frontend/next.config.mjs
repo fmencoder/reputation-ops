@@ -7,6 +7,10 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    // Only used when NEXT_PUBLIC_MEDIA_ORIGIN points at the Media Library.
+    remotePatterns: [
+      { protocol: "https", hostname: "novraintelligence.wordpress.com", pathname: "/wp-content/uploads/**" },
+    ],
   },
   eslint: { dirs: ["app", "components", "lib"] },
 };

@@ -3,6 +3,7 @@ import { Masthead } from "@/components/Masthead";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { site } from "@/lib/site";
+import { asset } from "@/lib/media";
 import { websiteSchema, personSchema } from "@/lib/seo";
 import "@/styles/global.css";
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   applicationName: site.name,
   authors: [{ name: site.author.name, url: `${site.url}/about/` }],
   robots: { index: true, follow: true },
-  icons: { icon: "/assets/novra-nmark.webp" },
+  icons: { icon: asset("/assets/novra-nmark.webp") },
 };
 
 export const viewport: Viewport = {

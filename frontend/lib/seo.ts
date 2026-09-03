@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { site } from "./site";
 import type { Article } from "./cms/types";
+import { asset } from "./media";
 
-const OG_IMAGE = "/assets/share-card.webp";
+const OG_IMAGE = asset("/assets/share-card.webp");
 
 export function pageMetadata({
   title,
@@ -39,7 +40,7 @@ export function pageMetadata({
 
 export function articleMetadata(article: Article): Metadata {
   const url = `${site.url}${article.path}`;
-  const image = article.hero.src || OG_IMAGE;
+  const image = article.hero.src ? asset(article.hero.src) : OG_IMAGE;
   return {
     title: article.title,
     description: article.excerpt,

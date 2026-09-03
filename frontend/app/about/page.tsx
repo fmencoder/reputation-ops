@@ -5,6 +5,7 @@ import { Section, SectionLabel } from "@/components/Section";
 import { Eyebrow } from "@/components/Eyebrow";
 import { domainIcon } from "@/components/DomainGrid";
 import { ArchitectureRail } from "@/components/graphics/ArchitectureRail";
+import { asset } from "@/lib/media";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -41,7 +42,7 @@ export default async function AboutPage() {
            */
           <figure className={styles.portraitFrame} style={{ margin: 0 }}>
             <Image
-              src={about.portrait.src}
+              src={asset(about.portrait.src)}
               alt={about.portrait.alt}
               width={about.portrait.width}
               height={about.portrait.height}
@@ -106,7 +107,7 @@ export default async function AboutPage() {
             {/* The artwork is near-black on a near-black ground; without a
                 plate behind it, it simply disappears into the page. */}
             <Image
-              src="/assets/novra-n-lattice.webp"
+              src={asset("/assets/novra-n-lattice.webp")}
               alt=""
               width={480}
               height={760}

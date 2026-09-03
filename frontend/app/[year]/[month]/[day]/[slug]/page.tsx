@@ -9,6 +9,7 @@ import { GridField } from "@/components/graphics/GridField";
 import { JsonLd } from "@/components/JsonLd";
 import { articleMetadata, articleSchema } from "@/lib/seo";
 import { site } from "@/lib/site";
+import { asset } from "@/lib/media";
 import styles from "./page.module.css";
 
 /*
@@ -67,7 +68,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
             <figure className={styles.hero}>
               <div className={styles.heroFrame}>
                 <Image
-                  src={article.hero.src}
+                  src={asset(article.hero.src)}
                   alt={article.hero.alt}
                   width={article.hero.width}
                   height={article.hero.height}

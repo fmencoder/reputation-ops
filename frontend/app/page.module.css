@@ -124,10 +124,6 @@
   }
 
   .plate {
-    padding: var(--s-10) var(--s-10) var(--s-8);
-  }
-
-  .plate {
     padding: var(--s-10);
   }
 }

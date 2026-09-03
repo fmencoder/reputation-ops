@@ -41,7 +41,6 @@ export default async function ResearchPage() {
               {paragraph}
             </p>
           ))}
-          <p className={styles.introBody}>{research.introExtra}</p>
         </div>
       </Section>
 

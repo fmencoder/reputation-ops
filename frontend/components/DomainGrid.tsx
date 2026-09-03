@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/media";
 import styles from "./DomainGrid.module.css";
 
 /*
@@ -14,7 +15,7 @@ const ICONS: Record<string, string> = {
 };
 
 export function domainIcon(title: string): string {
-  return ICONS[title] ?? "/assets/icon-ai-systems.webp";
+  return asset(ICONS[title] ?? "/assets/icon-ai-systems.webp");
 }
 
 export function DomainGrid({
