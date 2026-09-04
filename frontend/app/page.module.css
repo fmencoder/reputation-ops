@@ -118,19 +118,30 @@
   }
 
   .heroInner {
-    grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
-    gap: var(--s-16);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-12);
     align-items: center;
   }
 
   .plate {
-    padding: var(--s-10);
+    padding: var(--s-8);
+  }
+}
+
+/* The landscape takes the larger share of the grid — but only once there is
+   room to give it. At 1024 the copy column cannot yield any further: the
+   display type needs 388px to set "infrastructure." on one line, and a 0.82fr
+   track leaves 367px. Shifting the balance any earlier breaks the headline. */
+@media (min-width: 1200px) {
+  .heroInner {
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
   }
 }
 
 @media (min-width: 1440px) {
   .heroInner {
-    gap: var(--s-20);
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: var(--s-16);
   }
 
   .headline {

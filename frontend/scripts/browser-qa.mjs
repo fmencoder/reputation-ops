@@ -8,14 +8,18 @@
  *
  * Usage: node scripts/browser-qa.mjs [--base http://localhost:3000] [--shots DIR]
  */
-import { mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { mkdirSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import { chromium } from "/home/user/reputation-ops/node_modules/playwright-core/index.mjs";
 
 const arg = (name, fallback) => {
   const index = process.argv.indexOf(`--${name}`);
   return index > -1 ? process.argv[index + 1] : fallback;
 };
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const SNAPSHOT = JSON.parse(readFileSync(join(ROOT, "content", "cms-snapshot.json"), "utf8"));
 
 const BASE = arg("base", "http://127.0.0.1:3000").replace(/\/$/, "");
 const SHOTS = arg("shots", "../artifacts/frontend-qa");
@@ -111,6 +115,9 @@ for (const target of PAGES) {
         brand: brandName?.textContent?.trim() ?? "",
         lockup: spans,
         svgCount: document.querySelectorAll("svg").length,
+        labels: [...document.querySelectorAll("svg[aria-label]")].map(
+          (node) => node.getAttribute("aria-label") ?? "",
+        ),
         overflowingHeadings: headings,
         // Only images the viewport actually reaches. Below the fold they are
         // lazy by design and "not yet loaded" is the correct state, not a fault.
@@ -164,6 +171,23 @@ for (const target of PAGES) {
 
     if (state.svgCount < 1) fail(`${label}: no inline SVG — the graphic brand is missing`);
 
+    /*
+     * The graphic brand is asserted by name, not by counting shapes. Each of
+     * these pages owns a specific composition; a page that renders some SVG but
+     * not its own drawing is exactly the regression that put the founder's
+     * "the images have not changed" note on the last preview.
+     */
+    const OWNED = {
+      home: "converge through a reconciliation architecture",
+      technology: "Five architectural layers",
+      research: "map of five research domains",
+      insights: "",
+      article: "",
+    }[target.name];
+    if (OWNED && !state.labels.some((aria) => aria.includes(OWNED))) {
+      fail(`${label}: the page's own graphic is missing (no figure described "${OWNED}")`);
+    }
+
     if (width >= 1024 && !state.navVisible) fail(`${label}: desktop navigation is not visible`);
     if (width < 1024 && !state.toggleVisible) fail(`${label}: mobile menu button is not visible`);
 
@@ -213,6 +237,53 @@ for (const path of ARTICLE_PATHS) {
   if (!response || response.status() !== 200) {
     fail(`URL PARITY: ${path} returned ${response ? response.status() : "nothing"}`);
   }
+}
+
+/* ------------------------------------------------- rendered article bodies --
+ * The rejected preview served five complete articles as a title, a standfirst
+ * and "1 min read". Counting words in the built bundle would not have caught
+ * it; counting them in the rendered page does.
+ */
+const WPM = 220;
+const words = (text) => (text.trim() ? text.trim().split(/\s+/).length : 0);
+
+for (const article of SNAPSHOT.articles) {
+  const canonicalWords = words(article.bodyHtml.replace(/<[^>]*>/g, " "));
+  const expected = `${Math.max(1, Math.round(canonicalWords / WPM))} min read`;
+
+  await page.goto(`${BASE}${article.path}`, { waitUntil: "load" });
+  const rendered = await page.evaluate(() => {
+    const body = document.querySelector("article [class*='body']");
+    const related = [...document.querySelectorAll("h2, p")].find((node) =>
+      /related insights/i.test(node.textContent ?? ""),
+    );
+    return {
+      bodyWords: body ? (body.innerText.trim() ? body.innerText.trim().split(/\s+/).length : 0) : -1,
+      headings: body ? body.querySelectorAll("h2,h3,h4").length : 0,
+      paragraphs: body ? body.querySelectorAll("p").length : 0,
+      meta: document.body.innerText.match(/\d+ min read/)?.[0] ?? "",
+      bodyBottom: body ? Math.round(body.getBoundingClientRect().bottom + window.scrollY) : -1,
+      relatedTop: related ? Math.round(related.getBoundingClientRect().top + window.scrollY) : -1,
+      artLabels: [...document.querySelectorAll("article svg[aria-label]")].length,
+    };
+  });
+
+  if (rendered.bodyWords < 0) {
+    fail(`ARTICLE ${article.slug}: no body element rendered`);
+    continue;
+  }
+  if (rendered.bodyWords < canonicalWords * 0.8) {
+    fail(`ARTICLE ${article.slug}: rendered ${rendered.bodyWords} words against a canonical ${canonicalWords}`);
+  }
+  if (rendered.paragraphs < 2) fail(`ARTICLE ${article.slug}: rendered ${rendered.paragraphs} paragraphs`);
+  if (rendered.meta !== expected) {
+    fail(`ARTICLE ${article.slug}: reading time reads "${rendered.meta}", body of ${rendered.bodyWords} words derives "${expected}"`);
+  }
+  if (rendered.relatedTop >= 0 && rendered.relatedTop < rendered.bodyBottom) {
+    fail(`ARTICLE ${article.slug}: related insights sits above the end of the body`);
+  }
+  if (rendered.artLabels < 1) fail(`ARTICLE ${article.slug}: no described article artwork`);
+  notes.push(`${article.slug}: ${rendered.bodyWords} words, ${rendered.headings} headings, ${rendered.meta}`);
 }
 
 for (const href of [...seenLinks].sort()) {

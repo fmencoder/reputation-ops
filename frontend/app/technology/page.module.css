@@ -1,5 +1,46 @@
-.stage {
+.signature {
+  display: grid;
+  gap: var(--s-8);
+}
+
+/* The map first, the prose under it on a phone; side by side once there is room
+   for both to be read without scrolling between them. */
+.signatureBody {
+  display: grid;
+  gap: var(--s-10);
+}
+
+.plate {
   position: relative;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: radial-gradient(120% 90% at 62% 22%, rgb(20 30 66 / 0.7), rgb(5 7 15 / 0.92));
+  padding: var(--s-6);
+  overflow: hidden;
+}
+
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(158deg, rgb(77 132 255 / 0.08), transparent 46%);
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .signatureBody {
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+    gap: var(--s-12);
+    align-items: start;
+  }
+
+  .plate {
+    padding: var(--s-8);
+    position: sticky;
+    top: var(--s-10);
+  }
 }
 
 .actions {
@@ -55,12 +96,6 @@
   font-size: 0.9375rem;
 }
 
-.converge {
-  display: grid;
-  gap: var(--s-10);
-  align-items: start;
-}
-
 .prose {
   max-width: var(--measure);
 }
@@ -78,13 +113,8 @@
   margin-top: var(--s-4);
 }
 
-.diagram {
-  display: flex;
-  justify-content: center;
-  padding: var(--s-6);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
-  background: radial-gradient(110% 90% at 50% 0%, rgb(20 30 66 / 0.7), rgb(5 7 15 / 0.9));
+.prose > div + div {
+  margin-top: var(--s-10);
 }
 
 .caption {
@@ -104,14 +134,5 @@
   .cards {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--s-6);
-  }
-
-  .converge {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
-    gap: var(--s-16);
-  }
-
-  .diagram {
-    padding: var(--s-10);
   }
 }

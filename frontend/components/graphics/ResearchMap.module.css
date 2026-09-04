@@ -1,0 +1,56 @@
+.map {
+  position: relative;
+  width: 100%;
+}
+
+.wide,
+.narrow {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.domain {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.narrowDomain {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.relation {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+/* Art direction, not scaling: the relation labels cannot be set legibly on a
+   phone, so the narrow map keeps the domains and the reading order and drops
+   the annotations rather than shrinking them. */
+.wide {
+  display: none;
+}
+
+.narrow {
+  display: block;
+  max-width: 344px;
+  margin-inline: auto;
+}
+
+@media (min-width: 620px) {
+  .wide {
+    display: block;
+  }
+
+  .narrow {
+    display: none;
+  }
+}

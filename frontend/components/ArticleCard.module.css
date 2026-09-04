@@ -23,15 +23,20 @@
   background: var(--ink);
 }
 
-.image {
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: transform 400ms ease;
+/* The art is inline SVG, not a bitmap, so it is lit rather than zoomed on
+   hover — a scale transform on a vector diagram blurs nothing and gains
+   nothing, and the interaction should read as attention, not motion. */
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 70% 10%, rgb(77 132 255 / 0), transparent 60%);
+  transition: background 300ms ease;
+  pointer-events: none;
 }
 
-.card:hover .image {
-  transform: scale(1.02);
+.card:hover .frame::after {
+  background: radial-gradient(120% 90% at 70% 10%, rgb(77 132 255 / 0.1), transparent 60%);
 }
 
 .body {
@@ -79,37 +84,53 @@
   }
 }
 
-/* The lead article gets the image beside the words rather than above them, and
-   a larger title — an editorial hierarchy the block grid could not express. */
-@media (min-width: 1024px) {
-  .feature {
-    display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    align-items: stretch;
-  }
+/* The lead article is set as a research cover rather than a large blog card:
+   the diagram runs the full width of the plate, and the words sit beneath it in
+   a band with a lit top edge and an issue line. The old block grid could
+   express neither the band nor the edge. */
+.feature {
+  border-color: var(--line-strong);
+}
 
-  .feature .frame {
-    border-bottom: 0;
-    border-right: 1px solid var(--line);
-    height: 100%;
-  }
+.feature .body {
+  position: relative;
+  padding: var(--s-6) var(--s-5) var(--s-6);
+  background: linear-gradient(180deg, rgb(13 18 38 / 0.85), rgb(5 7 15 / 0.6));
+}
 
-  .feature .image {
-    height: 100%;
-    object-fit: cover;
-  }
+.feature .body::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(77 132 255 / 0.55), transparent);
+}
 
+.feature .kicker::after {
+  content: " · lead research";
+  color: var(--text-subtle);
+  font-weight: 600;
+}
+
+@media (min-width: 620px) {
   .feature .body {
-    padding: var(--s-10);
-    justify-content: center;
+    padding: var(--s-10) var(--s-8) var(--s-8);
   }
 
   .feature .title {
-    font-size: clamp(1.5rem, 2vw, 1.875rem);
+    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+    max-width: 22ch;
   }
 
   .feature .excerpt {
     font-size: 1.0625rem;
+    max-width: 58ch;
     flex: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .feature .body {
+    padding: var(--s-10);
   }
 }

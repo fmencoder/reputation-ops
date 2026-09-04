@@ -158,3 +158,42 @@
     padding: var(--s-8);
   }
 }
+
+/* The domain map ---------------------------------------------------------- */
+
+.domains {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.mapPlate {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: radial-gradient(120% 100% at 58% 26%, rgb(20 30 66 / 0.7), rgb(5 7 15 / 0.92));
+  padding: var(--s-5);
+  overflow: hidden;
+}
+
+.mapPlate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(150deg, rgb(77 132 255 / 0.08), transparent 48%);
+  pointer-events: none;
+}
+
+.mapCaption {
+  color: var(--text-subtle);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  max-width: 68ch;
+}
+
+@media (min-width: 1024px) {
+  .mapPlate {
+    padding: var(--s-8);
+  }
+}

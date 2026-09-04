@@ -5,11 +5,11 @@
  * public REST surface — structured data, never scraped HTML pages — and hands
  * back the frontend's own types with WordPress presentation removed.
  *
- * It is allowed to fail. Builds run in environments without egress to
- * public-api.wordpress.com (the migration sandbox is one), and a content fetch
- * that throws would turn a network condition into a broken deploy. So every
- * call returns null on failure and the caller falls back to the committed
- * snapshot, which is the same content taken from the same CMS.
+ * It is allowed to fail, and failing is not allowed to cost anything. Builds
+ * run in environments without egress to public-api.wordpress.com (the migration
+ * sandbox is one), so every call returns null rather than throwing. Nothing here
+ * decides what gets published: the caller holds the canonical snapshot and takes
+ * a live body only when that body measures up as a whole article.
  */
 import { cms } from "../site";
 import type { Article } from "./types";
@@ -56,12 +56,34 @@ async function getJson<T>(path: string): Promise<T | null> {
  * the body has to be lifted out of the wrapper — and the class names that
  * identify it survive only until normalizeBody runs, which is why this
  * happens first.
+ *
+ * The region is read by counting tags rather than by a lazy regex. The earlier
+ * pattern stopped at the first closing div, so any nested element inside the
+ * body — a figure, a callout, a list wrapper — truncated the article at that
+ * point and the rest was silently dropped. Counting cannot do that: it either
+ * finds the matching close or reports that the markup is not what it expected.
  */
+function balancedRegion(html: string, openPattern: RegExp): string | null {
+  const opening = openPattern.exec(html);
+  if (!opening) return null;
+  const tag = opening[1] ?? "div";
+  const start = opening.index + opening[0].length;
+  const scanner = new RegExp(`<(/?)${tag}\\b[^>]*>`, "gi");
+  scanner.lastIndex = start;
+  let depth = 1;
+  let match: RegExpExecArray | null;
+  while ((match = scanner.exec(html)) !== null) {
+    depth += match[1] ? -1 : 1;
+    if (depth === 0) return html.slice(start, match.index);
+  }
+  return null;
+}
+
 export function extractRegions(rendered: string): { body: string; sources: string } | null {
-  const body = rendered.match(/<div class="article__body">([\s\S]*?)<\/div>\s*(?:<aside|<\/div>)/);
-  if (!body) return null;
-  const sources = rendered.match(/<aside class="sources">([\s\S]*?)<\/aside>/);
-  return { body: body[1], sources: sources ? sources[1] : "" };
+  const body = balancedRegion(rendered, /<(div)[^>]*class="[^"]*\barticle__body\b[^"]*"[^>]*>/i);
+  if (body === null) return null;
+  const sources = balancedRegion(rendered, /<(aside)[^>]*class="[^"]*\bsources\b[^"]*"[^>]*>/i);
+  return { body, sources: sources ?? "" };
 }
 
 /**
@@ -88,9 +110,9 @@ export async function fetchArticles(
       date: post.date_gmt,
       modified: post.modified_gmt,
       // No recognisable body region means the CMS markup changed shape. Return
-      // an empty string rather than the whole wrapper: the loader treats that
-      // as "keep the snapshot body", which is safer than rendering a second
-      // byline and hero inside the article.
+      // an empty string rather than the whole wrapper: the loader measures every
+      // live body before it accepts one, and an empty string simply fails that
+      // measurement and leaves the canonical body in place.
       bodyHtml: regions ? normalizeBody(regions.body, mediaMap) : "",
     };
   });

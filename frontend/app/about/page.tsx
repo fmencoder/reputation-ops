@@ -5,6 +5,7 @@ import { Section, SectionLabel } from "@/components/Section";
 import { Eyebrow } from "@/components/Eyebrow";
 import { domainIcon } from "@/components/DomainGrid";
 import { ArchitectureRail } from "@/components/graphics/ArchitectureRail";
+import { PortraitField } from "@/components/graphics/PortraitField";
 import { asset } from "@/lib/media";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
@@ -39,17 +40,27 @@ export default async function AboutPage() {
            * capped well below the width of its column: the page is about the
            * work, and a portrait that fills half the screen says otherwise.
            * Nothing is set beneath it.
+           *
+           * What is new is the field it stands in. The photograph is inset on a
+           * stage carrying coordinate arcs and a sparse lattice, so the geometry
+           * reads around the portrait rather than behind it — where, with the
+           * image covering its own frame edge to edge, it would never be seen at
+           * all. Held back throughout: the man is the subject, the system is what
+           * he is standing in.
            */
-          <figure className={styles.portraitFrame} style={{ margin: 0 }}>
-            <Image
-              src={asset(about.portrait.src)}
-              alt={about.portrait.alt}
-              width={about.portrait.width}
-              height={about.portrait.height}
-              priority
-              sizes="(min-width: 1024px) 320px, 280px"
-              className={styles.portrait}
-            />
+          <figure className={styles.portraitStage} style={{ margin: 0 }}>
+            <PortraitField />
+            <div className={styles.portraitFrame}>
+              <Image
+                src={asset(about.portrait.src)}
+                alt={about.portrait.alt}
+                width={about.portrait.width}
+                height={about.portrait.height}
+                priority
+                sizes="(min-width: 1024px) 300px, 260px"
+                className={styles.portrait}
+              />
+            </div>
           </figure>
         }
       />

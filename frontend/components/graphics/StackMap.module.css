@@ -1,0 +1,68 @@
+.map {
+  position: relative;
+  width: 100%;
+}
+
+.wide,
+.narrow {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.label,
+.gateLabel,
+.narrowLabel {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.label {
+  font-size: 12px;
+}
+
+.gateLabel {
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+}
+
+.narrowLabel {
+  font-size: 12.5px;
+}
+
+.note {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+}
+
+.edge {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+/* Art direction, not scaling. The projected plates need the width to read as
+   planes; below 620px they are replaced by stacked plates at a legible size. */
+.wide {
+  display: none;
+}
+
+.narrow {
+  display: block;
+  max-width: 360px;
+  margin-inline: auto;
+}
+
+@media (min-width: 620px) {
+  .wide {
+    display: block;
+  }
+
+  .narrow {
+    display: none;
+  }
+}

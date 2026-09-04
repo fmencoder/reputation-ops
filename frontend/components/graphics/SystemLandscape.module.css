@@ -25,16 +25,23 @@
   overflow: visible;
 }
 
-/* Art direction, not scaling: below 620px the wide scene is replaced, not
-   shrunk. Above it, the reverse. */
+/* Art direction, not scaling. Below 620px the landscape is replaced by a
+   vertical funnel with half the nodes at twice the size; above it, the reverse.
+   The phone drawing is never the desktop drawing made small. */
 .wide {
   display: none;
 }
 
 .narrow {
   display: block;
-  max-width: 344px;
+  max-width: 384px;
   margin-inline: auto;
+}
+
+/* The phone composition carries fewer labels, so the ones it keeps can be
+   larger without crowding. */
+.narrow .label {
+  font-size: 12px;
 }
 
 @media (min-width: 620px) {

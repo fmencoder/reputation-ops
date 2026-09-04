@@ -5,7 +5,7 @@ import { Eyebrow } from "@/components/Eyebrow";
 import { ArticleCard } from "@/components/ArticleCard";
 import { DomainGrid } from "@/components/DomainGrid";
 import { GridField } from "@/components/graphics/GridField";
-import { ConvergenceScene } from "@/components/graphics/ConvergenceScene";
+import { SystemLandscape } from "@/components/graphics/SystemLandscape";
 import { Section, SectionLabel } from "@/components/Section";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
@@ -53,11 +53,11 @@ export default async function HomePage() {
 
           <figure className={styles.scene}>
             <div className={styles.plate}>
-              <ConvergenceScene />
+              <SystemLandscape />
             </div>
             <figcaption className={styles.caption}>
-              Four classes of input converge on one deterministic gate. Nothing commits without
-              passing it.
+              Five streams of input, two of them probabilistic, reconciled and put to one governed
+              boundary. Only what passes it reaches the execution layer.
             </figcaption>
           </figure>
         </div>

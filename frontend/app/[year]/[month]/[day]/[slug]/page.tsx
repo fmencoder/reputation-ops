@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticle, getArticles } from "@/lib/cms";
@@ -6,10 +5,10 @@ import { Prose } from "@/components/Prose";
 import { Section, SectionLabel } from "@/components/Section";
 import { ArticleCard } from "@/components/ArticleCard";
 import { GridField } from "@/components/graphics/GridField";
+import { ArticleArt, hasArticleArt } from "@/components/graphics/ArticleArt";
 import { JsonLd } from "@/components/JsonLd";
 import { articleMetadata, articleSchema } from "@/lib/seo";
 import { site } from "@/lib/site";
-import { asset } from "@/lib/media";
 import styles from "./page.module.css";
 
 /*
@@ -64,22 +63,12 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
             </div>
           </header>
 
-          {article.hero.src ? (
+          {hasArticleArt(article.slug) ? (
             <figure className={styles.hero}>
-              <div className={styles.heroFrame}>
-                <Image
-                  src={asset(article.hero.src)}
-                  alt={article.hero.alt}
-                  width={article.hero.width}
-                  height={article.hero.height}
-                  priority
-                  sizes="(min-width: 1200px) 1120px, 100vw"
-                  className={styles.heroImage}
-                />
-              </div>
-              {article.hero.caption ? (
-                <figcaption className={styles.heroCaption}>{article.hero.caption}</figcaption>
-              ) : null}
+              <ArticleArt slug={article.slug} />
+              <figcaption className={styles.heroCaption}>
+                {article.hero.caption ?? article.hero.alt}
+              </figcaption>
             </figure>
           ) : null}
 

@@ -1,8 +1,9 @@
 import { getArticles, getPages } from "@/lib/cms";
 import { PageHeader } from "@/components/PageHeader";
-import { Section } from "@/components/Section";
+import { Section, SectionLabel } from "@/components/Section";
 import { ArticleCard } from "@/components/ArticleCard";
 import { NodeWeb } from "@/components/graphics/NodeWeb";
+import { ResearchMap } from "@/components/graphics/ResearchMap";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -57,6 +58,21 @@ export default async function ResearchPage() {
           </div>
         }
       />
+
+      <Section bordered>
+        <div className={styles.domains}>
+          <SectionLabel>The domains, and how they bear on each other</SectionLabel>
+          <figure className={styles.mapPlate}>
+            <ResearchMap />
+          </figure>
+          <p className={styles.mapCaption}>
+            Five domains and six relations. There are no figures in this drawing and none are
+            wanted: what is worth showing is the structure — that context work sits upstream of
+            reliability, that governance is only real once execution is deterministic, and that
+            recoverability is what remains when the other four have run out.
+          </p>
+        </div>
+      </Section>
 
       <Section bordered size="tight">
         <div className={styles.intro}>

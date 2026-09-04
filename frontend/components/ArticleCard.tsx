@@ -1,9 +1,16 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/lib/cms/types";
-import { asset } from "@/lib/media";
+import { ArticleArt, hasArticleArt } from "./graphics/ArticleArt";
 import styles from "./ArticleCard.module.css";
 
+/**
+ * An index entry.
+ *
+ * The art is the article's own diagram, not a photograph of a circuit board.
+ * Every card in the index therefore belongs to one family and each one still
+ * says what its article is about — which is the whole point of drawing them
+ * rather than buying them.
+ */
 export function ArticleCard({
   article,
   feature = false,
@@ -13,21 +20,15 @@ export function ArticleCard({
   feature?: boolean;
   showImage?: boolean;
 }) {
+  const art = showImage && hasArticleArt(article.slug);
   return (
     <Link
       href={article.path}
-      className={`${styles.card} ${feature ? styles.feature : ""} ${showImage ? "" : styles.textOnly}`}
+      className={`${styles.card} ${feature ? styles.feature : ""} ${art ? "" : styles.textOnly}`}
     >
-      {showImage && article.hero.src ? (
+      {art ? (
         <div className={styles.frame}>
-          <Image
-            src={asset(article.hero.src)}
-            alt=""
-            width={article.hero.width}
-            height={article.hero.height}
-            sizes={feature ? "(min-width: 1024px) 640px, 100vw" : "(min-width: 1024px) 380px, (min-width: 620px) 50vw, 100vw"}
-            className={styles.image}
-          />
+          <ArticleArt slug={article.slug} variant="card" />
         </div>
       ) : null}
       <div className={styles.body}>

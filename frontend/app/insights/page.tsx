@@ -30,27 +30,33 @@ export default async function InsightsPage() {
            * The reference composition puts an analytics panel here — counters
            * and a distribution chart. Every figure in it was invented, so none
            * of it is rendered and none of the numbers appear anywhere in this
-           * source. What replaces them is the thing the panel was gesturing at
-           * and which is true: the four areas this publication covers.
+           * source.
+           *
+           * What replaces it is set as the contents plate of a research
+           * publication: a masthead rule, the areas numbered in sequence, and a
+           * standing line at the foot. It carries exactly one claim, which is
+           * true — these are the four areas this publication covers.
            */
-          <div className={styles.panel}>
+          <aside className={styles.cover}>
             <NodeWeb className={styles.web} seed={9021} />
-            <p className={styles.panelLabel}>Research areas</p>
-            <ul className={styles.panelList}>
-              {insights.domains.map((domain) => (
-                <li key={domain} className={styles.panelItem}>
+            <p className={styles.coverLabel}>Research areas</p>
+            <ol className={styles.coverIndex}>
+              {insights.domains.map((domain, index) => (
+                <li key={domain} className={styles.coverEntry}>
+                  <span className={styles.coverNumber}>{String(index + 1).padStart(2, "0")}</span>
                   <Image
                     src={domainIcon(domain)}
                     alt=""
                     width={96}
                     height={96}
-                    className={styles.panelIcon}
+                    className={styles.coverIcon}
                   />
-                  <span className={styles.panelName}>{domain}</span>
+                  <span className={styles.coverName}>{domain}</span>
                 </li>
               ))}
-            </ul>
-          </div>
+            </ol>
+            <p className={styles.coverFoot}>Written and edited by Fredrick Mendez</p>
+          </aside>
         }
       />
 

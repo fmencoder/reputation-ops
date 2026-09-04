@@ -1,12 +1,35 @@
+/* The stage. The field is drawn across the whole of it, and the portrait is
+   inset, so the geometry is visible as the ground the photograph stands on. */
+.portraitStage {
+  position: relative;
+  isolation: isolate;
+  max-width: 380px;
+  margin-inline: auto;
+  padding: var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: radial-gradient(120% 100% at 74% 16%, rgb(20 30 66 / 0.7), rgb(5 7 15 / 0.94));
+  overflow: hidden;
+}
+
+/* The portrait is untouched: nothing here crops it, tints it or blends with
+   it. It sits above the field on its own plate. */
 .portraitFrame {
   position: relative;
-  max-width: 320px;
+  z-index: 1;
+  max-width: 300px;
   margin-inline: auto;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--ink-inset);
   line-height: 0;
+}
+
+@media (min-width: 1024px) {
+  .portraitStage {
+    padding: var(--s-8);
+  }
 }
 
 /* A hairline of brand light along the top edge of the plate, and a soft

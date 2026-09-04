@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint app components lib",
     "typecheck": "tsc --noEmit",
-    "snapshot": "node scripts/build-snapshot.mjs"
+    "snapshot": "node scripts/build-snapshot.mjs",
+    "content-qa": "node --experimental-strip-types --no-warnings scripts/content-qa.mjs"
   },
   "dependencies": {
     "next": "16.3.4",
