@@ -5,7 +5,7 @@ import { Eyebrow } from "@/components/Eyebrow";
 import { ArticleCard } from "@/components/ArticleCard";
 import { DomainGrid } from "@/components/DomainGrid";
 import { GridField } from "@/components/graphics/GridField";
-import { SystemLandscape } from "@/components/graphics/SystemLandscape";
+import { BrandImage } from "@/components/BrandImage";
 import { Section, SectionLabel } from "@/components/Section";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
@@ -51,15 +51,17 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <figure className={styles.scene}>
-            <div className={styles.plate}>
-              <SystemLandscape />
-            </div>
-            <figcaption className={styles.caption}>
-              Five streams of input, two of them probabilistic, reconciled and put to one governed
-              boundary. Only what passes it reaches the execution layer.
-            </figcaption>
-          </figure>
+          {/* The artwork carries no labels and is not explained beneath it. It is
+              the environment the page opens in, and it runs past the right edge
+              of the frame rather than sitting inside a bordered plate. */}
+          <div className={styles.scene}>
+            <BrandImage
+              name="home-earth"
+              alt="Earth at night seen from space, the Western Hemisphere lit by a network of connected points."
+              priority
+              sizes="(min-width: 1024px) 62vw, 100vw"
+            />
+          </div>
         </div>
       </section>
 

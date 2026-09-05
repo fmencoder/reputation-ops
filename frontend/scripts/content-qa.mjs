@@ -23,12 +23,12 @@ import {
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-/* Parsed from the source rather than restated, so a diagram cannot be removed
- * from the family without this failing. */
-const ART = [
-  ...readFileSync(join(root, "components", "graphics", "ArticleArt.tsx"), "utf8")
-    .matchAll(/^\s{2}"([a-z0-9-]+)": (?:reliabilityBudget|contextEngineering|deterministicBoundary|humanOversight|recoverability),$/gm),
-].map((match) => match[1]);
+/* Read from the generated manifest, so an artwork cannot go missing from the
+ * family without this failing. */
+const artManifest = JSON.parse(readFileSync(join(root, "content", "art-manifest.json"), "utf8"));
+const ART = Object.keys(artManifest)
+  .filter((name) => name.startsWith("article-") && !name.endsWith("-narrow"))
+  .map((name) => name.slice("article-".length));
 const snapshot = JSON.parse(readFileSync(join(root, "content", "cms-snapshot.json"), "utf8"));
 
 let failed = 0;
@@ -38,7 +38,7 @@ const fail = (message) => {
 };
 const pass = (message) => console.log(`ok    ${message}`);
 
-console.log(`Article art: ${ART.length} diagrams — ${ART.join(", ")}\n`);
+console.log(`Editorial artwork: ${ART.length} articles — ${ART.join(", ")}\n`);
 console.log(`Canonical snapshot: ${snapshot.articles.length} articles, ${WPM} wpm, floor ${MIN_ARTICLE_WORDS} words, retention ${Math.round(MIN_RETENTION * 100)}%\n`);
 
 if (snapshot.articles.length === 0) fail("snapshot contains no articles");
@@ -68,7 +68,10 @@ for (const article of snapshot.articles) {
    * the raster in the snapshot survives only because Open Graph and
    * schema.org need a bitmap and cannot take an inline SVG.
    */
-  if (!ART.includes(article.slug)) fail(`${article.slug}: no diagram in the article-art system`);
+  if (!ART.includes(article.slug)) fail(`${article.slug}: no editorial artwork generated`);
+  if (!artManifest[`article-${article.slug}-narrow`]) {
+    fail(`${article.slug}: no phone composition — the desktop artwork would be scaled instead`);
+  }
   if (!article.hero?.src) fail(`${article.slug}: no raster for Open Graph and structured data`);
   if (!article.topic) fail(`${article.slug}: no editorial topic`);
 }

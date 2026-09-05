@@ -1,15 +1,15 @@
 import Link from "next/link";
 import type { Article } from "@/lib/cms/types";
-import { ArticleArt, hasArticleArt } from "./graphics/ArticleArt";
+import { BrandImage, hasArticleArt } from "./BrandImage";
 import styles from "./ArticleCard.module.css";
 
 /**
  * An index entry.
  *
- * The art is the article's own diagram, not a photograph of a circuit board.
- * Every card in the index therefore belongs to one family and each one still
- * says what its article is about — which is the whole point of drawing them
- * rather than buying them.
+ * The art is the article's editorial artwork — a luminous field, unlabelled,
+ * in the publication's image brand. It is not the schematic diagram that used
+ * to sit here: a row of index cards is a shelf, and a shelf of diagrams reads
+ * as documentation rather than as a publication.
  */
 export function ArticleCard({
   article,
@@ -28,7 +28,11 @@ export function ArticleCard({
     >
       {art ? (
         <div className={styles.frame}>
-          <ArticleArt slug={article.slug} variant="card" />
+          <BrandImage
+            name={`article-${article.slug}`}
+            alt=""
+            sizes={feature ? "(min-width: 1024px) 1100px, 100vw" : "(min-width: 1024px) 520px, 100vw"}
+          />
         </div>
       ) : null}
       <div className={styles.body}>

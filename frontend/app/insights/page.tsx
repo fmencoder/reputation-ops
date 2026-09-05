@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { Section, SectionLabel } from "@/components/Section";
 import { ArticleCard } from "@/components/ArticleCard";
 import { domainIcon } from "@/components/DomainGrid";
-import { NodeWeb } from "@/components/graphics/NodeWeb";
+import { BrandImage } from "@/components/BrandImage";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -27,19 +27,19 @@ export default async function InsightsPage() {
         lead={insights.lead}
         aside={
           /*
-           * The reference composition puts an analytics panel here — counters
-           * and a distribution chart. Every figure in it was invented, so none
-           * of it is rendered and none of the numbers appear anywhere in this
-           * source.
-           *
-           * What replaces it is set as the contents plate of a research
-           * publication: a masthead rule, the areas numbered in sequence, and a
-           * standing line at the foot. It carries exactly one claim, which is
-           * true — these are the four areas this publication covers.
+           * The reference panel puts a research network here with a set of
+           * percentages beside it. The network is reproduced; the percentages
+           * are not, and neither is any other figure — every number in that
+           * panel was invented at concept stage. What sits under the artwork is
+           * the four areas this publication actually covers, which is the one
+           * claim the panel was making that happens to be true.
            */
           <aside className={styles.cover}>
-            <NodeWeb className={styles.web} seed={9021} />
-            <p className={styles.coverLabel}>Research areas</p>
+            <BrandImage
+              name="insights-map"
+              alt="A world map drawn as a field of lit points, with research routes arcing between hubs."
+              sizes="(min-width: 1024px) 46vw, 100vw"
+            />
             <ol className={styles.coverIndex}>
               {insights.domains.map((domain, index) => (
                 <li key={domain} className={styles.coverEntry}>
@@ -55,7 +55,6 @@ export default async function InsightsPage() {
                 </li>
               ))}
             </ol>
-            <p className={styles.coverFoot}>Written and edited by Fredrick Mendez</p>
           </aside>
         }
       />

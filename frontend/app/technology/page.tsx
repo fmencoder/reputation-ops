@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { Section, SectionLabel } from "@/components/Section";
 import { Button } from "@/components/Button";
 import { StackMap } from "@/components/graphics/StackMap";
-import { BoundaryDetail } from "@/components/graphics/BoundaryDetail";
+import { BrandImage } from "@/components/BrandImage";
 import { domainIcon } from "@/components/DomainGrid";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
@@ -17,12 +17,10 @@ export const metadata = pageMetadata({
 });
 
 /*
- * The page is built around two views of one thing.
- *
- * The opening carries the gate seen close up — one request, three obligations,
- * and a boundary that holds. The section beneath carries the whole architecture
- * that gate sits in, with the prose that explains it alongside at the widths
- * where both can be read without scrolling between them.
+ * The opening is the cube field: brand imagery, unlabelled, doing no
+ * explaining. The architecture drawing that does explain sits further down,
+ * beside the prose it belongs to, where a reader who wants the mechanism can
+ * find it and a reader who does not is never handed a diagram as a hero.
  */
 export default async function TechnologyPage() {
   const { technology } = await getPages();
@@ -33,7 +31,16 @@ export default async function TechnologyPage() {
         eyebrow={technology.eyebrow}
         headline={technology.headline}
         lead={technology.lead}
-        aside={<BoundaryDetail />}
+        aside={
+          <div className={styles.stage}>
+            <BrandImage
+              name="tech-cubes"
+              alt="A field of luminous architectural cubes in deep space, one lit from within."
+              priority
+              sizes="(min-width: 1024px) 52vw, 100vw"
+            />
+          </div>
+        }
         below={
           <div className={styles.actions}>
             <Button href="/insights/">Explore insights →</Button>

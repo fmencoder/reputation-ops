@@ -1,0 +1,74 @@
+{
+  "home-earth": {
+    "width": 2000,
+    "height": 1573
+  },
+  "home-earth-narrow": {
+    "width": 1093,
+    "height": 933
+  },
+  "tech-cubes": {
+    "width": 2080,
+    "height": 1360
+  },
+  "tech-cubes-narrow": {
+    "width": 1093,
+    "height": 1040
+  },
+  "insights-map": {
+    "width": 2027,
+    "height": 1067
+  },
+  "insights-map-narrow": {
+    "width": 1067,
+    "height": 747
+  },
+  "about-orbital": {
+    "width": 1707,
+    "height": 1413
+  },
+  "about-orbital-narrow": {
+    "width": 1067,
+    "height": 960
+  },
+  "article-agentic-ai-reliability-budget": {
+    "width": 2240,
+    "height": 1067
+  },
+  "article-agentic-ai-reliability-budget-narrow": {
+    "width": 1093,
+    "height": 827
+  },
+  "article-context-engineering-production-ai": {
+    "width": 2240,
+    "height": 1067
+  },
+  "article-context-engineering-production-ai-narrow": {
+    "width": 1093,
+    "height": 827
+  },
+  "article-deterministic-boundaries-ai-smart-contracts": {
+    "width": 2240,
+    "height": 1067
+  },
+  "article-deterministic-boundaries-ai-smart-contracts-narrow": {
+    "width": 1093,
+    "height": 827
+  },
+  "article-human-oversight-architecture": {
+    "width": 2240,
+    "height": 1067
+  },
+  "article-human-oversight-architecture-narrow": {
+    "width": 1093,
+    "height": 827
+  },
+  "article-recoverability-architecture": {
+    "width": 2240,
+    "height": 1067
+  },
+  "article-recoverability-architecture-narrow": {
+    "width": 1093,
+    "height": 827
+  }
+}

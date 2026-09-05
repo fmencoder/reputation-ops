@@ -5,7 +5,7 @@ import { Section, SectionLabel } from "@/components/Section";
 import { Eyebrow } from "@/components/Eyebrow";
 import { domainIcon } from "@/components/DomainGrid";
 import { ArchitectureRail } from "@/components/graphics/ArchitectureRail";
-import { PortraitField } from "@/components/graphics/PortraitField";
+import { BrandImage } from "@/components/BrandImage";
 import { asset } from "@/lib/media";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
@@ -41,15 +41,19 @@ export default async function AboutPage() {
            * work, and a portrait that fills half the screen says otherwise.
            * Nothing is set beneath it.
            *
-           * What is new is the field it stands in. The photograph is inset on a
-           * stage carrying coordinate arcs and a sparse lattice, so the geometry
-           * reads around the portrait rather than behind it — where, with the
-           * image covering its own frame edge to edge, it would never be seen at
-           * all. Held back throughout: the man is the subject, the system is what
-           * he is standing in.
+           * What is new is the field it stands in: the orbital environment from
+           * the approved board, with the photograph inset on it so the geometry
+           * reads around the portrait rather than behind it — where, the image
+           * covering its own frame edge to edge, it would never be seen at all.
+           * The man is the subject; the system is what he is standing in.
            */
           <figure className={styles.portraitStage} style={{ margin: 0 }}>
-            <PortraitField />
+            <BrandImage
+              name="about-orbital"
+              alt=""
+              className={styles.orbital}
+              sizes="(min-width: 1024px) 480px, 100vw"
+            />
             <div className={styles.portraitFrame}>
               <Image
                 src={asset(about.portrait.src)}

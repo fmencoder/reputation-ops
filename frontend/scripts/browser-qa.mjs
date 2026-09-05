@@ -84,7 +84,26 @@ for (const target of PAGES) {
       return url.host === new URL(BASE).host ? route.continue() : route.abort();
     });
     const response = await page.goto(`${BASE}${target.path}`, { waitUntil: "load" });
-    await page.waitForTimeout(350);
+    /*
+     * Give the visible images a chance to finish. next/image transforms the
+     * first request for each size on demand, and a cold transform of a large
+     * source can outlast a fixed pause — which reads as a broken image when it
+     * is only a slow one.
+     */
+    await page
+      .waitForFunction(
+        () =>
+          [...document.querySelectorAll("img")]
+            .filter((image) => {
+              const box = image.getBoundingClientRect();
+              return box.width > 0 && box.height > 0 && box.top < window.innerHeight * 1.5;
+            })
+            .every((image) => image.complete),
+        undefined,
+        { timeout: 15000 },
+      )
+      .catch(() => {});
+    await page.waitForTimeout(250);
     const label = `${target.name}@${width}`;
 
     if (!response || response.status() !== 200) {
@@ -115,15 +134,16 @@ for (const target of PAGES) {
         brand: brandName?.textContent?.trim() ?? "",
         lockup: spans,
         svgCount: document.querySelectorAll("svg").length,
-        labels: [...document.querySelectorAll("svg[aria-label]")].map(
-          (node) => node.getAttribute("aria-label") ?? "",
-        ),
+        art: [...document.querySelectorAll("img")].map((image) => decodeURIComponent(image.currentSrc || image.src)),
         overflowingHeadings: headings,
         // Only images the viewport actually reaches. Below the fold they are
         // lazy by design and "not yet loaded" is the correct state, not a fault.
         images: [...document.querySelectorAll("img")]
           .filter((image) => {
             const box = image.getBoundingClientRect();
+            // Art direction puts both compositions in the DOM and hides one.
+            // The hidden one is never fetched, and that is correct, not broken.
+            if (box.width === 0 || box.height === 0) return false;
             return box.top < window.innerHeight * 1.5 && box.bottom > -200;
           })
           .map((image) => ({
@@ -177,15 +197,21 @@ for (const target of PAGES) {
      * not its own drawing is exactly the regression that put the founder's
      * "the images have not changed" note on the last preview.
      */
+    /*
+     * The graphic brand is asserted by the artwork each page owns. A page that
+     * renders some decoration but not its own image is the regression that put
+     * the founder's "the images have not changed" note on two previews.
+     */
     const OWNED = {
-      home: "converge through a reconciliation architecture",
-      technology: "Five architectural layers",
-      research: "map of five research domains",
-      insights: "",
-      article: "",
+      home: "home-earth",
+      technology: "tech-cubes",
+      insights: "insights-map",
+      research: "about-orbital",
+      about: "about-orbital",
+      article: "article-",
     }[target.name];
-    if (OWNED && !state.labels.some((aria) => aria.includes(OWNED))) {
-      fail(`${label}: the page's own graphic is missing (no figure described "${OWNED}")`);
+    if (OWNED && !state.art.some((src) => src.includes(OWNED))) {
+      fail(`${label}: the page's own brand artwork is missing (no image matching "${OWNED}")`);
     }
 
     if (width >= 1024 && !state.navVisible) fail(`${label}: desktop navigation is not visible`);
@@ -264,7 +290,9 @@ for (const article of SNAPSHOT.articles) {
       meta: document.body.innerText.match(/\d+ min read/)?.[0] ?? "",
       bodyBottom: body ? Math.round(body.getBoundingClientRect().bottom + window.scrollY) : -1,
       relatedTop: related ? Math.round(related.getBoundingClientRect().top + window.scrollY) : -1,
-      artLabels: [...document.querySelectorAll("article svg[aria-label]")].length,
+      artLabels: [...document.querySelectorAll("article img")].filter((i) =>
+        decodeURIComponent(i.currentSrc || i.src).includes("/art/article-"),
+      ).length,
     };
   });
 

@@ -3,6 +3,10 @@
 .hero {
   position: relative;
   isolation: isolate;
+  /* The globe runs past the right edge on purpose. Clipping keeps that a
+     composition rather than a horizontal scrollbar; `clip` rather than
+     `hidden` so it never becomes a scroll container. */
+  overflow-x: clip;
   padding-block: var(--s-12) var(--s-16);
 }
 
@@ -41,37 +45,19 @@
   margin-top: var(--s-8);
 }
 
+/* The globe bleeds past the right edge of the viewport, as the reference does.
+   The negative margin is what makes it read as a window onto something larger
+   rather than a picture placed in a column. */
 .scene {
   position: relative;
+  margin-inline: calc(var(--gutter, 20px) * -1);
 }
 
-/* The scene sits in a framed plate on a wide screen: a bordered surface with
-   its own inner light, so the graphic reads as part of the composition rather
-   than an image dropped into a column. */
-.plate {
-  position: relative;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
-  background: radial-gradient(120% 100% at 70% 30%, rgb(20 30 66 / 0.75), rgb(5 7 15 / 0.9));
-  padding: var(--s-6);
-  overflow: hidden;
-}
-
-.plate::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(160deg, rgb(77 132 255 / 0.08), transparent 45%);
-  pointer-events: none;
-}
-
-.caption {
-  margin-top: var(--s-4);
-  color: var(--text-subtle);
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  max-width: 52ch;
+@media (min-width: 1024px) {
+  .scene {
+    margin-right: min(-6vw, -60px);
+    margin-left: 0;
+  }
 }
 
 .domains {
@@ -123,9 +109,6 @@
     align-items: center;
   }
 
-  .plate {
-    padding: var(--s-8);
-  }
 }
 
 /* The landscape takes the larger share of the grid — but only once there is

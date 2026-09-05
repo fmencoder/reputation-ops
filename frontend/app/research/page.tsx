@@ -2,8 +2,8 @@ import { getArticles, getPages } from "@/lib/cms";
 import { PageHeader } from "@/components/PageHeader";
 import { Section, SectionLabel } from "@/components/Section";
 import { ArticleCard } from "@/components/ArticleCard";
-import { NodeWeb } from "@/components/graphics/NodeWeb";
 import { ResearchMap } from "@/components/graphics/ResearchMap";
+import { BrandImage } from "@/components/BrandImage";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -39,7 +39,12 @@ export default async function ResearchPage() {
            * site, and the only ones that can be checked by clicking them.
            */
           <div className={styles.panel}>
-            <NodeWeb className={styles.web} seed={4471} />
+            <BrandImage
+              name="about-orbital"
+              alt=""
+              className={styles.web}
+              sizes="(min-width: 1024px) 640px, 100vw"
+            />
             <p className={styles.panelLabel}>Threads</p>
             <ul className={styles.panelList}>
               {THREADS.map((thread) => {

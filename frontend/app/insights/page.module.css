@@ -8,14 +8,6 @@
   gap: var(--s-6);
 }
 
-/* The node field sits behind the contents, held well back: it is the ground the
-   plate is printed on, not an element of it. */
-.web {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0.45;
-}
 
 @media (min-width: 620px) {
   .grid {
@@ -35,7 +27,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: var(--s-8) var(--s-6) var(--s-6);
+  padding: 0 0 var(--s-6);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
   background: linear-gradient(168deg, rgb(13 18 38 / 0.92), rgb(5 7 15 / 0.94));
@@ -53,24 +45,12 @@
   border-bottom: 1px solid var(--line);
 }
 
-.coverLabel {
-  position: relative;
-  z-index: 1;
-  font-size: var(--fs-kicker);
-  font-weight: 700;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--accent-bright);
-  margin-bottom: var(--s-5);
-}
-
 .coverIndex {
   position: relative;
   z-index: 1;
   list-style: none;
   margin: 0;
-  padding: 0;
-  counter-reset: none;
+  padding: 0 var(--s-6);
 }
 
 .coverEntry {
@@ -105,13 +85,4 @@
   color: var(--text);
 }
 
-.coverFoot {
-  position: relative;
-  z-index: 1;
-  margin-top: var(--s-6);
-  padding-top: var(--s-4);
-  border-top: 1px solid var(--line);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  color: var(--text-subtle);
-}
+

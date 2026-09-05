@@ -1,3 +1,17 @@
+/* The cube field bleeds off the right edge on a wide screen, as the reference
+   does; on a phone it runs the full width of the viewport. */
+.stage {
+  position: relative;
+  margin-inline: calc(var(--gutter, 20px) * -1);
+}
+
+@media (min-width: 1024px) {
+  .stage {
+    margin-left: 0;
+    margin-right: min(-6vw, -60px);
+  }
+}
+
 .signature {
   display: grid;
   gap: var(--s-8);

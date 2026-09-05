@@ -1,0 +1,33 @@
+.art {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+
+.wide,
+.narrow {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Art direction, not scaling. Below 620px the phone composition is served in
+   place of the desktop one; above it, the reverse. Neither is the other made
+   small, and only one of the two is ever requested. */
+.wide {
+  display: none;
+}
+
+.narrow {
+  display: block;
+}
+
+@media (min-width: 620px) {
+  .wide {
+    display: block;
+  }
+
+  .narrow {
+    display: none;
+  }
+}

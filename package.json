@@ -26,14 +26,18 @@
     "search:monitor": "tsx src/cli/search-monitor.ts",
     "search:t0": "tsx src/cli/search-monitor.ts --capture-t0",
     "source:watch": "tsx src/cli/source-watch.ts",
-    "site:deploy:auth-check": "tsx src/cli/deploy.ts --auth-check"
+    "site:deploy:auth-check": "tsx src/cli/deploy.ts --auth-check",
+    "frontend:art": "node frontend/scripts/build-art.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "d3-geo": "^3.1.1",
     "playwright-core": "^1.62.1",
     "sharp": "^0.35.4",
+    "topojson-client": "^3.1.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.8",
+    "world-atlas": "^2.0.2"
   }
 }

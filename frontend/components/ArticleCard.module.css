@@ -23,9 +23,9 @@
   background: var(--ink);
 }
 
-/* The art is inline SVG, not a bitmap, so it is lit rather than zoomed on
-   hover — a scale transform on a vector diagram blurs nothing and gains
-   nothing, and the interaction should read as attention, not motion. */
+/* The artwork is a raster now, and is lit rather than zoomed on hover: a scale
+   transform on a dark luminous field muddies it and gains nothing, and the
+   interaction should read as attention, not motion. */
 .frame::after {
   content: "";
   position: absolute;
@@ -133,4 +133,26 @@
   .feature .body {
     padding: var(--s-10);
   }
+}
+
+/* The index crop. The artwork is composed at 2.1:1 and seen through a shorter
+   window on a card, so the row keeps a card-like proportion. */
+.frame {
+  aspect-ratio: 16 / 7;
+}
+
+.frame :global(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 619px) {
+  .frame {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.feature .frame {
+  aspect-ratio: 21 / 8;
 }

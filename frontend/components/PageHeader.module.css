@@ -1,4 +1,7 @@
 .header {
+  /* Page artwork is allowed to bleed past the frame; it is clipped here rather
+     than allowed to widen the document. */
+  overflow-x: clip;
   position: relative;
   isolation: isolate;
   padding-block: var(--s-16) var(--s-12);

@@ -5,7 +5,7 @@ import { Prose } from "@/components/Prose";
 import { Section, SectionLabel } from "@/components/Section";
 import { ArticleCard } from "@/components/ArticleCard";
 import { GridField } from "@/components/graphics/GridField";
-import { ArticleArt, hasArticleArt } from "@/components/graphics/ArticleArt";
+import { BrandImage, hasArticleArt } from "@/components/BrandImage";
 import { JsonLd } from "@/components/JsonLd";
 import { articleMetadata, articleSchema } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -63,12 +63,16 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
             </div>
           </header>
 
+          {/* Editorial artwork, unlabelled and uncaptioned. The article says
+              what it is about; the picture sets the register. */}
           {hasArticleArt(article.slug) ? (
             <figure className={styles.hero}>
-              <ArticleArt slug={article.slug} />
-              <figcaption className={styles.heroCaption}>
-                {article.hero.caption ?? article.hero.alt}
-              </figcaption>
+              <BrandImage
+                name={`article-${article.slug}`}
+                alt=""
+                priority
+                sizes="(min-width: 1200px) 1120px, 100vw"
+              />
             </figure>
           ) : null}
 
