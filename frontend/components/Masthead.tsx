@@ -10,7 +10,7 @@
  */
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/lib/site";
 import { Wordmark } from "./Wordmark";
 import styles from "./Masthead.module.css";
@@ -18,6 +18,7 @@ import styles from "./Masthead.module.css";
 export function Masthead() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   /*
    * The drawer closes on the link itself rather than in an effect watching the
@@ -33,6 +34,25 @@ export function Masthead() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [open]);
+
+  /*
+   * Escape closes the drawer, and focus goes back to the button that opened it.
+   *
+   * Both halves matter. A keyboard user who opens the menu and decides against
+   * it had no way out except tabbing through all nine links; and closing it
+   * without moving focus leaves focus on an element that is now display:none,
+   * which drops the caret back to the top of the document.
+   */
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      toggleRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
   const isCurrent = (href: string) =>
@@ -57,6 +77,7 @@ export function Masthead() {
         </nav>
 
         <button
+          ref={toggleRef}
           type="button"
           className={styles.toggle}
           aria-expanded={open}

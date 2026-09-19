@@ -10,7 +10,13 @@
     "typecheck": "tsc --noEmit",
     "snapshot": "node scripts/build-snapshot.mjs",
     "content-qa": "node --experimental-strip-types --no-warnings scripts/content-qa.mjs",
-    "art": "node scripts/build-art.mjs"
+    "art": "node scripts/build-art.mjs",
+    "qa:a11y": "node scripts/a11y-qa.mjs",
+    "qa:csp": "node scripts/csp-qa.mjs",
+    "qa:keyboard": "node scripts/keyboard-qa.mjs",
+    "qa:seo": "node scripts/seo-qa.mjs",
+    "qa:browser": "node scripts/browser-qa.mjs",
+    "qa:lighthouse": "node scripts/lighthouse-qa.mjs"
   },
   "dependencies": {
     "next": "16.3.4",

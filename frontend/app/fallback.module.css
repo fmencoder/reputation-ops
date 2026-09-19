@@ -1,0 +1,91 @@
+/*
+ * Shared by the three pages a visitor reaches when something has gone wrong:
+ * 404, a route-level error, and the global error that replaces the whole
+ * layout. They looked like the site before only because not-found.tsx carried
+ * the rules as inline style attributes, which could not be reused and could
+ * not express a hover state.
+ */
+.heading {
+  margin-top: var(--s-5);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-display);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.body {
+  margin-top: var(--s-5);
+  max-width: 48ch;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+.link {
+  color: var(--accent-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.link:hover {
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-top: var(--s-8);
+}
+
+.retry {
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-nav);
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--grad-brand);
+  border: 0;
+  border-radius: var(--radius);
+  padding: var(--s-3) var(--s-6);
+  cursor: pointer;
+}
+
+.retry:hover {
+  filter: brightness(1.1);
+}
+
+/* The global boundary replaces the root layout, so it has no tokens, no font
+   and no body background to inherit. It carries just enough to not look broken. */
+.bare {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: #05070f;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  line-height: 1.65;
+}
+
+.bareInner {
+  max-width: 48ch;
+}
+
+.bareHeading {
+  font-size: 1.75rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+
+.bareBody {
+  margin: 0 0 1.5rem;
+  color: #9aa6c8;
+}
+
+.bareLink {
+  color: #4d84ff;
+}
