@@ -23,6 +23,14 @@
     "width": 1067,
     "height": 747
   },
+  "global-map": {
+    "width": 2027,
+    "height": 1147
+  },
+  "global-map-narrow": {
+    "width": 1067,
+    "height": 800
+  },
   "about-orbital": {
     "width": 1707,
     "height": 1413

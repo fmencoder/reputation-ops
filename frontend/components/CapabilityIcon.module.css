@@ -1,0 +1,28 @@
+.frame {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 120% at 20% 0%, rgb(47 107 255 / 0.14) 0%, transparent 62%),
+    var(--ink-raised);
+  flex: none;
+}
+
+.glyph {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: var(--accent-bright);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The violet is a highlight on the closing strokes, never the whole mark. */
+.glyph > :last-child {
+  stroke: var(--violet);
+}

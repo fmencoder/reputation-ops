@@ -27,6 +27,8 @@ const WIDTHS = [390, 620, 1024, 1600];
 
 const PAGES = [
   { name: "home", path: "/" },
+  { name: "capabilities", path: "/capabilities/" },
+  { name: "global-development", path: "/global-development/" },
   { name: "insights", path: "/insights/" },
   { name: "research", path: "/research/" },
   { name: "technology", path: "/technology/" },

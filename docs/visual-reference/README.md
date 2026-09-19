@@ -4,13 +4,31 @@
 
 | File | Role |
 | --- | --- |
-| `novra-concept-board.jpg` | **PRIMARY BENCHMARK.** The canonical board, panels A/B/C/D. 1536×1024, 559 KB. |
+| `novra-concept-board-approved-2026-09-18.jpg` | **PRIMARY BENCHMARK — APPROVED DESIGN DIRECTION.** Supplied by the founder 2026-09-18 and approved as the visual baseline for the Next.js migration. Panels A/B/C/D, 1536×1024, 442 KB. |
+| `novra-concept-board.jpg` | Superseded. The earlier board, kept for diffing. 1536×1024, 559 KB. |
 | `README.md` | Implementation specification — palette, typography, graphic language, prohibitions |
 | `asset-specs.md` | Buildable specs for panels E–J and article heroes |
 | `board.html` | Secondary. Live HTML/CSS reproduction from the shipping tokens; useful for spotting palette drift in a diff. |
 
 Verified present 2026-08-31 at `0b19196`: valid JPEG, 1536×1024, sha256 `b2c6b471…`,
 all four panels confirmed by inspection.
+
+---
+
+## What the approved board changed
+
+The 2026-09-18 board supersedes `novra-concept-board.jpg`. It is the same
+composition, palette and graphic language; three things differ, and all three
+are already implemented:
+
+| | Superseded board | Approved board | Status |
+| --- | --- | --- | --- |
+| Wordmark | `NOVRA AI` | `NOVRA` over `INTELLIGENCE` | Shipped — `components/Wordmark.tsx` |
+| Panel D | `10+ Years`, `50+ Research Papers`, `Global`, `Impact` counters | The four capability tiles | Shipped — the counters were never built |
+| Panel C | `System Overview` counter row | Dropped; research areas and publications remain | Shipped |
+
+The approved board therefore *ratifies* the correction the rule below already
+required, rather than reversing it. The rule still stands for what remains.
 
 ---
 
@@ -28,6 +46,7 @@ canonical for content, and six values on it are unsupported:
 | C | 98.7% Impact Score | Unsupported — removed |
 | D | 10+ Years of Experience | Unsupported — removed |
 | D | 50+ Research Papers | Unsupported — removed |
+| C | Research Areas 42 / 28 / 18 / 12% | Unsupported — still on the approved board, still not rendered. Five articles in one category cannot produce a four-way split. |
 
 The two qualitative D tiles ("Global — Perspective", "Impact — Focused") were
 removed as well: sitting in a counter frame makes them read as metrics whether or

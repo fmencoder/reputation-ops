@@ -60,6 +60,18 @@ export interface PageCopy {
 
 export interface HomeCopy extends PageCopy {
   domains: string[];
+  /**
+   * The pathway into the institutional pages. It sits below the approved hero
+   * composition rather than inside it: the board's panel A is the homepage's
+   * visual contract, and widening the hero to carry a second positioning is
+   * what would break it.
+   */
+  institutional: {
+    label: string;
+    heading: string;
+    body: string;
+    links: { label: string; href: string; note: string }[];
+  };
 }
 
 export interface InsightsCopy extends PageCopy {
@@ -90,6 +102,38 @@ export interface ContactCopy extends PageCopy {
   note: string;
 }
 
+/**
+ * A capability area. `icon` is a glyph key resolved by CapabilityIcon, not a
+ * file path: these marks are drawn inline so a new capability never waits on
+ * an uploaded asset, and so they inherit the palette rather than baking it in.
+ */
+export interface Capability {
+  icon: string;
+  title: string;
+  body: string;
+}
+
+/**
+ * Capability and global-development copy both carry a `standing` note.
+ *
+ * That field is not decoration and must not be dropped to tighten a layout.
+ * These two pages describe what the practice can do, and a reader evaluating a
+ * contractor will read capability as past performance unless the page says
+ * otherwise in its own voice. The note is where it says otherwise.
+ */
+export interface CapabilitiesCopy extends PageCopy {
+  areas: Capability[];
+  method: ProseSection[];
+  standing: string;
+}
+
+export interface GlobalDevelopmentCopy extends PageCopy {
+  areas: Capability[];
+  context: ProseSection[];
+  standing: string;
+  engagement: { heading: string; body: string };
+}
+
 export interface SiteContent {
   generatedAt: string;
   articles: Article[];
@@ -98,6 +142,8 @@ export interface SiteContent {
     insights: InsightsCopy;
     research: ResearchCopy;
     technology: TechnologyCopy;
+    capabilities: CapabilitiesCopy;
+    globalDevelopment: GlobalDevelopmentCopy;
     about: AboutCopy;
     contact: ContactCopy;
   };

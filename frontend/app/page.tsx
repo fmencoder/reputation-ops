@@ -38,8 +38,20 @@ export default async function HomePage() {
         <div className={`wrap ${styles.heroInner}`}>
           <div>
             <Eyebrow>{home.eyebrow}</Eyebrow>
+            {/* The board sets the headline in three lines, one sentence each.
+                Leaving that to the wrapping algorithm made it depend on the
+                font metrics at each breakpoint, and it broke to five lines on
+                every wide viewport. The sentences are their own blocks so the
+                composition holds at any width; below 620px they wrap inside
+                their own line rather than across each other. */}
             <h1 className={styles.headline}>
-              {home.headline.lead}{" "}
+              {home.headline.lead
+                .split(/(?<=\.)\s+/)
+                .map((sentence) => (
+                  <span key={sentence} className={styles.headlineLine}>
+                    {sentence}
+                  </span>
+                ))}
               <span className={styles.headlineAccent}>{home.headline.accent}</span>
             </h1>
             <p className={styles.lead}>{home.lead}</p>
@@ -69,6 +81,31 @@ export default async function HomePage() {
         <h2 className="sr-only">Areas of focus</h2>
         <div className={styles.domains}>
           <DomainGrid domains={home.domains} descriptors={descriptors} />
+        </div>
+      </Section>
+
+      {/* The pathway the institutional positioning needs, placed after the
+          approved hero and domain strip so neither is altered to make room. */}
+      <Section bordered>
+        <div className={styles.institutional}>
+          <div>
+            <SectionLabel>{home.institutional.label}</SectionLabel>
+            <h3 className={styles.institutionalHeading}>{home.institutional.heading}</h3>
+            <p className={styles.institutionalBody}>{home.institutional.body}</p>
+          </div>
+          <ul className={styles.pathways}>
+            {home.institutional.links.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className={styles.pathway}>
+                  <span className={styles.pathwayLabel}>{link.label}</span>
+                  <span className={styles.pathwayNote}>{link.note}</span>
+                  <span className={styles.pathwayArrow} aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </Section>
 

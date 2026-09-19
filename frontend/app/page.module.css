@@ -23,7 +23,10 @@
   line-height: var(--lh-display);
   letter-spacing: var(--tracking-display);
   font-weight: 600;
-  text-wrap: balance;
+}
+
+.headlineLine {
+  display: block;
 }
 
 .headlineAccent {
@@ -109,25 +112,129 @@
     align-items: center;
   }
 
-}
-
-/* The landscape takes the larger share of the grid — but only once there is
-   room to give it. At 1024 the copy column cannot yield any further: the
-   display type needs 388px to set "infrastructure." on one line, and a 0.82fr
-   track leaves 367px. Shifting the balance any earlier breaks the headline. */
-@media (min-width: 1200px) {
-  .heroInner {
-    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  /*
+   * The board sets this headline in three lines — "Intelligent systems." /
+   * "Digital infrastructure." / "Real impact." — and that is a composition
+   * decision, not a coincidence of the text. Holding it means the copy column
+   * has to fit the longest line, "Digital infrastructure.", whole.
+   *
+   * Measured in the browser: that line occupies about 12.1x the font size.
+   * The previous rule grew the type to 68px at 1920 while the copy track was
+   * narrowed to 0.78fr (459px), so it needed 823px in 459 and broke to five
+   * lines at every width above 1200. The type is therefore capped where the
+   * column can still carry it rather than scaled until it cannot.
+   */
+  .headline {
+    font-size: clamp(2.25rem, 3.4vw, 3rem);
   }
 }
 
+/* The landscape takes the larger share of the grid, but only as much as the
+   headline can spare: at 1.1fr against 1fr the copy column holds ~598px at the
+   capped 48px type, which is the 12.1x the long line needs with margin. */
+@media (min-width: 1200px) {
+  .heroInner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+}
+
+/* At 1440 and above the type reaches its cap, so the copy column has to be the
+   thing that gives. "Digital infrastructure." is the line that decides it: at a
+   0.86fr/1.14fr split it had 459px and needed ~580, which is the five-line hero
+   the board never asked for. Near-equal tracks and a 46px cap clear it with
+   room, and the globe still bleeds past the right edge, which is what actually
+   makes the composition read. */
 @media (min-width: 1440px) {
   .heroInner {
-    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
     gap: var(--s-16);
   }
 
   .headline {
-    font-size: clamp(3.25rem, 3.6vw, 4.25rem);
+    font-size: 2.875rem;
+  }
+}
+
+/* The institutional band: a pathway, not a second hero. It is deliberately
+   quieter than the domain strip above it so panel A keeps the page's weight. */
+.institutional {
+  display: grid;
+  gap: var(--s-8);
+}
+
+.institutionalHeading {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-heading);
+  margin: var(--s-4) 0 var(--s-4);
+  color: var(--text);
+  max-width: 20ch;
+}
+
+.institutionalBody {
+  margin: 0;
+  max-width: var(--measure);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+.pathways {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-4);
+}
+
+.pathway {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--s-4);
+  padding: var(--s-5) var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--ink-raised);
+  text-decoration: none;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.pathway:hover {
+  border-color: var(--line-strong);
+  background: var(--ink-inset);
+}
+
+.pathwayLabel {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-heading);
+  color: var(--text);
+}
+
+.pathwayNote {
+  grid-column: 1;
+  margin-top: var(--s-2);
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+.pathwayArrow {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  font-size: 1.25rem;
+  color: var(--accent-bright);
+  transition: transform 180ms ease;
+}
+
+.pathway:hover .pathwayArrow {
+  transform: translateX(3px);
+}
+
+@media (min-width: 1024px) {
+  .institutional {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: var(--s-12);
+    align-items: start;
   }
 }

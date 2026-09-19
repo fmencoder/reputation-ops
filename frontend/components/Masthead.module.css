@@ -127,10 +127,23 @@
 @media (min-width: 1024px) {
   .nav {
     display: flex;
+    /*
+     * Eight nav items, one of them "Global Development", do not fit the
+     * original var(--s-6) gap at exactly 1024px — the row collides with the
+     * wordmark before the drawer would take over. The gap opens back up once
+     * there is room for it rather than staying tight at every desktop width.
+     */
+    gap: var(--s-4);
   }
 
   .toggle,
   .drawer {
     display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .nav {
+    gap: var(--s-6);
   }
 }

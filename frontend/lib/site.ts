@@ -16,6 +16,8 @@ export const site = {
   },
   nav: [
     { label: "Home", href: "/" },
+    { label: "Capabilities", href: "/capabilities/" },
+    { label: "Global Development", href: "/global-development/" },
     { label: "Insights", href: "/insights/" },
     { label: "Research", href: "/research/" },
     { label: "Technology", href: "/technology/" },

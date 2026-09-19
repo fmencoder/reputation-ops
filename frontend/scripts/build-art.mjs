@@ -75,6 +75,12 @@ const TARGETS = [
   ["insights-map", () => worldMapScene({ width: 1520, height: 800 })],
   ["insights-map-narrow", () => worldMapScene({ width: 800, height: 560, density: 2.1 })],
 
+  /* Global Development. The same projection as the insights map, drawn from a
+     different seed and denser, so the two pages do not share one picture: this
+     one is about reach across regions rather than where research is filed. */
+  ["global-map", () => worldMapScene({ width: 1520, height: 860, seed: 4471, density: 1.95 })],
+  ["global-map-narrow", () => worldMapScene({ width: 800, height: 600, seed: 4471, density: 2.4 })],
+
   ["about-orbital", () => orbitalScene({ width: 1280, height: 1060, transparent: true })],
   ["about-orbital-narrow", () => orbitalScene({ width: 800, height: 720, cx: 0.5, cy: 0.46, transparent: true })],
 ];
