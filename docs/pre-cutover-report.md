@@ -44,7 +44,8 @@ No Supabase, PostHog, Sentry or AWS resource was provisioned — see §19.
 | --- | --- |
 | Repository | `fmencoder/reputation-ops` |
 | Branch | `claude/optimistic-darwin-b249sn` |
-| Commits | `fbb623a` institutional pages + hero fix, `62617e5` accessibility fix |
+| Head commit | `e8ebb39` |
+| Commits this pass | `fbb623a` institutional pages + hero, `62617e5` accessibility, `971a2cb` report, `e8ebb39` header measure |
 | Frontend root | `frontend/` |
 
 ## 6. Vercel preview deployment
@@ -53,18 +54,22 @@ No Supabase, PostHog, Sentry or AWS resource was provisioned — see §19.
 | --- | --- |
 | Project | `novra-intelligence-web` (`prj_zqBKYpUd7lJquswPSsA8dVdqg7UM`) |
 | Team | `fmencoder` (`team_OfFB8yCjcnAoj8znWRdliDGB`) |
-| Current deployment | `dpl_GQYYmbHAXjZrHcXaFq79sM34Tca6`, state **READY**, from `62617e5` |
-| **Preview URL (review this one)** | <https://novra-intelligence-ixlda1zou-fmencoder.vercel.app> |
-| Branch alias (always latest) | <https://novra-intelligence-web-git-claude-optimistic-d-bf7df6-fmencoder.vercel.app> |
-| Previous deployment | `dpl_4jXtyDmE7QzvEZ8ymyFcp8uDw5fb`, READY, from `fbb623a` |
+| Current deployment | `dpl_7E3HHseJhUmr7ExJYZrPvGP1iNpb`, state **READY**, from `e8ebb39` |
+| **Preview URL (review this one)** | <https://novra-intelligence-web-git-claude-optimistic-d-bf7df6-fmencoder.vercel.app> |
+| Immutable URL for this build | <https://novra-intelligence-2hyt7unt9-fmencoder.vercel.app> |
+| Earlier builds | `fbb623a`, `62617e5`, `971a2cb` — all READY |
+
+The branch alias always serves the latest commit on the branch, so it is the
+one to review. Four pushes produced four READY builds, every one confirmed
+through the Vercel API.
 | Production domain attached | **No.** `novraintelligence.com` is not on this project. |
 
 **The Vercel blocker recorded in the previous pass is resolved.** That pass
 concluded the token could create a project with its first deployment but could
 not deploy into an existing one. That is no longer the behaviour: the project
 is git-linked, and pushing to the branch produced a preview build automatically
-with no API upload. Both pushes produced their own READY build, confirmed
-through the Vercel API — the git-linked path works end to end.
+with no API upload. Every push in this session produced its own READY
+build — the git-linked path works end to end.
 
 ## 7–8. Pages migrated and content preserved
 
