@@ -12,8 +12,16 @@
   z-index: 1;
 }
 
+/*
+ * The 46ch measure belongs to the prose, not to the whole column. Applied to
+ * .copy it also throttled the headline, so a split header set its display type
+ * into 460px and broke short headlines across four lines — on Global
+ * Development it split the accent itself ("emerging / markets.") and pushed
+ * the two buttons onto separate rows. The measure now sits on the text that
+ * wants it and the headline uses the column it was given.
+ */
 .copy {
-  max-width: 46ch;
+  max-width: 100%;
 }
 
 .wide {
@@ -35,7 +43,7 @@
 .lead {
   color: var(--text-muted);
   font-size: var(--fs-lead);
-  max-width: 54ch;
+  max-width: 46ch;
 }
 
 .aside {
