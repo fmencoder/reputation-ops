@@ -5,13 +5,13 @@
 }
 
 .axis {
-  fill: #6b779c;
+  fill: var(--text-subtle);
   font-family: var(--font-mono);
   font-size: 10px;
 }
 
 .axisLabel {
-  fill: #6b779c;
+  fill: var(--text-subtle);
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.14em;

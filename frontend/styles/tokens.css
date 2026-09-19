@@ -17,7 +17,12 @@
 
   --text: #ffffff;
   --text-muted: #9aa6c8;
-  --text-subtle: #6b779c;
+  /* Lifted from #6b779c, which failed WCAG AA for normal-size text on every
+     raised surface: 4.19:1 on --ink-inset and 4.34:1 on --ink-raised against a
+     4.5:1 requirement. This clears 4.62:1 at the worst case and 5.01:1 on the
+     page ground, at a 6% lift that leaves the palette where the board put it.
+     Verified by scripts/a11y-qa.mjs, which fails the build on a regression. */
+  --text-subtle: #717ea5;
 
   --accent: #2f6bff;
   --accent-bright: #4d84ff;
