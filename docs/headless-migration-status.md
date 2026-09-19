@@ -31,6 +31,17 @@ Verified locally, against the real application in a real browser:
 
 Screenshots for every page at every width: `artifacts/frontend-qa/`.
 
+> **Superseded 2026-09-19.** The Vercel blocker described below is resolved.
+> The project `novra-intelligence-web` is git-linked to this repository with
+> root directory `frontend/`, and pushing to a branch now produces a preview
+> build automatically — no API upload, no base64 archive. Two READY
+> deployments were confirmed through the API this pass. The read-back limits
+> are narrower than recorded here: `get_deployment` and `list_deployments`
+> work; `list_deployment_events` and `get_deployment_file_contents` still do
+> not. Direct HTTP to `*.vercel.app` remains blocked by egress policy.
+> Current state is in `docs/pre-cutover-report.md`; the account below is kept
+> because its forensics explain how the arrangement was reached.
+
 ## What is not done: the hosted preview
 
 A preview deployment exists (see *Deployment recovery* below), but its build
