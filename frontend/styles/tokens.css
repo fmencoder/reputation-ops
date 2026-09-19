@@ -35,7 +35,8 @@
   --glow-accent: 0 0 24px rgb(47 107 255 / 0.28);
   --shadow-card: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 12px 32px rgb(0 0 0 / 0.5);
 
-  --font-sans: "Inter", "Inter var", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  /* --font-inter is set by next/font in the root layout and is self-hosted. */
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
 
   /* Type. Fluid between the breakpoints, capped at both ends so the longest

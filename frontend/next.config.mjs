@@ -14,8 +14,9 @@ const MEDIA_HOST = "https://novraintelligence.wordpress.com";
  * Content-Security-Policy, built from what the application actually loads.
  *
  * Measured rather than assumed: a Chromium run over all nine routes plus a 404
- * requested exactly two origins — self and fonts.googleapis.com — used zero
- * <style> elements, and carried no inline event-handler attributes.
+ * requests exactly one origin — its own — uses zero <style> elements, and
+ * carries no inline event-handler attributes. Fonts were the only external
+ * origin and are now self-hosted, so no third-party host is allowed at all.
  *
  * Two directives are looser than the rest, and both are load-bearing:
  *
@@ -49,13 +50,12 @@ const CSP = [
   // navigation rather than a submission. Revisit this if a form is added.
   "form-action 'none'",
   "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  // Google Fonts serves the stylesheet from googleapis and the font files from
-  // gstatic. gstatic is not observable from the build sandbox because egress to
-  // it is blocked, so the stylesheet never resolves here and never requests a
-  // font — it is included on the documented behaviour of the service, and is
-  // the one entry in this policy not confirmed by a local request.
-  "font-src 'self' https://fonts.gstatic.com",
+  "style-src 'self' 'unsafe-inline'",
+  // Inter is downloaded at build time by next/font and served from this origin,
+  // so there is no external font host to allow. This is why that matters: an
+  // allowed origin in a CSP is an origin that can serve a resource into the
+  // page, and the shortest policy is the one that names none.
+  "font-src 'self'",
   `img-src 'self' ${MEDIA_HOST}`,
   // Client-side route changes fetch RSC payloads from this origin. The
   // WordPress REST API is read at build time on the server, never the browser,
