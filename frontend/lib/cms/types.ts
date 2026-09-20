@@ -130,6 +130,8 @@ export interface CapabilitiesCopy extends PageCopy {
 export interface GlobalDevelopmentCopy extends PageCopy {
   areas: Capability[];
   context: ProseSection[];
+  /* The institutional relationship disclosure, and the label it sits under. */
+  standingHeading: string;
   standing: string;
   engagement: { heading: string; body: string };
 }

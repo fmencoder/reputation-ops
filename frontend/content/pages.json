@@ -259,7 +259,7 @@
         {
           "icon": "government",
           "title": "Digital Government",
-          "body": "Service delivery platforms and administrative workflow automation, designed around the constraint that a failed transaction is a citizen who did not receive a service and may have no second channel."
+          "body": "Service delivery platforms and administrative workflow automation designed around reliability, accessibility, and continuity—recognizing that a failed digital transaction can mean a citizen does not receive an essential public service when needed."
         },
         {
           "icon": "governance",
@@ -274,12 +274,12 @@
         {
           "icon": "transformation",
           "title": "SME Digital Transformation",
-          "body": "Technology adoption for small and medium enterprises, where the binding constraint is usually operational capacity and staff time rather than software cost."
+          "body": "Technology adoption for small and medium enterprises, with particular attention to operational capacity, staff time, implementation constraints and the sustainability of technology adoption."
         },
         {
           "icon": "infrastructure",
           "title": "Infrastructure Intelligence",
-          "body": "Condition, utilisation and failure analysis across physical networks that were instrumented unevenly, where the data is thinnest precisely where the asset is oldest."
+          "body": "Data and analytical systems for asset condition, utilization, maintenance and failure-risk assessment across physical infrastructure networks, including environments where monitoring data is sparse or uneven."
         },
         {
           "icon": "climate",
@@ -289,14 +289,14 @@
         {
           "icon": "inclusion",
           "title": "Financial Inclusion Technology",
-          "body": "Payment, identity and credit infrastructure for populations formal financial systems have not reached, where onboarding friction decides adoption more than product design does."
+          "body": "Payment, identity and credit infrastructure designed to expand access to digital financial services, reduce onboarding friction and support interoperability across underserved and emerging-market contexts."
         }
       ],
       "context": [
         {
           "heading": "Why the constraints differ",
           "paragraphs": [
-            "Institutional and emerging-market deployments invert several assumptions that enterprise AI architecture takes for granted. Connectivity is intermittent rather than assumed. Data is sparse, late and unevenly collected rather than abundant. The cost of a wrong answer is borne by someone with no alternative provider and no appeal.",
+            "Institutional and emerging-market deployments invert several assumptions that enterprise AI architecture takes for granted. Connectivity is intermittent rather than assumed. Data is sparse, late and unevenly collected rather than abundant. In public-service and development contexts, the consequences of a system failure may fall on people with limited access to alternative providers or effective channels of appeal.",
             "Systems built for those conditions look different: they degrade to a defined state rather than an undefined one, they keep a durable record of what was decided and on what basis, and they treat the absence of data as a fact to be represented rather than a gap to be silently imputed."
           ]
         },
@@ -308,11 +308,12 @@
           ]
         }
       ],
-      "standing": "Novra Intelligence has no contractual, partnership, vendor or advisory relationship with the Inter-American Development Bank, the World Bank Group, the Caribbean Development Bank, the African Development Bank, CAF, the European Union, or any other multilateral or government institution. This page describes capability and approach. It is not a record of past performance, and nothing on it should be read as an existing institutional relationship.",
+      "standing": "References to multilateral development banks, development-finance institutions, governments, and international organizations reflect the institutional contexts relevant to Novra Intelligence’s research and capabilities. Unless expressly stated otherwise, such references do not imply endorsement, partnership, contractual engagement, or an existing advisory or vendor relationship.",
       "engagement": {
         "heading": "Engagement",
         "body": "Enquiries from institutions, government bodies, development organisations and technology partners are welcome, including at the stage where the problem is still being scoped. The practice is led by its founder; engagement structure and capacity are discussed directly rather than assumed from a capability page."
-      }
+      },
+      "standingHeading": "Institutional relationship disclosure"
     }
   }
 }

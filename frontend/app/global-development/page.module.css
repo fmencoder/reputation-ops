@@ -14,12 +14,25 @@
   overflow: hidden;
 }
 
+/*
+ * A disclosure, not a capability. The accent rule, the raised panel and the
+ * card padding all said "read this first"; at the foot of the page, after the
+ * claims it qualifies, it needs to read as a note. What is left is a single
+ * hairline above it and quiet type — enough to separate it from the page, not
+ * enough to compete with it.
+ */
 .standing {
-  border: 1px solid var(--line);
-  border-left: 2px solid var(--accent);
-  border-radius: var(--radius);
-  padding: var(--s-6);
-  background: var(--ink-raised);
+  border-top: 1px solid var(--line);
+  padding-top: var(--s-5);
+}
+
+.standingHeading {
+  margin: 0 0 var(--s-3);
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-subtle);
 }
 
 .standingText {
@@ -27,7 +40,7 @@
   max-width: var(--measure);
   font-size: var(--fs-small);
   line-height: var(--lh-body);
-  color: var(--text-muted);
+  color: var(--text-subtle);
 }
 
 .areas {

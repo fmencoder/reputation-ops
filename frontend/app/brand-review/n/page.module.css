@@ -1,0 +1,217 @@
+/*
+ * Styling for the temporary N comparison only. It uses the site's tokens so the
+ * marks are judged against the real background, but it defines nothing the rest
+ * of the site consumes, and it changes no shared stylesheet.
+ */
+.page {
+  padding-block: var(--s-16) var(--s-24);
+  display: grid;
+  gap: var(--s-16);
+}
+
+.head {
+  max-width: var(--measure);
+}
+
+.eyebrow {
+  margin: 0 0 var(--s-3);
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.title {
+  margin: 0 0 var(--s-4);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.lead {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.block {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.blockTitle {
+  margin: 0;
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-bright);
+}
+
+.row {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.cell {
+  margin: 0;
+  padding: var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--ink-raised);
+}
+
+.hero {
+  display: block;
+  width: 160px;
+  height: 160px;
+  margin-bottom: var(--s-5);
+}
+
+.cellLabel {
+  margin: 0 0 var(--s-2);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.cellNote {
+  margin: 0;
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+/* Sizes are laid out on a common baseline so the marks can be compared by
+   weight rather than by where they happen to sit in their boxes. */
+.sizes {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-6);
+  min-height: 56px;
+  margin-bottom: var(--s-5);
+}
+
+.sizeItem {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-2);
+}
+
+.sizeCaption {
+  font-size: 0.6875rem;
+  color: var(--text-subtle);
+}
+
+.lockups {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.lockupRow {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  flex-wrap: wrap;
+  padding: var(--s-5) var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--ink-raised);
+}
+
+.lockupLabel {
+  font-size: var(--fs-small);
+  color: var(--text-subtle);
+}
+
+/* --- Replicated from components/Wordmark.module.css, value for value. ------
+   Not imported and not edited: this is here so a candidate mark can be seen
+   against the approved wordmark without touching the approved wordmark. */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  text-decoration: none;
+}
+
+.lockMark {
+  display: block;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+}
+
+.name {
+  display: block;
+  font-size: 1.1875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--text);
+}
+
+.suffix {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+}
+
+.favRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-8);
+}
+
+.favCell {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-3);
+}
+
+.favTile {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--ink);
+}
+
+.footnote {
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--text-subtle);
+}
+
+@media (min-width: 620px) {
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lockMark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .name {
+    font-size: 1.3125rem;
+  }
+
+  .suffix {
+    font-size: 0.6875rem;
+    letter-spacing: 0.26em;
+    margin-top: 4px;
+  }
+}

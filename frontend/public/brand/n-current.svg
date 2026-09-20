@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img">
+  <defs>
+    <linearGradient id="cur-post" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5b93ff"/>
+      <stop offset="100%" stop-color="#2f6bff"/>
+    </linearGradient>
+    <linearGradient id="cur-band" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#6aa4ff"/>
+      <stop offset="46%" stop-color="#4d84ff"/>
+      <stop offset="100%" stop-color="#7b4dff"/>
+    </linearGradient>
+    <linearGradient id="cur-rear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3f7bff"/>
+      <stop offset="100%" stop-color="#7b4dff"/>
+    </linearGradient>
+  </defs>
+  <path d="M44 4h16v56H44V4z" fill="url(#cur-rear)"/>
+  <path d="M4 4h15l25 34V4h0v56h-1L19 26v34H4V4z" fill="url(#cur-band)"/>
+  <path d="M4 4h15v56H4V4z" fill="url(#cur-post)"/>
+  <path d="M44 38v22h-1L33 46l11-8z" fill="#0a1024" fill-opacity="0.34"/>
+</svg>

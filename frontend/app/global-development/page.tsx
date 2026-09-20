@@ -15,11 +15,15 @@ export const metadata = pageMetadata({
 });
 
 /*
- * The standing note on this page is load-bearing and sits above the fold of
- * the reader's attention, not at the bottom of it. Naming development banks as
- * the context for a capability is exactly the construction a reader converts
- * into a client list, so the page denies that reading in its own words before
- * it asks for anything.
+ * The institutional relationship disclosure is still load-bearing — naming
+ * development banks as the context for a capability is exactly the
+ * construction a reader converts into a client list, and the page has to deny
+ * that reading in its own words. What changed is where it earns its place: it
+ * now sits after the capabilities and the operating conditions, as the note a
+ * reader meets once they have read what is being claimed, rather than as the
+ * first card on the page. It is styled as a disclosure and not as a capability
+ * — quieter type, no accent rule, no raised panel — because a disclosure that
+ * looks like a headline is read as one.
  */
 export default async function GlobalDevelopmentPage() {
   const { globalDevelopment: gd } = await getPages();
@@ -49,12 +53,6 @@ export default async function GlobalDevelopmentPage() {
           </div>
         }
       />
-
-      <Section bordered size="tight">
-        <aside className={styles.standing} aria-label="Statement of standing">
-          <p className={styles.standingText}>{gd.standing}</p>
-        </aside>
-      </Section>
 
       <Section bordered field tone="quiet">
         <h2 className="sr-only">Capability areas</h2>
@@ -95,6 +93,15 @@ export default async function GlobalDevelopmentPage() {
           <p className={styles.engagementBody}>{gd.engagement.body}</p>
           <Button href="/contact/">Contact →</Button>
         </div>
+      </Section>
+
+      <Section size="tight">
+        <aside className={styles.standing} aria-labelledby="institutional-disclosure">
+          <h2 id="institutional-disclosure" className={styles.standingHeading}>
+            {gd.standingHeading}
+          </h2>
+          <p className={styles.standingText}>{gd.standing}</p>
+        </aside>
       </Section>
     </>
   );
