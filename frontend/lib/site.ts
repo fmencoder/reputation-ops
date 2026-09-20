@@ -11,7 +11,7 @@ export const site = {
     name: "Fredrick Mendez",
     credential: "Fredrick Mendez, MBA",
     role: "Founder & Research Architect",
-    descriptor: "Technology Executive, AI Strategist & Emerging Technology Innovator",
+    descriptor: "Technology Executive, AI Strategist, Global Development Researcher & Emerging Technology Innovator",
     url: "https://novraintelligence.com/about/#fredrick-mendez",
   },
   nav: [

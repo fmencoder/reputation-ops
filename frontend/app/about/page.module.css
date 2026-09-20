@@ -26,7 +26,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.74;
+  opacity: 0.80;
 }
 
 .mapField :global(img) {

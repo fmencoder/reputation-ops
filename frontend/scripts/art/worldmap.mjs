@@ -24,6 +24,13 @@ const land = feature(world, world.objects.land);
  * its own, so the artwork composites onto the card instead of laying its own
  * dark rectangle over it.
  *
+ * `highlight`, `highlightRate` and `dotOpacity` control the accent dots. The
+ * default is a white dot roughly one land point in fourteen, which is right for
+ * a map read at arm's length on a page of its own and wrong behind a portrait:
+ * at that size the white reads as a star field rather than as terrain, which is
+ * the single thing the approved reference does not look like. The About frames
+ * ask for a pale blue accent, far rarer, so the land stays one blue mass.
+ *
  * `dotScale` sizes the land dots against the width the frame is actually
  * served at, which is not the width it is drawn at. A scene drawn 1707px wide
  * and delivered into a 460px card is downsampled by 3.6x, and a 1.15px dot
@@ -41,6 +48,11 @@ export function worldMapScene({
   stars = 140,
   transparent = false,
   dotScale = 1,
+  dotOpacity = 0.42,
+  dotColor = IMAGE.bluePale,
+  highlight = "#ffffff",
+  highlightOpacity = 0.9,
+  highlightRate = 0.93,
   fit = [0.03, 0.06, 0.97, 0.94],
 }) {
   const random = mulberry32(seed);
@@ -58,7 +70,7 @@ export function worldMapScene({
       const p = projection([lon, lat]);
       if (!p) continue;
       if (random() > 0.7) continue;
-      dots.push({ x: p[0], y: p[1], bright: random() > 0.93 });
+      dots.push({ x: p[0], y: p[1], bright: random() > highlightRate });
     }
   }
 
@@ -92,7 +104,7 @@ export function worldMapScene({
   <defs>${back.defs}${glowDefs(1)}</defs>
   ${back.body}
   <g>
-    ${dots.map((d) => `<circle cx="${d.x.toFixed(1)}" cy="${d.y.toFixed(1)}" r="${((d.bright ? 1.9 : 1.15) * dotScale).toFixed(2)}" fill="${d.bright ? "#ffffff" : IMAGE.bluePale}" opacity="${d.bright ? 0.9 : 0.42}"/>`).join("")}
+    ${dots.map((d) => `<circle cx="${d.x.toFixed(1)}" cy="${d.y.toFixed(1)}" r="${((d.bright ? 1.9 : 1.15) * dotScale).toFixed(2)}" fill="${d.bright ? highlight : dotColor}" opacity="${d.bright ? highlightOpacity : dotOpacity}"/>`).join("")}
   </g>
   <g fill="none" stroke="${IMAGE.blueLit}" stroke-opacity="0.4" stroke-width="1.1" filter="url(#bloomS)">
     ${links.map((d) => `<path d="${d}"/>`).join("")}

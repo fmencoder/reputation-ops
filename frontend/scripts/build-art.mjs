@@ -98,34 +98,55 @@ const TARGETS = [
    * The founder stage: the world map, approved as the environment behind the
    * portrait.
    *
-   * Each frame is rendered at the aspect its stage actually has — 460x366 on
-   * desktop, about 350x368 on a phone — because the background is
-   * object-fit:cover inside that box and any other aspect would be silently
-   * cropped to fit.
+   * Composed against the card as Chromium actually lays it out, which is not
+   * what the stylesheet reads like. `.portraitFrame` has a 300px max-width, but
+   * the stage centres its grid items rather than stretching them, so the
+   * portrait settles at 208-239px and the card at 350x291 on a phone and
+   * 460x307 on a desktop. The first cut of this artwork was drawn for an
+   * assumed 460x366 and 342x358, and object-fit:cover quietly ate a fifth of
+   * the phone frame's height to reconcile the difference. Measure the box
+   * before composing for it.
    *
-   * The `fit` extent is wider than the canvas on purpose, which makes the
-   * projection bind on height: the map fills the card top to bottom and runs
-   * off both sides. That is the opposite of the reference board, where a 2:1
-   * card holds the whole world beside the portrait — and it is what this frame
-   * needs. The portrait covers the middle 65% of a near-square card, so the
-   * only artwork anyone sees is a band around it. Fitted whole, the world's
-   * centre would sit entirely behind the face and the bands would show the
-   * empty Pacific. Bound on height, every band carries land.
+   * The whole world is in frame, which is what makes it read as a map: the
+   * Americas to the left of the portrait, Europe and Africa behind it, Asia and
+   * Australia to the right. The `fit` extent runs about 1.35x past the canvas
+   * horizontally, trimming the empty mid-Pacific so the drawn band fills the
+   * card's height instead of floating in it, and its vertical centre is offset
+   * because the land bounding box includes an Antarctica this map does not draw
+   * — centre the box and the continents sit visibly high.
    *
-   * No hub network and no arcs: the portrait is the subject, and a bright arc
-   * crossing a face is the one thing a background must never do. The phone
-   * frame is drawn denser so the land still reads as continents at a third of
-   * the pixel width rather than dissolving into speckle.
+   * Fine dots, not big ones. This is a halftone of the land, so the grid is
+   * dense (1.15 degrees) and each dot small; the phone frame is coarser in
+   * degrees and smaller in scale so its pitch on screen matches. And the accent
+   * dots are a near-white blue at one land point in a hundred, not white at one
+   * in fourteen: white at map scale behind a face reads as a star field, which
+   * is the one thing the approved reference is not. The land itself is drawn in
+   * the brand's lit blue rather than its palest, so it reads as cobalt against
+   * the card instead of grey. Stars are off for the same reason — the empty
+   * ocean stays empty.
+   *
+   * The dots are sized against what is actually delivered, not what is drawn.
+   * At 1024px and up the optimizer serves a 480px-wide frame into a card that
+   * is 920 device pixels across on a retina screen, so a dot that looks right
+   * in the 2027px original is invisible by the time it is painted. Every visual
+   * judgement here was made from a Chromium screenshot with .next/cache/images
+   * cleared first: that cache keys on the file path, so an edited artwork at an
+   * unchanged path serves the previous render and the check silently passes on
+   * the old picture.
    */
   ["about-worldmap", () => worldMapScene({
-    width: 1280, height: 1016, seed: 5310, density: 1.7,
-    network: false, stars: 90, transparent: true, dotScale: 3.4,
-    fit: [-1.0, 0.06, 2.0, 1.2],
+    width: 1520, height: 1013, seed: 5310, density: 1.15, dotScale: 2.0,
+    network: false, stars: 0, transparent: true,
+    dotColor: "#7db4ff", dotOpacity: 0.78,
+    highlight: "#dbe8ff", highlightOpacity: 0.72, highlightRate: 0.99,
+    fit: [-0.18, 0.024, 1.18, 1.124],
   })],
   ["about-worldmap-narrow", () => worldMapScene({
-    width: 800, height: 840, seed: 5310, density: 2.2,
-    network: false, stars: 60, transparent: true, dotScale: 2.4,
-    fit: [-1.0, 0.06, 2.0, 1.2],
+    width: 840, height: 700, seed: 5310, density: 1.45, dotScale: 1.75,
+    network: false, stars: 0, transparent: true,
+    dotColor: "#7db4ff", dotOpacity: 0.78,
+    highlight: "#dbe8ff", highlightOpacity: 0.72, highlightRate: 0.99,
+    fit: [-0.16, 0.057, 1.16, 1.057],
   })],
 ];
 
