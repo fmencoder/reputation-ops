@@ -7,7 +7,7 @@ import styles from "./page.module.css";
 export const metadata = pageMetadata({
   title: "Contact",
   description:
-    "How to reach Fredrick Mendez about anything published on NOVRA Intelligence, including corrections.",
+    "How to reach NOVRA Intelligence about research, publications, institutional collaboration, technology initiatives and media requests.",
   path: "/contact/",
 });
 

@@ -60,7 +60,16 @@ async function featherEdges(buffer, feather = 0.16) {
     .toBuffer();
 }
 
-/* Scenes that run past their frame and must not end on a straight cut. */
+/*
+ * Scenes that run past their frame and must not end on a straight cut.
+ *
+ * The About world map is deliberately NOT here. Its frame is a near-square
+ * card with the portrait covering the middle, so the only part of the artwork
+ * anyone ever sees is the outer band — which is exactly the band featherEdges
+ * fades to nothing. Feathered, the map reads as an empty card. It needs no
+ * feather anyway: it is drawn transparent, so it has no rectangle of its own
+ * to end on.
+ */
 const BLEEDS = new Set(["home-earth", "home-earth-narrow", "tech-cubes", "tech-cubes-narrow", "about-orbital", "about-orbital-narrow"]);
 
 const TARGETS = [
@@ -81,8 +90,43 @@ const TARGETS = [
   ["global-map", () => worldMapScene({ width: 1520, height: 860, seed: 4471, density: 1.95 })],
   ["global-map-narrow", () => worldMapScene({ width: 800, height: 600, seed: 4471, density: 2.4 })],
 
+  /* Research keeps the orbital field. */
   ["about-orbital", () => orbitalScene({ width: 1280, height: 1060, transparent: true })],
   ["about-orbital-narrow", () => orbitalScene({ width: 800, height: 720, cx: 0.5, cy: 0.46, transparent: true })],
+
+  /*
+   * The founder stage: the world map, approved as the environment behind the
+   * portrait.
+   *
+   * Each frame is rendered at the aspect its stage actually has — 460x366 on
+   * desktop, about 350x368 on a phone — because the background is
+   * object-fit:cover inside that box and any other aspect would be silently
+   * cropped to fit.
+   *
+   * The `fit` extent is wider than the canvas on purpose, which makes the
+   * projection bind on height: the map fills the card top to bottom and runs
+   * off both sides. That is the opposite of the reference board, where a 2:1
+   * card holds the whole world beside the portrait — and it is what this frame
+   * needs. The portrait covers the middle 65% of a near-square card, so the
+   * only artwork anyone sees is a band around it. Fitted whole, the world's
+   * centre would sit entirely behind the face and the bands would show the
+   * empty Pacific. Bound on height, every band carries land.
+   *
+   * No hub network and no arcs: the portrait is the subject, and a bright arc
+   * crossing a face is the one thing a background must never do. The phone
+   * frame is drawn denser so the land still reads as continents at a third of
+   * the pixel width rather than dissolving into speckle.
+   */
+  ["about-worldmap", () => worldMapScene({
+    width: 1280, height: 1016, seed: 5310, density: 1.7,
+    network: false, stars: 90, transparent: true, dotScale: 3.4,
+    fit: [-1.0, 0.06, 2.0, 1.2],
+  })],
+  ["about-worldmap-narrow", () => worldMapScene({
+    width: 800, height: 840, seed: 5310, density: 2.2,
+    network: false, stars: 60, transparent: true, dotScale: 2.4,
+    fit: [-1.0, 0.06, 2.0, 1.2],
+  })],
 ];
 
 for (const slug of ARTICLE_SLUGS) {

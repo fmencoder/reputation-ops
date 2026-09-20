@@ -14,15 +14,22 @@
   overflow: hidden;
 }
 
-/* The orbital field fills the stage; the portrait sits on it. */
-.orbital {
+/*
+ * The world map fills the stage; the portrait sits on it.
+ *
+ * Held well below full strength. At 0.95 — what the orbital field ran at — the
+ * dot matrix competes with the face for attention, which is the one thing the
+ * approved reference does not do: there the land is an environment you read
+ * after the portrait, not with it.
+ */
+.mapField {
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.95;
+  opacity: 0.74;
 }
 
-.orbital :global(img) {
+.mapField :global(img) {
   width: 100%;
   height: 100%;
   object-fit: cover;

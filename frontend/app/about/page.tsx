@@ -41,17 +41,17 @@ export default async function AboutPage() {
            * work, and a portrait that fills half the screen says otherwise.
            * Nothing is set beneath it.
            *
-           * What is new is the field it stands in: the orbital environment from
-           * the approved board, with the photograph inset on it so the geometry
-           * reads around the portrait rather than behind it — where, the image
-           * covering its own frame edge to edge, it would never be seen at all.
-           * The man is the subject; the system is what he is standing in.
+           * What is new is the field it stands in: the world map environment
+           * from the approved reference, with the photograph inset on it so the
+           * land reads around the portrait rather than behind it — where, the
+           * image covering its own frame edge to edge, it would never be seen
+           * at all. The man is the subject; the reach is what he stands in.
            */
           <figure className={styles.portraitStage} style={{ margin: 0 }}>
             <BrandImage
-              name="about-orbital"
+              name="about-worldmap"
               alt=""
-              className={styles.orbital}
+              className={styles.mapField}
               sizes="(min-width: 1024px) 480px, 100vw"
             />
             <div className={styles.portraitFrame}>

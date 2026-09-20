@@ -209,7 +209,7 @@ for (const target of PAGES) {
       technology: "tech-cubes",
       insights: "insights-map",
       research: "about-orbital",
-      about: "about-orbital",
+      about: "about-worldmap",
       article: "article-",
     }[target.name];
     if (OWNED && !state.art.some((src) => src.includes(OWNED))) {

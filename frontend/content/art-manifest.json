@@ -39,6 +39,14 @@
     "width": 1067,
     "height": 960
   },
+  "about-worldmap": {
+    "width": 1707,
+    "height": 1355
+  },
+  "about-worldmap-narrow": {
+    "width": 1067,
+    "height": 1120
+  },
   "article-agentic-ai-reliability-budget": {
     "width": 2240,
     "height": 1067
