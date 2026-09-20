@@ -10,7 +10,8 @@ export function Footer() {
         <div className={styles.identity}>
           <Wordmark size="compact" />
           <p className={styles.blurb}>
-            Research and perspectives on intelligent systems and digital infrastructure.
+            Research, analysis, and strategic perspectives on artificial intelligence, blockchain,
+            financial technology, and digital infrastructure.
           </p>
           <a className={styles.email} href={`mailto:${site.email}`}>
             {site.email}
