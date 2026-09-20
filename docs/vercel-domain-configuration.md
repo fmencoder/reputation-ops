@@ -119,3 +119,65 @@ so the following is engineering reasoning, not a Vercel instruction:
 Proxying can be enabled later, deliberately, once the certificate is issued and
 the site is confirmed healthy. It should not be switched on for convenience
 during the cutover.
+
+---
+
+## Production promotion — 2026-09-20
+
+The blocker recorded above is closed. Authorised: promote the reviewed build to
+production only. **No DNS record was changed, no nameserver touched, no email
+configured, no Production Branch change, no git merge, no code change.**
+
+### Pre-promotion checks
+
+| Check | Result |
+| --- | --- |
+| Deployment ↔ commit | `dpl_BvJ7GYAPdofVmGHfwiH4iSDZfL6V` → sha `d4d0ab2fe7208558dc64156fe86648da2ec2d678` |
+| App code unchanged since `d4d0ab2` | Yes — `git diff d4d0ab2..HEAD` touches only `docs/` |
+| QA at that tree | BROWSER_QA / A11Y_QA / CSP_QA / KEYBOARD_QA / SEO_QA all PASS; Lighthouse mobile 96–97, desktop 100 |
+| Rollback point recorded | `dpl_6uxrCBQXGm8c4tUkvYQFGLGzJGbp` (sha `492ab6e`), still `isRollbackCandidate: true` |
+
+### How it was promoted, and why not with promote
+
+`request_promote` returned **422 Unprocessable Entity**. The reviewed build was
+a preview-target deployment, and that endpoint aliases an existing production
+build rather than converting a preview one — its own documentation says it does
+not rebuild and points at the deployments endpoint when a rebuild is needed.
+
+So the promotion was done as a **redeploy of the same deployment with
+`target: production`**. `withLatestCommit` was left unset, which is the part
+that matters: the redeploy inherits the original `gitSource`, so it rebuilt the
+*same commit* rather than the branch tip. Vercel confirms the new deployment's
+sha is `d4d0ab2`, and the branch, the project's production branch and the
+repository history are all untouched.
+
+### Result
+
+    PREVIOUS_PRODUCTION  dpl_6uxrCBQXGm8c4tUkvYQFGLGzJGbp  sha 492ab6e  (rollback candidate)
+    NEW_PRODUCTION       dpl_8irAdBUujNDHccrozcM9yrhH3DTc  sha d4d0ab2  READY  target=production
+
+### One thing to read carefully
+
+The new production deployment's alias list now contains `novraintelligence.com`
+and `www.novraintelligence.com`. **That is a Vercel-internal mapping, not DNS.**
+Vercel assigns a project's custom domains to whatever is currently production;
+it has no effect until DNS resolves to Vercel. Verified against the
+authoritative Cloudflare nameservers immediately after promotion:
+
+    apex A    192.0.78.24 (ttl 300), 192.0.78.25 (ttl 300)   -> WordPress.com
+    www       CNAME novraintelligence.com
+    NS        igor.ns.cloudflare.com, ulla.ns.cloudflare.com
+    MX / TXT  ENODATA (unchanged — no mail record added or removed)
+
+The public site is still served by WordPress. Nothing a visitor sees has
+changed.
+
+### What could not be verified
+
+The deployed artefact's files were not read. `get_deployment_file_contents`
+returns 401 through this connector, and egress to `*.vercel.app` is blocked by
+network policy. The content claim therefore rests on commit identity — Vercel
+reports the build's sha, and that commit is verified to contain each required
+file — plus the build reaching READY, which means `next build`, `tsc` and
+`eslint` all succeeded. That is not the same as fetching the live files, and is
+not presented as such.
