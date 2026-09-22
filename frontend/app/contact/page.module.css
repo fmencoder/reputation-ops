@@ -34,3 +34,12 @@
     padding: var(--s-8);
   }
 }
+
+/* Sits between the section heading and the first label, on the same rhythm as
+   .note below the address above it. */
+.formIntro {
+  margin-bottom: var(--s-6);
+  color: var(--text-muted);
+  font-size: var(--fs-small);
+  max-width: 62ch;
+}

@@ -194,7 +194,11 @@
       },
       "lead": "For inquiries regarding NOVRA Intelligence research, publications, institutional collaboration, technology initiatives, or media requests, please contact us directly.",
       "email": "contact@novraintelligence.com",
-      "note": "For research inquiries or requests for additional information, please include the relevant publication or subject in your message."
+      "note": "For research inquiries or requests for additional information, please include the relevant publication or subject in your message.",
+      "form": {
+        "heading": "Send an inquiry",
+        "intro": "For research, institutional collaboration, technology initiatives, publications, or media requests, send us a message below."
+      }
     },
     "capabilities": {
       "eyebrow": "CAPABILITIES",

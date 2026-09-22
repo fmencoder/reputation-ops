@@ -1,6 +1,7 @@
 import { getPages } from "@/lib/cms";
 import { PageHeader } from "@/components/PageHeader";
 import { Section } from "@/components/Section";
+import { ContactForm } from "@/components/ContactForm";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -25,6 +26,18 @@ export default async function ContactPage() {
             {contact.email}
           </a>
           <p className={styles.note}>{contact.note}</p>
+        </div>
+      </Section>
+      {/*
+        The form is a second card rather than a widening of the first: the page
+        already had a shape, and the inquiry route is an addition to it, not a
+        replacement for the direct address above.
+      */}
+      <Section size="tight">
+        <div className={styles.card}>
+          <h2 className={styles.heading}>{contact.form.heading}</h2>
+          <p className={styles.formIntro}>{contact.form.intro}</p>
+          <ContactForm email={contact.email} />
         </div>
       </Section>
     </>

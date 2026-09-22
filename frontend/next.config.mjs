@@ -46,9 +46,18 @@ const CSP = [
   "object-src 'none'",
   "frame-ancestors 'none'",
   "frame-src 'none'",
-  // No form exists on this site; contact is a mailto: link, which is a
-  // navigation rather than a submission. Revisit this if a form is added.
-  "form-action 'none'",
+  /*
+   * Was 'none' while contact was only a mailto: link. The contact page now
+   * carries a real <form>, so this is the revisit that comment asked for.
+   *
+   * 'self' rather than 'none': the form submits with fetch, which 'none' would
+   * not have blocked, but a <form> whose JavaScript never ran falls back to a
+   * native submit to its own URL — and under 'none' that is blocked silently,
+   * with no message and nothing in the page to explain it. 'self' keeps the
+   * only property worth having here, which is that no submission can be
+   * redirected to an origin this site does not control.
+   */
+  "form-action 'self'",
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
   // Inter is downloaded at build time by next/font and served from this origin,

@@ -106,7 +106,13 @@ describe("snapshot page-content merge", () => {
   it("reports what it preserved", () => {
     const { preservedPages, preservedFields } = mergePageContent(approved, derivedFrom(approved));
     expect(preservedPages).toEqual(["capabilities", "globalDevelopment"]);
-    expect(preservedFields).toEqual(["home.institutional"]);
+    /*
+     * Two authored fields on pages the scrape DOES produce, and so two fields
+     * the generator would delete without the merge. `contact.form` is the
+     * inquiry form's heading and intro; it joined the list when the form was
+     * added, which is this test doing its job rather than a regression.
+     */
+    expect(preservedFields).toEqual(["contact.form", "home.institutional"]);
   });
 
   it("is idempotent — a second run changes nothing", () => {

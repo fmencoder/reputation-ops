@@ -13,6 +13,7 @@
     "art": "node scripts/build-art.mjs",
     "qa:a11y": "node scripts/a11y-qa.mjs",
     "qa:csp": "node scripts/csp-qa.mjs",
+    "qa:contact": "node scripts/contact-form-qa.mjs",
     "qa:keyboard": "node scripts/keyboard-qa.mjs",
     "qa:seo": "node scripts/seo-qa.mjs",
     "qa:browser": "node scripts/browser-qa.mjs",

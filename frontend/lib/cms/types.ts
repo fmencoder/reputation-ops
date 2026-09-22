@@ -100,6 +100,11 @@ export interface AboutCopy extends PageCopy {
 export interface ContactCopy extends PageCopy {
   email: string;
   note: string;
+  /* The inquiry form's own copy. Authored here rather than in the component
+     for the same reason every other string on the site is: the page's words
+     live in the content layer, and a heading hardcoded into JSX is a heading
+     nobody editing content will ever find. */
+  form: { heading: string; intro: string };
 }
 
 /**
