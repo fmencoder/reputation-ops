@@ -30,12 +30,23 @@ WordPress.com and not in Vercel.** Changing records through the WordPress.com
 tools would edit a zone that is not in effect and would change nothing, and the
 API refuses such writes anyway when `has_wpcom_nameservers` is false.
 
-**What could not be determined from here:** which registrar holds the zone, and
-what the authoritative records and their TTLs actually are. Egress to
-`novraintelligence.com` is blocked by the sandbox's network policy and no DNS
-resolver is available, so the zone could not be queried. The records below are
-what WordPress.com holds in its dormant copy — treat them as the expected shape
-and **confirm the real ones at the registrar before touching anything.**
+**Superseded 2026-09-19, corrected here.** This section originally said the
+authoritative zone could not be read from this environment. That was wrong:
+HTTPS egress to the domain is blocked by policy, but the system resolver on
+UDP/53 is not, and the zone was subsequently read directly from its own
+nameservers. `docs/dns-authoritative-snapshot.md` holds that reading and is the
+authority; the dormant WordPress.com copy below is kept only for contrast.
+
+What is now known: DNS is hosted at **Cloudflare** (`ulla.ns.cloudflare.com`,
+`igor.ns.cloudflare.com`), the apex records are **DNS-only, not proxied**, and
+**every record the cutover touches already has a TTL of 300**. Re-verified
+2026-09-22 — unchanged.
+
+Still not determinable from here: which **registrar** holds the domain. That
+only matters if nameservers change, and this cutover does not change them.
+
+**Take a full export of the live zone from Cloudflare before step 1.** That
+export — not any table in this document — is the rollback artefact.
 
 ### Records WordPress.com holds (dormant copy)
 
@@ -50,20 +61,25 @@ export — not this table — is the rollback artefact.
 
 ---
 
-## 2. TTL preparation
+## 2. TTL preparation — not required
 
-The only TTL visible here is 14400 (4 hours) on the dormant `www` CNAME. The
-authoritative TTLs are unknown.
+**This step is no longer needed, and doing it would only cost a wait.**
 
-1. At the registrar, read the current TTL on the apex A records and the `www`
-   record.
-2. Lower both to **300 seconds**.
-3. **Wait at least the length of the previous TTL** before cutting over — if the
-   old TTL was 14400, wait four hours. Lowering a TTL does not take effect until
-   the old value has expired from resolver caches, which is the step most
-   rushed cutovers skip and then discover during the rollback they cannot make.
-4. Leave the TTL at 300 until the site has been stable for 48 hours, then raise
-   it back to 3600.
+It was written when the authoritative TTLs were unknown and the only visible
+value was the 14400 on WordPress.com's dormant `www` CNAME. Reading the live
+zone settled it: the apex `A` records and the `www` record are already at
+**TTL 300**. Re-verified 2026-09-22.
+
+So there is nothing to lower and no old TTL to wait out. Rollback propagates in
+about five minutes.
+
+1. Confirm at Cloudflare that the apex `A` and `www` records still read TTL 300.
+2. If either has been raised since, lower it to 300 and **wait out the previous
+   value** before cutting over — lowering a TTL does not take effect until the
+   old one has expired from resolver caches, and that is the step whose absence
+   is discovered during a rollback that will not propagate.
+3. After the site has been stable for 48 hours, raising the TTL to 3600 is
+   optional housekeeping.
 
 ---
 

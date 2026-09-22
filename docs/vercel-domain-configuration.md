@@ -1,5 +1,20 @@
 # Vercel custom-domain configuration
 
+> **State as of 2026-09-22 — read this first.**
+>
+> This document was written for an earlier candidate and its evidence still
+> refers to it. Both states are true; they are different states.
+>
+> | | |
+> | --- | --- |
+> | HISTORICAL | `d4d0ab2` was prepared as a Vercel **production** deployment (`dpl_8irAdBUujNDHccrozcM9yrhH3DTc`) while public DNS stayed on WordPress. |
+> | CURRENT PRE-MERGE | The candidate is `ce2cf336` plus the closure commits on `claude/novra-founder-worldmap-0rf06p`. It is **preview only** and has **not** been promoted. |
+> | PRODUCTION NOW | Still `dpl_8irAdBUujNDHccrozcM9yrhH3DTc` at `d4d0ab2`. |
+> | PUBLIC DNS NOW | Still WordPress.com — apex `192.0.78.24` / `192.0.78.25`. Re-verified against the authoritative Cloudflare nameservers 2026-09-22. |
+> | CUTOVER | Has **not** occurred. |
+>
+> Nothing below should be read as saying the newer candidate is deployed.
+
 Recorded 2026-09-20. Vercel project configuration only. **No DNS record was
 changed, no nameserver was touched, no email was configured, and no cutover was
 initiated.**
