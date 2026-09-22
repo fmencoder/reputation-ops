@@ -5,7 +5,7 @@
     "The frontend prefers a live fetch from the WordPress REST API and falls back",
     "to this file when the API is unreachable at build time."
   ],
-  "generatedAt": "2026-09-03",
+  "generatedAt": "2026-09-22",
   "source": {
     "blogId": 257059568,
     "origin": "site/wp-payload/*.json (the exact payloads published to the CMS)",
@@ -218,7 +218,24 @@
         "Blockchain Infrastructure",
         "Financial Technology",
         "Digital Infrastructure"
-      ]
+      ],
+      "institutional": {
+        "label": "Institutions & public sector",
+        "heading": "Applied intelligence for complex global systems",
+        "body": "The same systems work applies where the operating conditions are hardest: public institutions, development organisations and emerging markets, where a failure is a service somebody did not receive rather than a degraded feature.",
+        "links": [
+          {
+            "label": "Capabilities",
+            "href": "/capabilities/",
+            "note": "AI and agentic systems, data intelligence, digital transformation, AI governance, decision systems."
+          },
+          {
+            "label": "Global Development & Public Sector",
+            "href": "/global-development/",
+            "note": "Digital government, institutional AI, development intelligence, infrastructure and climate analytics."
+          }
+        ]
+      }
     },
     "insights": {
       "eyebrow": "Insights That Matter",
@@ -382,6 +399,125 @@
       "lead": "For inquiries regarding NOVRA Intelligence research, publications, institutional collaboration, technology initiatives, or media requests, please contact us directly.",
       "email": "contact@novraintelligence.com",
       "note": "For research inquiries or requests for additional information, please include the relevant publication or subject in your message."
+    },
+    "capabilities": {
+      "eyebrow": "CAPABILITIES",
+      "headline": {
+        "lead": "Applied intelligence for",
+        "accent": "complex systems."
+      },
+      "lead": "Novra Intelligence works at the systems layer of applied AI: how autonomous and data-driven systems are architected, governed and operated so their behaviour stays bounded, observable and recoverable once they are carrying real work.",
+      "areas": [
+        {
+          "icon": "agentic",
+          "title": "AI & Agentic Systems",
+          "body": "Architecture for systems that plan and act rather than answer. Reliability budgeting across chained steps, explicit limits on autonomy, and deterministic control in front of anything irreversible."
+        },
+        {
+          "icon": "data",
+          "title": "Data Intelligence & Analytics",
+          "body": "Data platforms and analytical models built so that a number reaching a decision-maker carries its provenance, its uncertainty and its refresh interval with it rather than arriving bare."
+        },
+        {
+          "icon": "transformation",
+          "title": "Digital Transformation",
+          "body": "Sequencing technology change around the workflows an organisation actually runs, so that automation lands on processes that have been made legible first instead of encoding the confusion."
+        },
+        {
+          "icon": "governance",
+          "title": "AI Governance",
+          "body": "Oversight designed as an architecture with a latency budget rather than an approval button — the difference between a control that functions and one that only appears in a contract."
+        },
+        {
+          "icon": "decision",
+          "title": "Automation & Decision Systems",
+          "body": "Decision-support and workflow automation where the system's authority is stated, its failure modes are bounded, and a person can intervene inside the window where intervention still changes the outcome."
+        }
+      ],
+      "method": [
+        {
+          "heading": "Failure is the design input",
+          "paragraphs": [
+            "A production system is not one that avoids failure; it is one whose failures are bounded, observable and recoverable. That framing decides the architecture before any model is chosen, because it determines where state is checkpointed, which steps are permitted to retry, and which actions are put behind a gate that does not reason probabilistically.",
+            "The same reasoning applies to autonomy. A step that succeeds ninety-nine times in a hundred is excellent in isolation and unusable fifty steps deep, so the useful question is not how accurate a component is but how much unreliability the chain around it has been budgeted to absorb."
+          ]
+        },
+        {
+          "heading": "Oversight has a latency budget",
+          "paragraphs": [
+            "Human-in-the-loop appears in procurement documents and regulation as though it were a control. Most implementations cannot function as one: the reviewer is shown a decision without the context needed to judge it, inside a window too short to judge it in, with no path to reverse it afterwards.",
+            "Treating oversight as an architecture rather than an approval step changes what gets built — what is surfaced, how long the system waits, what it does when nobody answers, and what remains reversible after it has acted."
+          ]
+        }
+      ],
+      "standing": "Novra Intelligence is an independent research and engineering practice. The areas above describe the work it does and the methods it applies. They are not a record of completed engagements, and no capability on this page should be read as a claim of past performance for any named organisation."
+    },
+    "globalDevelopment": {
+      "eyebrow": "GLOBAL DEVELOPMENT & PUBLIC SECTOR",
+      "headline": {
+        "lead": "Institutional technology for",
+        "accent": "emerging markets."
+      },
+      "lead": "Public institutions and development organisations are adopting AI and data systems into environments where a failure is not a degraded feature but a service somebody did not receive. That constraint, not the model, shapes the architecture.",
+      "areas": [
+        {
+          "icon": "government",
+          "title": "Digital Government",
+          "body": "Service delivery platforms and administrative workflow automation designed around reliability, accessibility, and continuity—recognizing that a failed digital transaction can mean a citizen does not receive an essential public service when needed."
+        },
+        {
+          "icon": "governance",
+          "title": "Institutional AI",
+          "body": "AI adoption inside organisations carrying audit, procurement and accountability obligations, where a decision has to remain explainable long after the run that produced it."
+        },
+        {
+          "icon": "data",
+          "title": "Development Intelligence",
+          "body": "Data systems for programme design and portfolio oversight: indicator pipelines, monitoring and evaluation technology, and the analytics layered on top of them."
+        },
+        {
+          "icon": "transformation",
+          "title": "SME Digital Transformation",
+          "body": "Technology adoption for small and medium enterprises, with particular attention to operational capacity, staff time, implementation constraints and the sustainability of technology adoption."
+        },
+        {
+          "icon": "infrastructure",
+          "title": "Infrastructure Intelligence",
+          "body": "Data and analytical systems for asset condition, utilization, maintenance and failure-risk assessment across physical infrastructure networks, including environments where monitoring data is sparse or uneven."
+        },
+        {
+          "icon": "climate",
+          "title": "Climate & Resilience Analytics",
+          "body": "Geospatial and time-series analysis for climate exposure and resilience planning, and the decision-support that turns a hazard model into a sequencing decision under a fixed budget."
+        },
+        {
+          "icon": "inclusion",
+          "title": "Financial Inclusion Technology",
+          "body": "Payment, identity and credit infrastructure designed to expand access to digital financial services, reduce onboarding friction and support interoperability across underserved and emerging-market contexts."
+        }
+      ],
+      "context": [
+        {
+          "heading": "Why the constraints differ",
+          "paragraphs": [
+            "Institutional and emerging-market deployments invert several assumptions that enterprise AI architecture takes for granted. Connectivity is intermittent rather than assumed. Data is sparse, late and unevenly collected rather than abundant. In public-service and development contexts, the consequences of a system failure may fall on people with limited access to alternative providers or effective channels of appeal.",
+            "Systems built for those conditions look different: they degrade to a defined state rather than an undefined one, they keep a durable record of what was decided and on what basis, and they treat the absence of data as a fact to be represented rather than a gap to be silently imputed."
+          ]
+        },
+        {
+          "heading": "Accountability outlives the deployment",
+          "paragraphs": [
+            "Public-sector and development work is examined after the fact — by auditors, by evaluators, by successor teams, and sometimes by the people the system decided about. A system that cannot reconstruct why it did what it did in a given month is not merely opaque; it is unusable as evidence in the review that inevitably follows.",
+            "That is an architectural requirement, not a reporting feature. It decides what is logged, how long it is kept, what is versioned alongside it, and whether a model's inputs can still be assembled once the model itself has been replaced."
+          ]
+        }
+      ],
+      "standing": "References to multilateral development banks, development-finance institutions, governments, and international organizations reflect the institutional contexts relevant to Novra Intelligence’s research and capabilities. Unless expressly stated otherwise, such references do not imply endorsement, partnership, contractual engagement, or an existing advisory or vendor relationship.",
+      "engagement": {
+        "heading": "Engagement",
+        "body": "Enquiries from institutions, government bodies, development organisations and technology partners are welcome, including at the stage where the problem is still being scoped. The practice is led by its founder; engagement structure and capacity are discussed directly rather than assumed from a capability page."
+      },
+      "standingHeading": "Institutional relationship disclosure"
     }
   }
 }

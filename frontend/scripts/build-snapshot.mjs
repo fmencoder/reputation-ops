@@ -29,8 +29,51 @@ const REPO = join(HERE, "..", "..");
 const read = (p) => readFileSync(join(REPO, p), "utf8");
 const readJson = (p) => JSON.parse(read(p));
 
+/*
+ * The two halves of this script have different lifetimes, and conflating them
+ * is why `npm run snapshot` could not run at all in a clean checkout.
+ *
+ * PAGE COPY is live. Its input, site/pages/*.html, is tracked, and its output,
+ * frontend/content/pages.json, is imported by the frontend on every build. It
+ * regenerates deterministically from a fresh clone, every run.
+ *
+ * ARTICLES are historical. They were reconstructed once, during the migration,
+ * from a WordPress export: site/wp-payload/*.json and
+ * artifacts/phase0-production-record.json. Neither is in the repository —
+ * wp-payload was never committed at all, and artifacts/ is gitignored — while
+ * the *output*, frontend/content/cms-snapshot.json, is committed and carries
+ * all five articles with the dates that export recorded.
+ *
+ * So the script used to open a gitignored file unconditionally on line three
+ * and die with ENOENT before it could do the half it was still capable of. The
+ * dependency is now explicit: articles are regenerated only when their inputs
+ * are actually present, or when --articles demands it, in which case their
+ * absence is a loud failure rather than a crash.
+ */
+const ARTICLE_SOURCES = {
+  payloads: "site/wp-payload",
+  liveMetadata: "artifacts/phase0-production-record.json",
+};
+const missingArticleSources = Object.values(ARTICLE_SOURCES).filter(
+  (rel) => !existsSync(join(REPO, rel)),
+);
+const articleSourcesPresent = missingArticleSources.length === 0;
+const demandArticles = process.argv.includes("--articles");
+
+if (demandArticles && !articleSourcesPresent) {
+  console.error(
+    "SNAPSHOT FAILED\n" +
+      "  --articles was requested but the migration inputs are not present:\n" +
+      missingArticleSources.map((rel) => `    ${rel}`).join("\n") +
+      "\n\n  These are one-time WordPress export artefacts. They are not tracked in\n" +
+      "  this repository, and their output is already committed at\n" +
+      "  frontend/content/cms-snapshot.json. Restore them from the migration\n" +
+      "  export before asking for article regeneration.",
+  );
+  process.exit(1);
+}
+
 const permalinks = readJson("site/wp-permalinks.json");
-const production = readJson("artifacts/phase0-production-record.json");
 const media = readJson("site/wp-media.json").assets;
 
 const problems = [];
@@ -81,7 +124,16 @@ const normalize = (html) =>
     .trim();
 
 // ------------------------------------------------------------------ articles -
-const payloadDir = "site/wp-payload";
+const snapshotFile = join(HERE, "..", "content", "cms-snapshot.json");
+const committedSnapshot = existsSync(snapshotFile)
+  ? JSON.parse(readFileSync(snapshotFile, "utf8"))
+  : null;
+
+/** Derive the five articles from the WordPress export. Only ever called when
+ *  that export is on disk. */
+function deriveArticles() {
+const production = readJson(ARTICLE_SOURCES.liveMetadata);
+const payloadDir = ARTICLE_SOURCES.payloads;
 const articleFiles = readdirSync(join(REPO, payloadDir)).filter((f) => /^2\d-article-/.test(f));
 
 /* The editorial kicker each article carries on its cards. It is not a WordPress
@@ -139,6 +191,42 @@ const articles = articleFiles.map((file) => {
   };
 });
 articles.sort((a, b) => b.date.localeCompare(a.date));
+  return { articles, source: {
+    blogId: production.wordpress.blogId,
+    origin: "site/wp-payload/*.json (the exact payloads published to the CMS)",
+    liveMetadata: ARTICLE_SOURCES.liveMetadata,
+  } };
+}
+
+/**
+ * Validate the committed articles rather than rebuild them.
+ *
+ * This is the path a fresh clone takes. The committed snapshot is the only
+ * copy of this content left, so it is checked rather than trusted: five
+ * articles, each with the fields the frontend reads and a body substantial
+ * enough not to be a hollow shell.
+ */
+function loadCommittedArticles() {
+  if (!committedSnapshot) {
+    problems.push(`no article source and no committed snapshot at ${snapshotFile}`);
+    return { articles: [], source: {} };
+  }
+  const list = committedSnapshot.articles ?? [];
+  if (list.length !== 5) problems.push(`committed snapshot has ${list.length} articles, expected 5`);
+  for (const a of list) {
+    for (const field of ["slug", "title", "path", "date", "modified", "bodyHtml"]) {
+      if (!a?.[field]) problems.push(`committed article ${a?.slug ?? "?"} is missing ${field}`);
+    }
+    if (typeof a?.bodyHtml === "string" && a.bodyHtml.length < 400) {
+      problems.push(`committed article ${a.slug} has a suspiciously short body`);
+    }
+  }
+  return { articles: list, source: committedSnapshot.source ?? {} };
+}
+
+const { articles, source: articleSource } = articleSourcesPresent
+  ? deriveArticles()
+  : loadCommittedArticles();
 
 // --------------------------------------------------------------- page copy --
 const page = (name) => read(`site/pages/${name}.html`);
@@ -298,7 +386,9 @@ if (lost.length) problems.push(`snapshot would drop authored content: ${lost.joi
 if (pages.about.manifesto.paragraphs.length !== 3) {
   problems.push(`manifesto has ${pages.about.manifesto.paragraphs.length} paragraphs, expected 3`);
 }
-if (articles.length !== 5) problems.push(`found ${articles.length} articles, expected 5`);
+if (articleSourcesPresent && articles.length !== 5) {
+  problems.push(`found ${articles.length} articles, expected 5`);
+}
 for (const domain of ["home", "insights"]) {
   if (pages[domain].domains.length !== 4) {
     problems.push(`${domain} lists ${pages[domain].domains.length} domains, expected 4`);
@@ -317,17 +407,32 @@ const snapshot = {
     "The frontend prefers a live fetch from the WordPress REST API and falls back",
     "to this file when the API is unreachable at build time.",
   ],
-  generatedAt: new Date().toISOString().slice(0, 10),
-  source: {
-    blogId: production.wordpress.blogId,
-    origin: "site/wp-payload/*.json (the exact payloads published to the CMS)",
-    liveMetadata: "artifacts/phase0-production-record.json",
-  },
+  generatedAt: "",
+  source: articleSource,
   articles,
   pages,
 };
 
-writeFileSync(join(HERE, "..", "content", "cms-snapshot.json"), JSON.stringify(snapshot, null, 2) + "\n");
+/*
+ * generatedAt moves only when the content moves.
+ *
+ * Stamping today's date unconditionally made the output non-deterministic
+ * across a midnight boundary: two runs of an unchanged repository produced a
+ * one-line diff in two files and nothing else, which trains a reader to ignore
+ * the diff this script produces. The date now answers "when did this content
+ * last change", which is the question it looked like it was answering anyway.
+ */
+const sameContent = (a, b) => {
+  if (!a || !b) return false;
+  const strip = ({ generatedAt: _ignored, ...rest }) => JSON.stringify(rest);
+  return strip(a) === strip(b);
+};
+const today = new Date().toISOString().slice(0, 10);
+snapshot.generatedAt = sameContent(snapshot, committedSnapshot)
+  ? committedSnapshot.generatedAt
+  : today;
+
+writeFileSync(snapshotFile, JSON.stringify(snapshot, null, 2) + "\n");
 
 /*
  * Page copy is written separately because the two halves have different
@@ -337,21 +442,29 @@ writeFileSync(join(HERE, "..", "content", "cms-snapshot.json"), JSON.stringify(s
  * no structure for. It is small, it is always required, and it is therefore
  * always shipped, while the article snapshot is an optional offline fallback.
  */
-writeFileSync(
-  pagesFile,
-  JSON.stringify(
-    {
-      _comment: "Generated by frontend/scripts/build-snapshot.mjs — do not edit by hand.",
-      generatedAt: snapshot.generatedAt,
-      pages,
-    },
-    null,
-    2,
-  ) + "\n",
-);
+const committedPagesFile = existsSync(pagesFile)
+  ? JSON.parse(readFileSync(pagesFile, "utf8"))
+  : null;
+const pagesOut = {
+  _comment: "Generated by frontend/scripts/build-snapshot.mjs — do not edit by hand.",
+  generatedAt: "",
+  pages,
+};
+pagesOut.generatedAt = sameContent(pagesOut, committedPagesFile)
+  ? committedPagesFile.generatedAt
+  : today;
+
+writeFileSync(pagesFile, JSON.stringify(pagesOut, null, 2) + "\n");
 console.log(
   `snapshot written — ${articles.length} articles, ${Object.keys(pages).length} pages ` +
     `(${Object.keys(derivedPages).length} derived from site/pages/)`,
+);
+console.log(
+  articleSourcesPresent
+    ? "  articles: regenerated from the WordPress export"
+    : "  articles: carried over from the committed snapshot and validated — " +
+      `the migration export is not in this repository (${missingArticleSources.join(", ")}). ` +
+      "Run with --articles to require regeneration.",
 );
 if (preservedPages.length) console.log(`  preserved authored pages: ${preservedPages.join(", ")}`);
 if (preservedFields.length) console.log(`  preserved authored fields: ${preservedFields.join(", ")}`);
